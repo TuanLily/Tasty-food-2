@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="/user/images/favicon.png" type="" />
+
+    <title>Tasty Food</title>
+
+    <!-- bootstrap core css -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap.css" /> -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/Shop.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="css/responsive.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="hero_area">
+      <div class="bg-box">
+        <div class="banner">
+          <div id="slider">
+            <img
+              src="images/hero-bg.jpg"
+              alt=""
+              id="hinh"
+              style="width: 100%"
+            />
+            <div class="dieuHuong">
+              <i
+                class="fa-sharp fa-regular fa-circle-left"
+                onclick="prev()"
+              ></i>
+              <i class="fa-regular fa-circle-right" onclick="next()"></i>
+            </div>
+            <!-- <p id="demSo"></p> -->
+          </div>
+        </div>
+      </div>
+      <header class="header_section">
+        <div class="container">
+          <nav class="navbar navbar-expand-lg custom_nav-container">
+            <a class="navbar-brand" href="index.html">
+              <span> Tasty Food </span>
+            </a>
+
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class=""> </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mx-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html"
+                    >Trang chủ <span class="sr-only">(current)</span></a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="menu.html">Món ăn</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">Giới thiệu</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="book.html">Liên hệ</a>
+                </li>
+              </ul>
+              <div class="user_option">
+                <!-- Button trigger modal -->
+                <form class="form-inline">
+                  <button
+                    type="button"
+                    class="btn my-2 my-sm-0 nav_search-btn"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                  >
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </form>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                          Tìm kiếm
+                        </h1>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Bạn muốn ăn gì?"
+                            aria-label="Search"
+                          />
+                          <button
+                            class="btn btn-outline-warning"
+                            type="submit"
+                            style="width: 8rem"
+                          >
+                            Tìm kiếm
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a class="cart_link" href="#">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <a href="./account/Login.html" class="user_link">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </a>
+                <a href="./account/register.html" class="register"> Đăng ký </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+      <!-- end header section -->
+      <!-- slider section -->
+
+      <!-- end slider section -->
+    </div>
+
+    <!-- offer section -->
+
+    <section class="offer_section layout_padding-bottom">
+      <div class="offer_container">
+        <div class="container">
+          <div class="heading_container heading_center">
+            <h2>Giảm giá trong tuần</h2>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="box">
+                <div class="img-box">
+                  <img src="images/o1.jpg" alt="" />
+                </div>
+                <div class="detail-box">
+                  <h5>Ngày Hội Burger</h5>
+                  <h6><span>20%</span> Giảm giá toàn món</h6>
+                  <a href="">
+                    Mua Ngay
+                    <svg
+                      version="1.1"
+                      id="Capa_1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 456.029 456.029"
+                      style="enable-background: new 0 0 456.029 456.029"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                          />
+                        </g>
+                      </g>
+                      <g>
+                        <g>
+                          <path
+                            d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z"
+                          />
+                        </g>
+                      </g>
+                      <g>
+                        <g>
+                          <path
+                            d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                          />
+                        </g>
+                      </g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="box">
+                <div class="img-box">
+                  <img src="images/o2.jpg" alt="" />
+                </div>
+                <div class="detail-box">
+                  <h5>Ngày Pizza</h5>
+                  <h6><span>15%</span> Giảm giá toàn món</h6>
+                  <a href="">
+                    Mua ngay
+                    <svg
+                      version="1.1"
+                      id="Capa_1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      viewBox="0 0 456.029 456.029"
+                      style="enable-background: new 0 0 456.029 456.029"
+                      xml:space="preserve"
+                    >
+                      <g>
+                        <g>
+                          <path
+                            d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                     c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                          />
+                        </g>
+                      </g>
+                      <g>
+                        <g>
+                          <path
+                            d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                     C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                     c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                     C457.728,97.71,450.56,86.958,439.296,84.91z"
+                          />
+                        </g>
+                      </g>
+                      <g>
+                        <g>
+                          <path
+                            d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                     c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                          />
+                        </g>
+                      </g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                      <g></g>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- end offer section -->
+
+    <!-- food section -->
+
+    <section class="food_section layout_padding-bottom">
+      <div class="container">
+        <div class="heading_container heading_center">
+          <h2>Our Menu</h2>
+        </div>
+
+        <ul class="filters_menu">
+          <li class="active" data-filter="*">Xem Tấc cả</li>
+          <li data-filter=".burger">Burger</li>
+          <li data-filter=".pizza">Pizza</li>
+          <li data-filter=".pasta">Mì ống</li>
+          <li data-filter=".fries">Khoai tây chiên</li>
+          <li data-filter=".thucuong">Thức uống</li>
+        </ul>
+
+        <div class="filters-content">
+          <div class="row grid">
+            <div
+              class="col-sm-6 col-lg-4 all pizza"
+              data-filter=".chitietsanpham"
+            >
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f1.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Pizza Hải Sản</h5>
+                    <p>
+                      Món pizza hải sản là một tuyệt phẩm ẩm thực kết hợp giữa
+                      hương vị độc đáo của hải sản tươi ngon và sự phong phú của
+                      các thành phần khác trên một nền bánh pizza đẹp mắt
+                    </p>
+                    <div class="options">
+                      <h6>235,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all burger">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f2.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Burger Phô mai</h5>
+                    <p>
+                      Món ăn phô mai là một tráng miệng ngon lành, thường làm từ
+                      các loại phô mai truyền thống hoặc phô mai mềm. Với hương
+                      vị đặc biệt và độ béo ngậy, phô mai được tạo nên từ quá
+                      trình chế biến và ủ chất liệu từ sữa.
+                    </p>
+                    <div class="options">
+                      <h6>70,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all pizza">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f3.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Pizza Sốt Cà Chua</h5>
+                    <p>
+                      Pizza sốt cà chua là món ăn phổ biến với nền bánh mỏng và
+                      sốt cà chua đậm đà. Hương vị tươi ngon của cà chua kết hợp
+                      với gia vị như tỏi, hành, oregano và muối. Mỗi miếng pizza
+                      thơm ngon, giòn và sốt cà chua đậm đà.
+                    </p>
+                    <div class="options">
+                      <h6>150,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all pasta">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f4.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Mì ống với salad</h5>
+                    <p>
+                      Mì ống với salad Món ăn Ý kết hợp giữa mì ống và salad
+                      tươi. Mì ống chín vừa, salad gồm rau tươi như xà lách, cà
+                      chua, dưa leo và hành tây, gia vị bằng dấm balsamic, dầu
+                      ô-liu. Hòa quyện vị ngọt
+                    </p>
+                    <div class="options">
+                      <h6>75,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all fries">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f5.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Khoai tây chiên</h5>
+                    <p>
+                      Khoai tây chiên Món ăn phổ biến, khoai tây cắt mỏng, chiên
+                      vàng giòn. Vị mặn, gia vị muối, hành tỏi. Kèm sốt cà chua,
+                      mayonnaise hoặc BBQ. Đơn giản, thơm ngon, giòn hấp dẫn.
+                    </p>
+                    <div class="options">
+                      <h6>35,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all pizza">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f6.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Pizza Rau củ thập cẩm</h5>
+                    <p>
+                      Pizza Rau củ thập cẩm: Bánh pizza sốt cà chua đậm đà, rau
+                      củ đa dạng như cà rốt, hành tây, nấm, ớt. Món Pizza Rau củ
+                      thập cẩm không chỉ ngon mà còn bổ dưỡng, phù hợp cho người
+                      ưa thích chế độ ăn rau.
+                    </p>
+                    <div class="options">
+                      <h6>90,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all burger">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f7.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Burger Gà bơ Tây Nam</h5>
+                    <p>
+                      Burger Gà bơ Bánh burger tròn, gà nướng với lớp bơ mềm
+                      mượt. Kèm rau xanh, cà chua, hành tây và sốt gia vị. Hương
+                      vị độc đáo từ bơ kết hợp với gà, một trải nghiệm thú vị
+                      cho người thích burger.
+                    </p>
+                    <div class="options">
+                      <h6>85,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all burger">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f8.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Burger Gà nướng</h5>
+                    <p>
+                      Burger Gà nướng Bánh burger tròn, gà nướng thịt mềm và
+                      thơm ngon. Kèm rau xanh, cà chua, hành tây và sốt gia vị.
+                      Hương vị đậm đà từ gà nướng, trải nghiệm burger ngon lành
+                      cho người thích gà và burger.
+                    </p>
+                    <div class="options">
+                      <h6>80,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 all pasta">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img src="images/f9.png" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <h5>Mì ống Hummus với Thịt</h5>
+                    <p>
+                      mì ống được trộn đều với hummus và thịt để tạo ra một món
+                      ăn ngon miệng. Hương vị độc đáo của hummus kết hợp với
+                      thịt thơm ngon tạo nên sự kết hợp hài hòa và đa dạng. Bạn
+                      có thể thêm các loại rau sống
+                    </p>
+                    <div class="options">
+                      <h6>85,000₫</h6>
+                      <a href="">
+                        <svg
+                          version="1.1"
+                          id="Capa_1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          viewBox="0 0 456.029 456.029"
+                          style="enable-background: new 0 0 456.029 456.029"
+                          xml:space="preserve"
+                        >
+                          <g>
+                            <g>
+                              <path
+                                d="M345.6,338.862c-29.184,0-53.248,23.552-53.248,53.248c0,29.184,23.552,53.248,53.248,53.248
+                         c29.184,0,53.248-23.552,53.248-53.248C398.336,362.926,374.784,338.862,345.6,338.862z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M439.296,84.91c-1.024,0-2.56-0.512-4.096-0.512H112.64l-5.12-34.304C104.448,27.566,84.992,10.67,61.952,10.67H20.48
+                         C9.216,10.67,0,19.886,0,31.15c0,11.264,9.216,20.48,20.48,20.48h41.472c2.56,0,4.608,2.048,5.12,4.608l31.744,216.064
+                         c4.096,27.136,27.648,47.616,55.296,47.616h212.992c26.624,0,49.664-18.944,55.296-45.056l33.28-166.4
+                         C457.728,97.71,450.56,86.958,439.296,84.91z"
+                              />
+                            </g>
+                          </g>
+                          <g>
+                            <g>
+                              <path
+                                d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
+                         c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z"
+                              />
+                            </g>
+                          </g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                          <g></g>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-box">
+          <a href=""> View More </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- end food section -->
+
+    <!-- about section -->
+
+    <section class="about_section layout_padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="img-box">
+              <img src="images/about-img.png" alt="" />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="detail-box">
+              <div class="heading_container">
+                <h2>We Are Feane</h2>
+              </div>
+              <p>
+                There are many variations of passages of Lorem Ipsum available,
+                but the majority have suffered alteration in some form, by
+                injected humour, or randomised words which don't look even
+                slightly believable. If you are going to use a passage of Lorem
+                Ipsum, you need to be sure there isn't anything embarrassing
+                hidden in the middle of text. All
+              </p>
+              <a href=""> Read More </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- end about section -->
+
+    <!-- book section -->
+    <section class="book_section layout_padding">
+      <div class="container">
+        <div class="heading_container">
+          <h2>Book A Table</h2>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form_container">
+              <form action="">
+                <div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Phone Number"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div>
+                  <select class="form-control nice-select wide">
+                    <option value="" disabled selected>
+                      How many persons?
+                    </option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                  </select>
+                </div>
+                <div>
+                  <input type="date" class="form-control" />
+                </div>
+                <div class="btn_box">
+                  <button>Book Now</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="map_container">
+              <div id="googleMap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- end book section -->
+
+    <!-- client section -->
+
+    <section class="client_section layout_padding-bottom">
+      <div class="container">
+        <div class="heading_container heading_center psudo_white_primary mb_45">
+          <h2>What Says Our Customers</h2>
+        </div>
+        <div class="carousel-wrap row">
+          <div class="owl-carousel client_owl-carousel">
+            <div class="item">
+              <div class="box">
+                <div class="detail-box">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam
+                  </p>
+                  <h6>Moana Michell</h6>
+                  <p>magna aliqua</p>
+                </div>
+                <div class="img-box">
+                  <img src="images/client1.jpg" alt="" class="box-img" />
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="box">
+                <div class="detail-box">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam
+                  </p>
+                  <h6>Mike Hamell</h6>
+                  <p>magna aliqua</p>
+                </div>
+                <div class="img-box">
+                  <img src="images/client2.jpg" alt="" class="box-img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- end client section -->
+
+    <!-- footer section -->
+    <footer class="footer_section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 footer-col">
+            <div class="footer_contact">
+              <h4>Liên hệ</h4>
+              <div class="contact_link_box">
+                <a href="">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <span>
+                    Toà nhà FPT Polytechnic quận Cái Răng, TP Cần Thơ
+                  </span>
+                </a>
+                <a href="">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <span> Call +365347890 </span>
+                </a>
+                <a href="">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  <span> tastyfood@gmail.com </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 footer-col">
+            <div class="footer_detail">
+              <a href="" class="footer-logo"> Tasty Food </a>
+              <p>
+                Hãy đến và trải nghiệm những hương vị tuyệt vời tại nhà hàng
+                Tasty Food.
+              </p>
+              <div class="footer_social">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-pinterest" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 footer-col">
+            <h4>Giờ mở cửa</h4>
+            <p>Mỗi ngày</p>
+            <p>10.00 Am -10.00 Pm</p>
+          </div>
+        </div>
+        <div class="footer-info">
+          <p>&copy; 2023 Tên Công ty. Bảo lưu mọi quyền.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- footer section -->
+
+    <!-- jQery -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <!-- popper js -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"
+      integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- owl slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <!-- isotope js -->
+    <script src="https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+    <!-- custom js -->
+    <script src="js/custom.js"></script>
+    <script src="js/XuLySuKien.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+    <!-- End Google Map -->
+  </body>
+</html>

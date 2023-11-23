@@ -1,0 +1,792 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  color: #0c0c0c;
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+.row {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.col2 {
+  flex-basis: 50%;
+  min-width: 300px;
+}
+
+.col2 img {
+  max-width: 100%;
+  padding: 50px 0;
+}
+
+.col2 h1 {
+  font-size: 50px;
+  line-height: 60px;
+  margin: 25px 0;
+}
+
+.btnatc {
+  display: inline-block;
+  background: #ff523b;
+  color: #fff;
+  padding: 6px 20px;
+  margin: 30px 0;
+  border: none;
+  transition: background 0.5s;
+}
+
+.btnatc:hover {
+  background: #563434;
+}
+
+.col3 {
+  flex-basis: 30%;
+  min-width: 250px;
+  margin-bottom: 30px;
+}
+
+.col3 img {
+  width: 100%;
+}
+
+.khungchitietsanpham {
+  max-width: 1080px;
+  margin: auto;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.col4 {
+  flex-basis: 25%;
+  padding: 10px;
+  min-width: 200px;
+  margin-bottom: 50px;
+  transition: transform 0.5s;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center; /* Added text-align: center; */
+}
+
+.col4 img {
+  width: 100%;
+}
+
+.checked {
+  color: orange;
+}
+
+.title {
+  margin: 0 auto 80px;
+  line-height: 30px;
+  color: #555;
+  text-align: center; /* Added text-align: center; */
+}
+
+.col4 p {
+  font-size: 14px;
+  text-align: center; /* Added text-align: center; */
+}
+
+.col4:hover {
+  transform: translateY(-5px);
+}
+
+/*---- single product details ----*/
+
+.single-productctsp {
+  margin-top: 80px;
+}
+
+.single-productctsp .col2 img {
+  padding: 0;
+}
+
+.single-productctsp .col2 {
+  padding: 20px;
+}
+
+.single-productctsp h4 {
+  margin: 20px 0;
+  font-size: 16px;
+  color: #555;
+  text-decoration: line-through;
+}
+
+.single-productctsp h3 {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.single-productctsp .sale_price {
+  font-size: 25px;
+  font-weight: bold;
+  color: orange;
+}
+
+.mini_price {
+  font-size: 10px;
+  color: #555;
+  text-decoration: line-through;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.single-productctsp select {
+  display: block;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.single-productctsp input {
+  width: 50px;
+  height: 40px;
+  padding-left: 10px;
+  font-size: 20px;
+  margin-right: 10px;
+  border: 1px solid #ff523b;
+}
+
+.sale_price {
+  font-size: 18px;
+  font-weight: bold;
+  color: orange;
+}
+input:focus {
+  outline: none;
+}
+
+.small-img-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.small-img-col {
+  flex-basis: 24%;
+  cursor: pointer;
+}
+
+/*---- cart items ----*/
+
+.cart-page {
+  margin: 80px auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+small {
+  color: #555;
+}
+
+.cart-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+th {
+  text-align: left;
+  padding: 5px;
+  color: #fff;
+  background: #ff523b;
+  font-weight: normal;
+}
+
+td {
+  padding: 10px 5px;
+}
+
+td input {
+  width: 40px;
+  height: 30px;
+  padding: 5px;
+}
+
+td a {
+  color: #ff523b;
+  font-size: 12px;
+}
+
+td img {
+  width: 80px;
+  margin-right: 10px;
+}
+
+.total-price {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total-price table {
+  border-top: 3px solid #ff523b;
+  width: 100%;
+  max-width: 315px;
+}
+
+td:last-child {
+  text-align: right;
+}
+
+th:last-child {
+  text-align: right;
+}
+
+.buy1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buy1 a {
+  width: 200px;
+  background: #ff523b;
+  color: white;
+  display: block;
+  font-size: 20px;
+  margin-top: 25px;
+  padding: 15px 80px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.buy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buy a {
+  width: 200px;
+  background: #ff523b;
+  color: white;
+  display: block;
+  font-size: 20px;
+  margin-top: 25px;
+  padding: 15px 80px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* ---- account page ----*/
+
+.account-page {
+  padding: 50px 0;
+  background: radial-gradient(#fff, #d6d7ff);
+}
+
+.form-container {
+  background: #fff;
+  width: 300px;
+  height: 400px;
+  position: relative;
+  text-align: center;
+  padding: 20px 0;
+  margin: auto;
+  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.form-container span {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #555;
+  cursor: pointer;
+  width: 100px;
+  display: inline-block;
+}
+
+.form-btnatc {
+  display: inline-block;
+}
+
+/* .form-container form{
+    max-width: 300px;
+    padding: 0 20px;
+    position: absolute;
+    top: 50px;
+    transition: transform 1s;
+} */
+/*-- filter css */
+/* .form1 input{
+    width :30rem;
+    padding: 1rem;
+    border:none;
+    outline: none;
+    font-size: 1.4rem;
+    border-radius: 5px;
+    border-bottom:2px solid lightblue;
+
+} */
+
+/* .btnatc-filter{
+    font-size: 1rem;
+    text-decoration: none;
+    color: #fff;
+    margin-right: 1rem;
+    background-color: rgb(255, 102, 0);
+    padding: 5px;
+    border-radius: 3px;
+} */
+/* form input{
+    width: 100%;
+    height: 30px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+} */
+
+form .btnatc {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+form .btnatc:focus {
+  outline: none;
+}
+
+#LoginForm {
+  left: -300px;
+}
+
+#RegForm {
+  left: 0;
+}
+
+form a {
+  font-size: 12px;
+}
+
+#Indicator {
+  width: 100px;
+  border: none;
+  background: #ff523b;
+  height: 3px;
+  margin-top: 8px;
+  transform: translateX(100px);
+  transition: transform 1s;
+}
+
+/* ---- media query for menu ---- */
+
+@media only screen and (max-width: 800px) {
+  nav ul {
+    position: absolute;
+    top: 160px;
+    left: 0;
+    background: #333;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.5s;
+  }
+
+  nav ul li {
+    display: block;
+    margin-right: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  nav ul li a {
+    color: #fff;
+  }
+
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+  }
+}
+
+.btn-filter:hover,
+.btn-filter:active {
+  background-color: rgb(0, 195, 255);
+}
+
+/* .current{
+    background-color: rgb(0, 195, 255);
+} */
+
+/* ---- media query for less than 600 screen size ---- */
+
+@media only screen and (max-width: 600px) {
+  .row {
+    text-align: center;
+  }
+  .col2,
+  .col3,
+  .col4 {
+    flex-basis: 100%;
+  }
+
+  .single-product .row {
+    text-align: left;
+  }
+
+  .single-product .col2 {
+    padding: 20px 0;
+  }
+
+  .single-product h1 {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .cart-info p {
+    display: none;
+  }
+}
+/* sileder */
+#slider {
+  width: 100%;
+}
+#slider i:first-child {
+  position: absolute;
+  top: 50%;
+  left: 200px;
+  color: #ffffff;
+  font-size: 3rem;
+}
+#slider i:last-child {
+  position: absolute;
+  top: 50%;
+  right: 200px;
+  color: #ffffff;
+  font-size: 3rem;
+}
+
+/* banner */
+
+.banner {
+  width: 100%;
+}
+.banner img {
+  border-radius: 4px;
+  width: 100%;
+  text-align: center;
+}
+
+/* form dat ban */
+
+.khungdatban {
+  background-color: #222831;
+  max-width: 100%;
+  width: 100%;
+  height: 124rem;
+  border-radius: 8px;
+  padding: 50px;
+  margin: auto;
+}
+
+.tieuDe {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 50px;
+}
+
+p.title {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Dancing Script", cursive;
+}
+
+.khungdatban form {
+  position: relative;
+  min-height: 100%;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 4px;
+}
+
+.khungdatban form .form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+form .form-group .form-group-input {
+  display: flex;
+  /* flex-direction: column  sẽ  làm label nằm trên input nằm dưới   */
+  flex-direction: column;
+  width: calc(100% / 3 - 20px);
+  margin: 8px 0;
+}
+
+.form-group-input select {
+  outline: none;
+  height: 35px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  font-weight: 300;
+  color: #000;
+  padding: 10px 32px 10px 16px;
+  width: 100%;
+}
+
+.form-group-input label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group-input input {
+  outline: none;
+  border: 1px solid #ccc;
+  padding: 0 15px;
+  height: 35px;
+  margin: 8px 0;
+  padding: 10px 16px 10px 16px;
+}
+
+form .form-group .form-group-input-long1 {
+  display: flex;
+  flex-direction: column;
+  width: calc(135% / 2 - 15px);
+  margin: 8px 0;
+}
+form .form-group .form-group-input-long1 label {
+  font-size: 14px;
+  font-weight: 500;
+}
+form .form-group .form-group-input-long1 select {
+  outline: none;
+  height: 35px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  font-weight: 300;
+  color: #000;
+  padding: 10px 32px 10px 16px;
+  width: 100%;
+}
+.form-group-input-note label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.form-group-input-note textarea {
+  outline: none;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  font-weight: 300;
+  color: #000;
+  padding: 10px 32px 10px 16px;
+  width: 100%;
+  height: 150px;
+  resize: none;
+  box-sizing: border-box; /* Thêm dòng này */
+}
+.form-group-input-note {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 8px 0;
+}
+.form-group-input-note-lienhe textarea {
+  outline: none;
+  margin: 10px 0;
+  border: 1px solid #999;
+  font-weight: 300;
+  color: #000;
+  padding: 10px 32px 10px 16px;
+  width: 100%;
+  height: 150px;
+  resize: none;
+  box-sizing: border-box; /* Thêm dòng này */
+  border-radius: 4px;
+}
+.form-group-input-note-lienhe {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.form-group-input-note-lienhe ::placeholder {
+  color: #000;
+  padding-left: 4px;
+}
+form .form-group .form-group-input-long2 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 8px 0;
+}
+form .form-group .form-group-input-long2 label {
+  font-size: 14px;
+  font-weight: 500;
+}
+form .form-group .form-group-input-long2 select {
+  outline: none;
+  height: 40px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  font-weight: 300;
+  color: #000;
+  padding: 10px 32px 10px 16px;
+  width: 100%;
+}
+
+.form-button {
+  padding: 10px 30px;
+  outline: none;
+  font-weight: bold;
+  background-color: #ffbe33;
+  color: white;
+  margin-left: 10px;
+}
+.form-group .form-button {
+  width: auto;
+  border: none;
+  border-radius: 4px;
+}
+
+/* quen mat khau */
+
+.khungquenmatkhau {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  color: #333333;
+}
+
+.forgot-password-form {
+  max-width: 400px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-password-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.forgot-password-form .form-group {
+  margin-bottom: 20px;
+}
+
+.forgot-password-form .form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.forgot-password-form .form-group input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.forgot-password-form button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffbe33;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.forgot-password-form button[type="submit"]:hover {
+  background-color: #ffbe33;
+}
+.btn_gui[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #ffbe33;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Arial", sans-serif; /* Thay đổi phông chữ */
+  font-size: 18px; /* Thay đổi kích thước chữ */
+  font-weight: bold; /* Cân nhắc tăng độ đậm của chữ */
+  letter-spacing: 1px; /* Khoảng cách giữa các ký tự */
+}
+
+.btn_gui[type="submit"]:hover {
+  background-color: #ffbe33;
+  /* Thêm hiệu ứng hover tùy chỉnh nếu cần */
+}
+
+/* cap nhat tai khoan */
+
+.khungcapnhattaikhoan {
+  max-width: 50%;
+  margin: 7rem 18rem 0rem;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-group-capnhattaikhoan {
+  margin-bottom: 20px;
+}
+
+.form-group-capnhattaikhoan label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group-capnhattaikhoan input[type="text"],
+.form-group-capnhattaikhoan input[type="email"],
+.form-group-capnhattaikhoan input[type="tel"],
+.form-group-capnhattaikhoan input[type="password"],
+.form-group-capnhattaikhoan textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-group-capnhattaikhoan textarea {
+  height: 80px;
+  resize: none;
+}
+
+.form-group-capnhattaikhoan .btn-capnhattaikhoan {
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.form-group-capnhattaikhoan .btn-capnhattaikhoan:hover {
+  background-color: #45a049;
+}
+.button_datbanngay {
+  background-color: #28a745; /* Màu nền xanh lá cây */
+  color: #fff; /* Màu chữ trắng */
+  border: none; /* Không viền */
+  padding: 10px 20px; /* Khoảng cách trong nút */
+  border-radius: 4px; /* Góc bo tròn */
+  font-size: 16px; /* Cỡ chữ */
+  cursor: pointer; /* Con trỏ chuột thành dạng tay */
+  /* Các thuộc tính khác tùy chỉnh theo ý muốn của bạn */
+}

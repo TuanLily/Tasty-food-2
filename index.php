@@ -1,0 +1,399 @@
+<?php
+session_start();
+ob_start();
+include "dao/datban.php";
+
+include 'dao/pdo.php';
+include 'dao/cookie.php';
+require_once './mail/index.php';
+include 'dao/danhmuc.php';
+include 'dao/monan.php';
+include "dao/taikhoan.php";
+include 'global/global.php';
+$mail = new Mailer();
+
+
+$show_monan = loadall_monan_home();
+
+// Gọi hàm kiểm tra đăng nhập tự động
+if (autoLoginIfRemembered()) {
+  // Người dùng đã đăng nhập tự động, bạn có thể thực hiện các hành động liên quan ở đây
+  header('Location: index.php?act=trangchu');
+  exit();
+}
+include "view/header.php";
+
+$show_monan = loadall_monan_home();
+$danhsachdanhmuc = loadall_danhmuc(); // làm cho form dat bàn
+
+
+if (isset($_GET['act']) && $_GET['act'] != "") {
+  $act = $_GET['act'];
+  switch ($act) {
+    case 'trangchu':
+      include "view/header.php";
+      include "view/nav.php";
+      include "view/slider.php";
+      include "view/giamgiatrongtuan.php";
+      include "view/home.php";
+      include "view/footer.php";
+      break;
+
+    case 'monan':
+      include "view/header.php";
+      include "view/nav.php";
+      if ((isset($_POST['keyw']) && $_POST['keyw'] != "")) {
+        $keyw = $_POST['keyw'];
+      } else {
+        $keyw = "";
+      }
+      $dsma = loadall_monan($keyw, $danh_muc_id);
+      include "view/margintop.php";
+      include "pages/menu.php";
+      include "view/footer.php";
+      break;
+
+    case 'monanct':
+      include "view/header.php";
+      include "view/nav.php";
+      if ((isset($_GET['id_ma']) && $_GET['id_ma'] > 0)) {
+        $id = $_GET['id_ma'];
+        $onemonan = loadone_monan($id);
+        extract($onemonan);
+
+        $macungloai = load_monan_cungloai($id, $danh_muc_id);
+        include 'pages/chitietmonan.php';
+        include "view/footer.php";
+      } else {
+        include "view/header.php";
+        include "view/nav.php";
+        include "view/slider.php";
+        include "view/giamgiatrongtuan.php";
+        include "view/home.php";
+        include "view/footer.php";
+      }
+      break;
+
+
+
+
+
+
+
+    case 'search':
+      include "view/header.php";
+      include "view/nav.php";
+      if (isset($_GET['keyw']) && $_GET['keyw'] != "") {
+        $keyw = $_GET['keyw'];
+      } else {
+        $keyw = "";
+      }
+
+      $dsma = loadall_monan($keyw, $danh_muc_id);
+
+      include "pages/menu.php";
+      include "view/footer.php";
+      break;
+
+
+
+    case 'gioithieu':
+      include "view/header.php";
+      include "view/nav.php";
+      include "pages/gioithieu.php";
+      include "view/footer.php";
+      break;
+
+    case 'lienhe':
+      include "view/header.php";
+      include "view/nav.php";
+      include "pages/lienhe.php";
+      include "view/footer.php";
+      break;
+
+    case 'datban':
+      include "view/header.php";
+      include "view/nav.php";
+      include "pages/formdatban.php";
+      include "view/footer.php";
+      break;
+
+    case 'dangky':
+      session_unset();
+      if (isset($_POST['dangky']) && ($_POST['dangky'])) {
+        $email = $_POST['email'];
+        $ten = $_POST['ten'];
+        $mat_khau = $_POST['mat_khau'];
+        $rpass = $_POST['rpass'];
+        $pass_hash = password_hash($mat_khau, PASSWORD_DEFAULT);
+        $check = 1;
+
+        if (empty($ten)) {
+          $_SESSION['error']['ten'] = 'Không được để trống';
+          $check = 0;
+        } elseif (isset($ten)) {
+
+          $checkuser = check_user_validate($ten);
+          if ($checkuser !== false) {
+            $_SESSION['error']['ten'] = 'Tên người dùng này đã được đăng ký';
+            $check = 0;
+          }
+        }
+        if (empty($email)) {
+          $_SESSION['error']['email'] = 'Không được để trống';
+          $check = 0;
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $_SESSION['error']['email'] = 'Email không đúng định dạng';
+          $check = 0;
+        } else {
+
+          $checkemail = check_email($email);
+          if ($checkemail !== false) {
+            $_SESSION['error']['email'] = 'Email này đã được đăng ký';
+            $check = 0;
+          }
+        }
+        if (empty($mat_khau)) {
+          $_SESSION['error']['mat_khau'] = 'Không được để trống';
+          $check = 0;
+        } else if (strlen($mat_khau) < 8) {
+          $_SESSION['error']['mat_khau'] = 'Mật khẩu phải có ít nhất 8 ký tự';
+          $check = 0;
+        } else {
+
+          $pass_hash;
+        }
+
+
+        if (empty($rpass)) {
+          $_SESSION['error']['rpass'] = 'Không được để trống';
+          $check = 0;
+        } else {
+
+          if (!password_verify($rpass, $pass_hash)) {
+            $_SESSION['error']['rpass'] = 'Mật khẩu không trùng khớp';
+            $check = 0;
+          }
+        }
+
+        if ($check == 1) {
+          password_verify($rpass, $pass_hash);
+          insert_taikhoan($email, $ten, $pass_hash);
+          echo '<script>alert("Đăng ký thành công")</script>';
+          echo '<script>
+                          setTimeout(function() {
+                              window.location.href = "index.php?act=dangnhap";
+                          }, 0);
+                        </script>';
+        }
+      }
+
+      include 'pages/account/register.php';
+      break;
+
+    case 'dangnhap':
+      session_unset();
+      if (isset($_POST['dangnhap']) && ($_POST['dangnhap'])) {
+        $email = $_POST['email'];
+        $mat_khau = $_POST['mat_khau'];
+        $remember_me = isset($_POST['remember_me']) && $_POST['remember_me'] ? $_POST['remember_me'] : null; // Kiểm tra xem người dùng đã chọn "Ghi nhớ tài khoản" hay không
+        $check = 1;
+
+        if (empty($email)) {
+          $_SESSION['error']['email'] = 'Không được để trống';
+          $check = 0;
+        } else {
+          unset($_SESSION['error']['email']);
+        }
+
+        if (empty($mat_khau)) {
+          $_SESSION['error']['mat_khau'] = 'Không được để trống';
+          $check = 0;
+        } else {
+          unset($_SESSION['error']['mat_khau']);
+        }
+
+        if ($check == 1) {
+          $check_email_pass = check_email_validate($email);
+          if (is_array($check_email_pass)) {
+            $pass_check = password_verify($mat_khau, $check_email_pass['mat_khau']);
+            if ($pass_check == true) {
+              $_SESSION['email'] = $check_email_pass;
+
+              // Nếu người dùng chọn "Ghi nhớ tài khoản"
+              if ($remember_me) {
+                $cookieValue = base64_encode($email . ':' . $check_email_pass['mat_khau']);
+                setcookie('remember_me', $cookieValue, time() + (8 * 60 * 60), '/'); // Hết hạn sau 8 giờ
+              }
+
+              echo '<script>alert("Đăng nhập thành công")</script>';
+              echo '<script>
+                          setTimeout(function() {
+                              window.location.href = "index.php?act=trangchu";
+                          }, 0);
+                        </script>';
+              exit();
+            } else {
+              echo '<script>alert("Sai email hoặc sai mật khẩu")</script>';
+              include 'pages/account/login.php';
+              exit();
+            }
+          } else {
+            echo '<script>alert("Sai email hoặc sai mật khẩu")</script>';
+            include 'pages/account/login.php';
+            exit();
+          }
+        }
+      }
+      include 'pages/account/login.php';
+      break;
+
+
+    case 'reset':
+      session_unset();
+      if (isset($_POST['reset']) && ($_POST['reset'])) {
+        $mat_khau = $_POST['mat_khau'];
+        $rpass = $_POST['rpass'];
+        $pass_hash = password_hash($mat_khau, PASSWORD_DEFAULT);
+        $check = 1;
+        if (empty($mat_khau)) {
+          $_SESSION['error']['mat_khau'] = 'Không được để trống';
+          $check = 0;
+        } else if (strlen($mat_khau) < 8) {
+          $_SESSION['error']['mat_khau'] = 'Mật khẩu phải có ít nhất 8 ký tự';
+          $check = 0;
+        } else {
+
+          $pass_hash;
+        }
+
+        if (empty($rpass)) {
+          $_SESSION['error']['rpass'] = 'Không được để trống';
+          $check = 0;
+        } else {
+
+          if (!password_verify($rpass, $pass_hash)) {
+            $_SESSION['error']['rpass'] = 'Mật khẩu không trùng khớp';
+            $check = 0;
+          }
+        }
+        if ($check == 1) {
+          password_verify($rpass, $pass_hash);
+          update_password($_SESSION['email'], $pass_hash);
+          echo '<script>alert("Cập nhật thành công, vui lòng đăng nhập")</script>';
+          echo '
+          <script>
+              setTimeout(function() {
+                  window.location.href = "index.php?act=dangnhap";
+              }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
+          </script>
+          ';
+        }
+      }
+      include "view/header.php";
+      include "view/nav.php";
+      include 'pages/account/reset_pw.php';
+      include "view/footer.php";
+      break;
+
+    case 'quenmatkhau':
+      if (isset($_POST['guiemail']) && $_POST['guiemail']) {
+        $arr = array();
+        $email = $_POST['email'];
+
+        if (empty($email)) {
+          $_SESSION['error']['email'] = 'Email không được để trống';
+        }
+
+        if (!isset($email)) {
+          $_SESSION['error']['email'] = 'Email không không tồn tại';
+        }
+        if (empty($_SESSION['error']['email'])) {
+          $checkemail = check_email($email);
+          $code = substr(rand(0, 999999), 0, 6);
+          $title = "Quên mật khẩu";
+          $content = "Mã xác minh là: <span style='font-size: 20px; color:orange;'>" . $code . "</span>";
+          $mail->sendEmailPass($title, $content, $email);
+
+          $_SESSION["email"] = $email;
+          $_SESSION["code"] = $code;
+          header('Location: index.php?act=xacminh');
+        }
+      }
+      include 'pages/account/quenmatkhau.php';
+      break;
+
+    case 'xacminh':
+      if (isset($_POST['xacminh'])) {
+        $arr = array();
+        if ($_POST['maxacminh'] != $_SESSION['code']) {
+          $_SESSION['error']['maxacminh'] = 'Mã xác minh không hợp lệ';
+        } else {
+          header('Location: index.php?act=reset');
+        }
+      }
+      include 'pages/account/xacminh.php';
+      break;
+
+
+    case 'update':
+      include "view/header.php";
+      include "view/nav.php";
+      include 'pages/account/update.php';
+      include "view/footer.php";
+      break;
+
+
+    case 'datbanngay':
+      if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
+        $ten_kh = $_POST['ten_kh'];
+        $email = $_POST['email'];
+        $sdt = $_POST['sdt'];
+        $so_nguoi = $_POST['so_nguoi'];
+        $so_ban = $_POST['so_ban'];
+        $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
+        $ghi_chu = $_POST['ghi_chu'];
+
+        // Lưu thông tin món ăn vào cơ sở dữ liệu
+        $listmonan = loadall_monan();
+        foreach ($listmonan as $monan) {
+          $id = $monan['id'];
+          $so_luong = $_POST['so_luong_' . $id];
+          $gia = $_POST['gia_' . $id];
+          $hinh = $monan['hinh'];
+          $ten = $monan['ten'];
+          $mon_an_id = $id;
+
+          if ($so_luong > 0) {
+            insert_datban($ten_kh, $email, $sdt, $so_nguoi, $so_ban, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+          }
+        }
+
+        // Cấu hình hiển thị lỗi (chỉ sử dụng trong quá trình phát triển)
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+      }
+
+      // Hiển thị biểu mẫu sau khi đặt bàn thành công
+      include "./pages/formdatban.php";
+      break;
+
+
+    default:
+      include "view/header.php";
+      include "view/nav.php";
+      include "view/slider.php";
+      include "view/giamgiatrongtuan.php";
+      include "view/home.php";
+      include "view/footer.php";
+      break;
+  }
+} else {
+  include "view/header.php";
+  include "view/nav.php";
+  include "view/slider.php";
+  include "view/giamgiatrongtuan.php";
+  include "view/home.php";
+  include "view/footer.php";
+}
