@@ -1105,7 +1105,7 @@ input[type="submit"] {
 }
 
 .bang_thongtin_mon_an .quantity-input button {
-  background-color: #007bff;
+  background-color: rgb(255, 190, 50);
   color: #fff;
   border: none;
   padding: 5px 10px;

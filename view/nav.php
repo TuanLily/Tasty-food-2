@@ -21,7 +21,7 @@
                                     class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?act=monan">Món ăn</a>
+                            <a class="nav-link" href="index.php?act=monan">Thực Đơn</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?act=gioithieu">Giới thiệu</a>
@@ -68,7 +68,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
 
-                        <a href="index.php?act=datban" class="order_online">
+                        <a href="index.php?act=datbanngay" class="order_online">
                             Đặt bàn Online
                         </a>
 

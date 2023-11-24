@@ -1,3 +1,8 @@
+window.addEventListener(function (e) {
+  // Chặn chuyển trang
+  e.preventDefault();
+});
+
 // to get current year
 function getYear() {
   var currentDate = new Date();
@@ -67,3 +72,22 @@ $(".client_owl-carousel").owlCarousel({
     },
   },
 });
+
+// ! Tăng giảm số lượng món ăn trong form đặt bàn
+function decrementQuantity(id) {
+  var inputElement = document.getElementById("so_luong" + id);
+  var currentValue = parseInt(inputElement.value, 10);
+
+  // Giảm giá trị nếu nó lớn hơn 0
+  if (currentValue > 0) {
+    inputElement.value = currentValue - 1;
+  }
+}
+
+function incrementQuantity(id) {
+  var inputElement = document.getElementById("so_luong" + id);
+  var currentValue = parseInt(inputElement.value, 10);
+
+  // Tăng giá trị
+  inputElement.value = currentValue + 1;
+}

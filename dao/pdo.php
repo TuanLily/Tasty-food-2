@@ -129,3 +129,17 @@ function pdo_query_value($sql)
         }
     }
 }
+
+function pdo_prepare($pdo, $sql)
+{
+    // Kiểm tra kết nối PDO
+    if (!$pdo) {
+        return false;
+    }
+
+    // Tạo đối tượng PDOStatement
+    $stmt = $pdo->prepare($sql);
+
+    // Trả về kết quả
+    return $stmt;
+}

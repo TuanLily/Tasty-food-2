@@ -479,7 +479,7 @@ form a {
   background-color: #222831;
   max-width: 100%;
   width: 100%;
-  height: 124rem;
+  max-height: 400rem;
   border-radius: 8px;
   padding: 50px;
   margin: auto;
@@ -502,7 +502,7 @@ p.title {
 
 .khungdatban form {
   position: relative;
-  min-height: 100%;
+  min-height: 125rem;
   background-color: #fff;
   padding: 40px;
   border-radius: 4px;
