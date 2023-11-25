@@ -68,55 +68,69 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['datbanngay'])) {
                 <div class="heading_container heading_center">
                     <h2>Chọn món</h2>
                 </div>
-
-                <ul class="filters_menu">
-                    <?php
-                    // Kiểm tra và hiển thị danh sách danh mục
-                    if (!empty($danhsachdanhmuc)) {
-                        foreach ($danhsachdanhmuc as $danhMuc) {
-                            $ten_dm = $danhMuc['ten_dm'];
-                            echo '<li><a href="index.php?act=datbanngay&danh_muc_id=' . $danhMuc['id'] . '">' . $ten_dm . '</a></li>';
-                        }
-                    } else {
-                        echo '<li>Không có danh mục món ăn.</li>';
-                    }
-                    ?>
+                <ul class="nav nav-pills mb-3 filters_menu" id="pills-tab" role="tablist">
+                    <!--  Kiểm tra và hiển thị danh sách danh mục -->
+                    <?php if (!empty($danhsachdanhmuc)): ?>
+                        <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-<?= $danhMuc['id'] ?>" data-bs-toggle="pill"
+                                    data-bs-target="#pills-<?= $danhMuc['id'] ?>" type="button" role="tab"
+                                    aria-controls="pills-<?= $danhMuc['id'] ?>" aria-selected="true">
+                                    <?= $danhMuc['ten_dm'] ?>
+                                </button>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </ul>
+                <div class="tab-content" id="pills-tabContent">
 
-                <table class="bang_thongtin_mon_an">
-                    <tbody>
-                        <?php
-                        // Lấy danh sách món ăn dựa trên danh mục và gán cho biến $listmonan
-                        if (isset($_GET['danh_muc_id']) && $_GET['danh_muc_id']) {
-                            $listmonan = loadMonAn_tu_danhMuc($_GET['danh_muc_id']);
-                            // Duyệt qua danh sách món ăn và hiển thị thông tin mỗi món
-                            foreach ($listmonan as $monan) {
-                                $ten = $monan['ten'];
-                                $hinh_ma = "uploads/" . $monan['hinh'];
-                                $gia = $monan['gia'];
-                                echo '
-                                <tr>
-                                <td class="bang_thongtin_mon_an-ten-mon-an">' . $ten . '</td>
-                                <td><img src="' . $hinh_ma . '" alt="Hình ảnh món ăn" /></td>
-                                <td class="bang_thongtin_mon_an-gia-ban">' . number_format($gia, 0, ',', '.') . 'đ</td>
-                                <td>
-                                    <div class="quantity-input">
-                                        <button type="button" class="decrement" onclick="decrementQuantity(' . $monan['mon_an_id'] . ')">-</button>
-                                        <input type="text" id="so_luong' . $monan['mon_an_id'] . '" name="so_luong' . $monan['mon_an_id'] . '" value="0"/>
-                                        <input type="hidden" name="gia_' . $monan['mon_an_id'] . '" value="' . $monan['gia'] . '" />
-                                        <button type="button" class="increment" onclick="incrementQuantity(' . $monan['mon_an_id'] . ')" max="10">+</button>
-                                    </div>
-                                </td>
-                                </tr>
-                                ';
-                            }
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                    <?php if (!empty($danhsachdanhmuc)): ?>
+                        <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                            <div class="tab-pane fade show" id="pills-<?= $danhMuc['id'] ?>" role="tabpanel"
+                                aria-labelledby="pills-home-tab" tabindex="0">
+                                <table class="bang_thongtin_mon_an">
+                                    <tbody>
+                                        <?php $listmonan = loadMonAn_tu_danhMuc($danhMuc['id']); ?>
+                                        <?php foreach ($listmonan as $monan): ?>
+                                            <?php
+                                            $ten = $monan['ten'];
+                                            $hinh_ma = "uploads/" . $monan['hinh'];
+                                            $gia = $monan['gia'];
+                                            ?>
+                                            <tr>
+                                                <td class="bang_thongtin_mon_an-ten-mon-an">
+                                                    <?= $ten ?>
+                                                </td>
+                                                <td><img src="  <?= $hinh_ma ?>" alt="Hình ảnh món ăn" /></td>
+                                                <td class="bang_thongtin_mon_an-gia-ban">
+                                                    <?= number_format($gia, 0, ',', '.') ?>đ
+                                                </td>
+                                                <td>
+                                                    <div class="quantity-input">
+                                                        <button type="button" class="decrement"
+                                                            onclick="decrementQuantity(<?= $monan['mon_an_id'] ?>)">-</button>
+                                                        <input type="text" id="so_luong<?= $monan['mon_an_id'] ?>"
+                                                            name="so_luong<?= $monan['mon_an_id'] ?>" value="0" />
+                                                        <input type="hidden" name="gia_<?= $monan['mon_an_id'] ?>"
+                                                            value="' . $monan['gia'] . '" />
+                                                        <button type="button" class="increment"
+                                                            onclick="incrementQuantity(<?= $monan['mon_an_id'] ?>)"
+                                                            max="10">+</button>
+                                                        <input type="hidden" name="danh_muc_id" value="<?= $danh_muc_id ?>">
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div>
 
                 <div class="float-right my-3">
-                    <input type="hidden" value="<?= $danh_muc_id ?>">
                     <input type="submit" class="button_datbanngay float-right" name="datbanngay" value="Đặt bàn ngay">
                 </div>
             </form>

@@ -359,14 +359,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $mon_an_id = $id;
 
                     if ($so_luong > 0) {
-                        $stmt->bindParam(':ten', $ten);
-                        $stmt->bindParam(':email', $email);
-                        $stmt->bindParam(':sdt', $sdt);
-                        $stmt->bindParam(':so_nguoi', $so_nguoi);
-                        $stmt->bindParam(':thoi_gian_dat_ban', $thoi_gian_dat_ban);
-                        $stmt->bindParam(':ghi_chu', $ghi_chu);
-                        $stmt->bindParam(':mon_an_id', $mon_an_id);
-                        $stmt->bindParam(':so_luong', $so_luong);
+                        insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
                     }
                 }
 

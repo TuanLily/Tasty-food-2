@@ -1105,7 +1105,7 @@ input[type="submit"] {
 }
 
 .bang_thongtin_mon_an .quantity-input button {
-  background-color: rgb(255, 190, 50);
+  background-color: #ffbe32;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -1143,4 +1143,20 @@ input[type="submit"] {
 
 .mau_xanh {
   background-color: #28a745;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: #ffbe32 !important;
+  color: #000000 !important;
+}
+
+.nav-pills .nav-link {
+  color: #000 !important;
+}
+
+.nav-pills .nav-link:hover,
+.nav-pills .show > .nav-link {
+  background-color: #ffbe32 !important;
+  color: #000000 !important;
 }

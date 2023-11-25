@@ -17,9 +17,10 @@ function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gh
 
 // function loadMonAn_tu_danhMuc()
 // {
-//   $sql = "SELECT dm.id AS danh_muc_id, dm.ten_dm, ma.id AS mon_an_id, ma.ten, ma.hinh, ma.gia";
+//   $sql = "SELECT dm.id AS danh_muc_id, dm.ten_dm, ma.id AS mon_an_id, ma.ten, ma.hinh, ma.gia, ma.trang_thai";
 //   $sql .= " FROM danh_muc dm JOIN mon_an ma ON dm.id = ma.danh_muc_id";
-//   $sql .= " GROUP BY dm.id, dm.ten_dm, ma.id, ma.ten ORDER BY dm.id, ma.id";
+//   $sql .= " WHERE dm.id and ma.trang_thai = 1";
+//   $sql .= " ORDER BY ma.gia DESC";
 //   $ma_dm = pdo_query($sql);
 //   return $ma_dm;
 // }
@@ -39,4 +40,4 @@ function loadMonAn_tu_danhMuc($danh_muc_id)
   return $stmt->fetchAll();
 }
 
-// SELECT dm.id AS danh_muc_id, dm.ten_dm, ma.id AS mon_an_id, ma.ten, ma.hinh, ma.gia, ma.trang_thai FROM danh_muc dm JOIN mon_an ma ON dm.id = ma.danh_muc_id WHERE dm.id = :danh_muc_id and trang_thai = 1 ORDER BY ma.gia DESC
+// SELECT dm.id AS danh_muc_id, dm.ten_dm, ma.id AS mon_an_id, ma.ten, ma.hinh, ma.gia, ma.trang_thai FROM danh_muc dm JOIN mon_an ma ON dm.id = ma.danh_muc_id WHERE dm.id = danh_muc_id and ma.trang_thai = 1 ORDER BY ma.gia DESC
