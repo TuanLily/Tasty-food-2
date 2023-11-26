@@ -350,6 +350,126 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $check = 0;
                 }
 
+
+    case 'datbanngay':
+      session_unset();
+      if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
+        $ten_kh = $_POST['ten_kh'];
+        $email = $_POST['email'];
+        $sdt = $_POST['sdt'];
+        $so_nguoi = $_POST['so_nguoi'];
+        $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
+        $ghi_chu = $_POST['ghi_chu'];
+        $check = 1;
+
+
+        // Kiểm tra trường "Họ và tên"
+        if (empty($ten_kh)) {
+          $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
+          $check = 0;
+        } elseif (strlen($ten_kh) > 30) {
+          $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
+          $check = 0;
+        }
+
+        // Kiểm tra trường "Email"
+        if (empty($email)) {
+          $_SESSION['error']['email']['invalid'] = 'Không được để trống';
+          $check = 0;
+        } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
+          $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
+          $check = 0;
+        }
+
+        // Kiểm tra trường "Số điện thoại"
+        if (empty($sdt)) {
+          $_SESSION['error']['sdt']['invalid'] = 'Không được để trống';
+          $check = 0;
+        } elseif (!preg_match('/^\+?\d{10,15}$/', $sdt)) {
+          $_SESSION['error']['sdt']['dinhdang'] = 'Không quá 15 số';
+          $check = 0;
+        }
+
+        // Kiểm tra trường "Số người"
+        if (empty($so_nguoi)) {
+          $_SESSION['error']['so_nguoi']['invalid'] = 'Không được để trống';
+          $check = 0;
+        } elseif ($so_nguoi > 20) {
+          $_SESSION['error']['so_nguoi']['dinhdang'] = 'Không quá 20 người';
+          $check = 0;
+        }
+
+        // Kiểm tra trường "Thời gian đặt bàn"
+        $min_date = date('Y-m-d\TH:i');
+        $max_date = date('Y-m-d\TH:i', strtotime('+1 month'));
+
+        if (empty($thoi_gian_dat_ban)) {
+          $_SESSION['error']['thoi_gian_dat_ban']['invalid'] = 'Không được để trống';
+          $check = 0;
+        } elseif (strtotime($thoi_gian_dat_ban) < time() || strtotime($thoi_gian_dat_ban) > strtotime($max_date)) {
+          $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'] = 'Không quá 30 ngày';
+          $check = 0;
+        }
+
+        if ($check == 1) {
+          $listmonan = loadall_monan();
+          $selectedItems = array(); // Mảng chứa thông tin về các món ăn được chọn
+
+          foreach ($listmonan as $monan) {
+            $hinh_ma = "uploads/" . $monan['hinh'];
+            $id = $monan['id'];
+            $so_luong = $_POST['so_luong' . $id];
+            $gia = $_POST['gia_' . $id];
+            $hinh = $monan['hinh'];
+            $ten = $monan['ten'];
+            $mon_an_id = $id;
+
+            if ($so_luong > 0) {
+              insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+
+              // Lưu thông tin về món ăn được chọn vào mảng $selectedItems
+              $selectedItems[] = array(
+                'hinh' => $hinh_ma,
+                'ten' => $ten,
+                'gia' => $gia,
+                'so_luong' => $so_luong,
+                'thanh_tien' => $gia * $so_luong
+              );
+            }
+          }
+        }
+
+        // Tính tổng thành tiền
+        $totalPrice = 0;
+        foreach ($selectedItems as $item) {
+          $totalPrice += $item['thanh_tien'];
+        }
+
+        // Cấu hình hiển thị lỗi (chỉ sử dụng trong quá trình phát triển)
+        ini_set('display_errors', 1);
+        ini_set('display_startup_errors', 1);
+        error_reporting(E_ALL);
+      }
+      if (!empty($_SESSION['error'])) {
+        include "./pages/formdatban.php";
+      } else {
+        include "view/margintop.php";
+        include "./pages/thongtindatban.php";
+      }
+
+
+      // Hiển thị biểu mẫu sau khi đặt bàn thành công hoặc có lỗi
+      include "view/header.php";
+      include "view/nav.php";
+      include "view/margintop.php";
+
+
+
+
+
+      include "view/footer.php";
+      break;
+
                 if (empty($sdt)) {
                     $_SESSION['error']['sdt'] = 'Không được để trống';
                     $check = 0;
@@ -509,4 +629,26 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
     include "view/giamgiatrongtuan.php";
     include "view/home.php";
     include "view/footer.php";
+}
+
+
+
+
+
+    default:
+      include "view/header.php";
+      include "view/nav.php";
+      include "view/slider.php";
+      include "view/giamgiatrongtuan.php";
+      include "view/home.php";
+      include "view/footer.php";
+      break;
+  }
+} else {
+  include "view/header.php";
+  include "view/nav.php";
+  include "view/slider.php";
+  include "view/giamgiatrongtuan.php";
+  include "view/home.php";
+  include "view/footer.php";
 }
