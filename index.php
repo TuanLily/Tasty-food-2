@@ -239,20 +239,20 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
-        case 'reset':
-            session_unset();
-            if (isset($_POST['reset']) && ($_POST['reset'])) {
-                $mat_khau = $_POST['mat_khau'];
-                $rpass = $_POST['rpass'];
-                $pass_hash = password_hash($mat_khau, PASSWORD_DEFAULT);
-                $check = 1;
-                if (empty($mat_khau)) {
-                    $_SESSION['error']['mat_khau'] = 'Không được để trống';
-                    $check = 0;
-                } else if (strlen($mat_khau) < 8) {
-                    $_SESSION['error']['mat_khau'] = 'Mật khẩu phải có ít nhất 8 ký tự';
-                    $check = 0;
-                } else {
+    case 'reset':
+      
+      if (isset($_POST['reset']) && ($_POST['reset'])) {
+        $mat_khau = $_POST['mat_khau'];
+        $rpass = $_POST['rpass'];
+        $pass_hash = password_hash($mat_khau, PASSWORD_DEFAULT);
+        $check = 1;
+        if (empty($mat_khau)) {
+          $_SESSION['error']['mat_khau'] = 'Không được để trống';
+          $check = 0;
+        } else if (strlen($mat_khau) < 8) {
+          $_SESSION['error']['mat_khau'] = 'Mật khẩu phải có ít nhất 8 ký tự';
+          $check = 0;
+        } else {
 
                     $pass_hash;
                 }
@@ -278,13 +278,13 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
               }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
           </script>
           ';
-                }
-            }
-            include "view/header.php";
-            include "view/nav.php";
-            include 'pages/account/reset_pw.php';
-            include "view/footer.php";
-            break;
+        }
+      }
+      include "view/header.php";
+      
+      include 'pages/account/reset_pw.php';
+      
+      break;
 
         case 'quenmatkhau':
             if (isset($_POST['guiemail']) && $_POST['guiemail']) {
@@ -326,51 +326,181 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
-        case 'update':
-            include "view/header.php";
-            include "view/nav.php";
-            include 'pages/account/update.php';
-            include "view/footer.php";
-            break;
 
+
+        
+
+    case 'update':
+      
+      if(isset($_POST['capnhat'])&&($_POST['capnhat'])){
+                
+        $ten=$_POST['ten'];
+        $email=$_POST['email'];
+        $sdt=$_POST['sdt'];
+        $id=$_POST['id'];
+        $phonePattern = '(84|0[3|5|7|8|9])+([0-9]{8})\b';
+        $check = 1;
+        if (empty($ten)) {
+          $_SESSION['error']['ten'] = 'Không được để trống';
+          $check = 0;
+        }
+        if (empty($email)) {
+          $_SESSION['error']['email'] = 'Không được để trống';
+          $check = 0;
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+          $_SESSION['error']['email'] = 'Email không đúng định dạng';
+          $check = 0;
+        }
+        
+        
+        if (empty($sdt)) {
+          $_SESSION['error']['sdt'] = 'Không được để trống';
+          $check = 0;
+        } else if (strlen($sdt) != $phonePattern) {
+          $_SESSION['error']['sdt'] = 'Không đúng định dạng số điện thoại';
+          $check = 0;
+        }
+
+        
+
+        
+        if ($check == 1) {
+          capnhat_taikhoan_kh($id, $ten, $email, $sdt);
+          echo '<script>alert("Cập nhật thành công thành công")</script>';
+          echo '<script>
+                          setTimeout(function() {
+                              window.location.href = "index.php?act=trangchu";
+                          }, 0);
+                        </script>';
+      
+      }
+    }
+        
+        
+        
+    
+      include "view/header.php";
+      include "view/nav.php";
+      include 'pages/account/update.php';
+      include "view/footer.php";
+      break;
+      case "thoat":
+        session_unset();
+        header("Location:index.php?act=trangchu");
+        
+        break;  
+        
         case 'datbanngay':
-            include "view/header.php";
-            include "view/nav.php";
+          include "view/header.php";
+          include "view/nav.php";
 
-            if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
-                $ten_kh = $_POST['ten_kh'];
-                $email = $_POST['email'];
-                $sdt = $_POST['sdt'];
-                $so_nguoi = $_POST['so_nguoi'];
-                $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
-                $ghi_chu = $_POST['ghi_chu'];
+          if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
+              $ten_kh = $_POST['ten_kh'];
+              $email = $_POST['email'];
+              $sdt = $_POST['sdt'];
+              $so_nguoi = $_POST['so_nguoi'];
+              $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
+              $ghi_chu = $_POST['ghi_chu'];
 
-                // Lưu thông tin món ăn vào cơ sở dữ liệu
-                $listmonan = loadall_monan();
-                $pdo = pdo_get_connection();
-                $stmt = pdo_prepare($pdo, 'INSERT INTO datban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu) VALUES (:ten_kh, :email, :sdt, :so_nguoi, :thoi_gian_dat_ban, :ghi_chu)');
+              // Lưu thông tin món ăn vào cơ sở dữ liệu
+              $listmonan = loadall_monan();
+              $pdo = pdo_get_connection();
+              $stmt = pdo_prepare($pdo, 'INSERT INTO datban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu) VALUES (:ten_kh, :email, :sdt, :so_nguoi, :thoi_gian_dat_ban, :ghi_chu)');
 
-                foreach ($listmonan as $monan) {
-                    $id = $monan['id'];
-                    $so_luong = isset($_POST['so_luong' . $id]) ? $_POST['so_luong' . $id] : 0;
-                    $gia = $monan['gia'];
-                    $hinh = $monan['hinh'];
-                    $ten = $monan['ten'];
-                    $mon_an_id = $id;
+              foreach ($listmonan as $monan) {
+                  $id = $monan['id'];
+                  $so_luong = isset($_POST['so_luong' . $id]) ? $_POST['so_luong' . $id] : 0;
+                  $gia = $monan['gia'];
+                  $hinh = $monan['hinh'];
+                  $ten = $monan['ten'];
+                  $mon_an_id = $id;
 
-                    if ($so_luong > 0) {
-                        insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-                    }
-                }
-
-
+                  if ($so_luong > 0) {
+                      insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+                  }
+              }
             }
 
             // Hiển thị biểu mẫu sau khi đặt bàn thành công
             include "./pages/formdatban.php";
             include "view/footer.php";
             break;
+       
+      case 'updatepw':
+        
+        if (isset($_POST['update']) && ($_POST['update'])) {
+          $email = $_POST['email'];
+          $mat_khau1 = $_POST['mat_khau_1'];
+          $mat_khau = $_POST['mat_khau'];
+          $rpass = $_POST['rpass'];
+          $check = 1;
 
+          if (empty($mat_khau1)) {
+            $_SESSION['error']['mat_khau_1']['not_empty'] = 'Mật khẩu không được để trống';
+            $check = 0;
+          }
+
+          // Check if new password is empty
+          if (empty($mat_khau)) {
+              $_SESSION['error']['mat_khau'] = 'Mật khẩu không được để trống';
+              $check = 0;
+          } else if (strlen($mat_khau) < 8) {
+              $_SESSION['error']['mat_khau'] = 'Mật khẩu phải có ít nhất 8 ký tự';
+              $check = 0;
+          } else {
+              // Hash the new password
+              $pass_hash = password_hash($mat_khau, PASSWORD_DEFAULT);
+          }
+  
+          // Check if retyped password is empty
+          if (empty($rpass)) {
+              $_SESSION['error']['rpass'] = 'Vui lòng nhập lại mật khẩu';
+              $check = 0;
+          } else {
+              // Verify if retyped password matches the new password
+              if (!password_verify($rpass, $pass_hash)) {
+                  $_SESSION['error']['rpass'] = 'Mật khẩu không trùng khớp';
+                  $check = 0;
+              }
+          }
+  
+          // Update password if all checks pass
+          if ($check == 1) {
+              // Check if email exists in the database
+              $check_email_pass = check_email_validate($email);
+  
+              if (is_array($check_email_pass)) {
+                  // Verify if current password matches the stored password
+                  $pass_check = password_verify($mat_khau1, $check_email_pass['mat_khau']);
+  
+                  if ($pass_check == true) {
+                      // Update the password in the database
+                      update_password($email, $pass_hash);
+  
+                      // Set session variable to indicate successful password update
+                      $_SESSION['update_success'] = true;
+  
+                      // Redirect to the homepage with success message
+                      echo '<script>alert("Cập nhật mật khẩu thành công")</script>';
+                      echo '<script>
+                          setTimeout(function() {
+                              window.location.href = "index.php?act=trangchu";
+                          }, 0);
+                      </script>';
+                      exit();
+                  } else {
+                      $_SESSION['error']['mat_khau_1']['dinhdang'] = 'Mật khẩu hiện tại không chính xác';
+                  }
+              } 
+          }
+      }
+        
+        // update_password($email, $mat_khau);
+        include "view/header.php";
+      include "view/nav.php";
+      include 'pages/account/update_pw.php';
+      include "view/footer.php";
+        break;
 
         default:
             include "view/header.php";

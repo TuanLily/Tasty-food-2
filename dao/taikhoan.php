@@ -56,8 +56,17 @@ function capnhat_taikhoan($id, $ten, $email, $sdt, $dia_chi, $mat_khau)
         return 0;
     }
 }
-
-
+function capnhat_taikhoan_kh($id, $ten, $email, $sdt)
+{
+        try{
+        $sql = "update khach_hang set ten = '" . $ten . "', email ='" . $email . "', sdt = '" . $sdt . "'where id=" . $id;
+        pdo_execute($sql);
+        return 1;
+        } catch (Exception $e) {
+            echo $e;
+            return 0;
+        }
+}
 /**
  * Kiểm tra thông tin tài khoản
  * @param mixed $id
@@ -66,6 +75,12 @@ function capnhat_taikhoan($id, $ten, $email, $sdt, $dia_chi, $mat_khau)
 function check_email($email)
 {
     $sql = "select * from khach_hang where email='" . $email . "' ";
+    $tk = pdo_query_one($sql);
+    return $tk;
+}
+function check_pass($id)
+{
+    $sql = "select mat_khau from khach_hang where id ='" . $id . "' ";
     $tk = pdo_query_one($sql);
     return $tk;
 }
