@@ -56,16 +56,16 @@ function capnhat_taikhoan($id, $ten, $email, $sdt, $dia_chi, $mat_khau)
         return 0;
     }
 }
-function capnhat_taikhoan_kh($id, $ten, $email, $sdt)
+function capnhat_taikhoan_kh($id, $ho_ten, $email, $sdt)
 {
-        try{
-        $sql = "update khach_hang set ten = '" . $ten . "', email ='" . $email . "', sdt = '" . $sdt . "'where id=" . $id;
+    try {
+        $sql = "update khach_hang set ho_ten = '" . $ho_ten . "', email ='" . $email . "', sdt = '" . $sdt . "'where id=" . $id;
         pdo_execute($sql);
         return 1;
-        } catch (Exception $e) {
-            echo $e;
-            return 0;
-        }
+    } catch (Exception $e) {
+        echo $e;
+        return 0;
+    }
 }
 /**
  * Kiểm tra thông tin tài khoản

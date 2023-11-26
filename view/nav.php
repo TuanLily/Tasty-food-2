@@ -65,42 +65,45 @@
                             </div>
                         </div>
                         <?php
-                        
-                        if(isset($_SESSION['email'])){
-                            extract($_SESSION['email']); 
-                            
+
+                        // var_dump($_SESSION['email']);
+                        if (isset($_SESSION['email'])) {
+                            extract($_SESSION['email']);
+
                             ?>
-                            
+
                         <div class="dropdown">
-                            <div class="user_kh"><a href="">Xin chào <?= $ten?><ion-icon name="caret-down-outline">
-                                    </ion-icon></a></div>
+                            <div class="user_kh"><a href="">Xin chào,
+                                    <?= $ten ?><ion-icon name="caret-down-outline">
+                                    </ion-icon>
+                                </a></div>
                             <div class="dropdown-content">
                                 <a href="index.php?act=update">Cập nhật tài khoản</a>
                                 <a href="">Giỏ hàng</a>
                                 <a href="index.php?act=updatepw">Đổi mật khẩu</a>
 
                                 <?php
-                                    if($vai_tro == 0){
-                                    ?>
+                                    if ($vai_tro == 0) {
+                                        ?>
                                 <a href="admin/index.php">Đăng nhập admin</a>
-                                <?php }?>
+                                <?php } ?>
 
                                 <a href="index.php?act=thoat">Đăng xuất</a>
 
                             </div>
                         </div>
 
-                        <?php 
-        }else{
+                        <?php
+                        } else {
 
-        
-    ?>
+
+                            ?>
                         <a href="index.php?act=dangnhap" class="user_link">
                             <i class="fa fa-user" aria-hidden="true"></i>
                         </a>
                         <?php
-        }
-        ?>
+                        }
+                        ?>
                         <a href="index.php?act=datbanngay" class="order_online">
                             Đặt bàn Online
                         </a>

@@ -833,7 +833,7 @@ form .form-group .form-group-input-long2 select {
 }
 
 .bang_thongtin_mon_an .quantity-input button {
-  background-color: #007bff;
+  background-color: #ffbe32;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -1080,7 +1080,7 @@ input[type="radio"]:checked {
 }
 
 .bang_thongtin_mon_an .quantity-input button {
-  background-color: #007bff;
+  background-color: #ffbe32;
   color: #fff;
   border: none;
   padding: 5px 10px;

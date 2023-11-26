@@ -16,10 +16,10 @@
 
         <form action="index.php?act=dangnhap" method="post">
             <div class="style_text">
-                 <a href="index.php?act=trangchu"><span > Tasty Food </span></a>
+                <a href="index.php?act=trangchu"><span> Tasty Food </span></a>
 
             </div>
-           
+
             <h2>Đăng Nhập</h2>
 
             <div class="form-group">
@@ -36,9 +36,9 @@
 
             </div>
             <div class="form-group">
-                <div class="icon" >
+                <div class="icon">
                     <ion-icon name="lock-closed"></ion-icon>
-</div>
+                </div>
                 <input type="password" placeholder="Nhập mật khẩu" id="mat_khau" name="mat_khau" class="form-control"
                     minlength="3">
                 <div class="thongbao">
