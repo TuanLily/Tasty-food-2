@@ -60,7 +60,7 @@
                                 </td>
 
                                 <td>
-                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
+                                    <a href="index.php?act=chi_tiet_dat_ban" class="btn btn-primary"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
                                 </td>
                             </tr>

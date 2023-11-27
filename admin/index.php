@@ -339,6 +339,9 @@ if (isset($_GET['act'])) {
             $listdatban = loadall_tt_datban();
             include('modules/datban/danhsach.php');
             break;
+        case 'chi_tiet_dat_ban':
+        include('modules/datban/thongtindatban.php');
+        break;
         // !Kết thúc chức năng đặt bàn
 
         // *Bắt đầu chức năng thống kê
