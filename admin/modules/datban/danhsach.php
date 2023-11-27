@@ -20,8 +20,7 @@
                         <thead class="table-dark text-center">
                             <tr>
                                 <th scope="col">Tất cả</th>
-                                <th scope="col">ID</th>
-                                <th scope="col">Tên khách đặt</th>
+                                <th scope="col">Họ Tên khách hàng</th>
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Số lượng người</th>
                                 <th scope="col">Ngày & giờ đặt bàn</th>
@@ -33,16 +32,13 @@
                             <?php foreach ($listdatban as $list): ?>
                             <tr>
                                 <td><input type="checkbox" name="" id="" /></td>
-                                <th scope="row">
-                                    <?= $list['id'] ?>
-                                </th>
                                 <td scope="row">
                                     <?= $list['ten_kh'] ?>
                                 </td>
                                 <td scope="row">
                                     <?= $list['sdt'] ?>
                                 </td>
-                                <td scope="row">
+                                <td scope="row" class="text-center">
                                     <?= $list['so_nguoi'] ?>
                                 </td>
                                 <td scope="row">
@@ -50,7 +46,7 @@
                                 </td>
                                 <td scope="row">
                                     <select class="form-select form-select-lg mb-3"
-                                        aria-label=".form-select-lg example">
+                                        style="height: 2.6rem; font-size:0.8rem;" aria-label=".form-select-lg example">
                                         <option value="0">Hủy đơn</option>
                                         <option value="1" selected>Đơn hàng mới</option>
                                         <option value="2">Chờ thanh toán cọc</option>
@@ -60,7 +56,8 @@
                                 </td>
 
                                 <td>
-                                    <a href="index.php?act=chi_tiet_dat_ban" class="btn btn-primary"><i
+                                    <?php $ct_datban = "index.php?act=chi_tiet_dat_ban&id=" . $list['id']; ?>
+                                    <a href="<?= $ct_datban ?>" class="btn btn-primary"><i
                                             class="fa-solid fa-pen-to-square"></i></a>
                                 </td>
                             </tr>

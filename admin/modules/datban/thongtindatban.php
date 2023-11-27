@@ -1,3 +1,10 @@
+<?php
+if (is_array($datban)) {
+    extract($datban);
+    $tt = get_trang_thai_datban($datban['trang_thai']);
+}
+?>
+
 <div class="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -9,7 +16,7 @@
                 <a href="index.php?act=ds_dat_ban" class="breadcrumb-item">QUẢN LÝ ĐẶT BÀN</a>
                 <li class="breadcrumb-item active">CHI TIẾT ĐƠN ĐẶT BÀN</li>
             </ol>
-            <form class="row g-3" method="post" action="index.php?act=them" enctype="multipart/form-data">
+            <form class="row g-3" method="post" action="index.php?act=chi_tiet_dat_ban" enctype="multipart/form-data">
 
                 <div class="card mb-2">
                     <div class="card-header">
@@ -25,12 +32,12 @@
                                 <div class="mb-3 col-6">
                                     <label for="exampleFormControlInput1" class="form-label">Tên khách hàng</label>
                                     <input type="text" class="form-control" id="exampleFormControlInput1" name="ten_kh"
-                                        value="">
+                                        value="<?= $datban['ten_kh'] ?>">
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="exampleFormControlInput1" class="form-label">Email</label>
                                     <input type="email" class="form-control" id="exampleFormControlInput1" name="email"
-                                        value="">
+                                        value="<?= $datban['email'] ?>">
                                 </div>
                             </div>
 
@@ -38,17 +45,17 @@
                                 <div class="mb-3 col-4">
                                     <label for="exampleFormControlInput2" class="form-label">Số điện thoại</label>
                                     <input type="text" class="form-control" id="exampleFormControlInput2" name="sdt"
-                                        value="">
+                                        value="<?= $datban['sdt'] ?>">
                                 </div>
                                 <div class="mb-3 col-4">
                                     <label for="exampleFormControlInput2" class="form-label">Số người</label>
                                     <input type="number" class="form-control" id="exampleFormControlInput2"
-                                        name="so_nguoi" value="">
+                                        name="so_nguoi" value="<?= $datban['so_nguoi'] ?>">
                                 </div>
                                 <div class="mb-3 col-4">
                                     <label for="exampleFormControlInput2" class="form-label">Ngày đặt bàn</label>
                                     <input type="datetime-local" class="form-control" id="exampleFormControlInput2"
-                                        name="thoi_gian_dat_ban" value="">
+                                        name="thoi_gian_dat_ban" value="<?= $datban['thoi_gian_dat_ban'] ?>">
                                 </div>
                             </div>
 
@@ -56,7 +63,7 @@
                                 <div class="mb-3 col-4">
                                     <label for="exampleFormControlInput1" class="form-label">Trạng thái</label>
                                     <input type="text" class="form-control" id="exampleFormControlInput1"
-                                        name="trang_thai" value="">
+                                        name="trang_thai" value="<?= $tt ?>" readonly>
                                 </div>
                                 <div class="mb-3 col-4">
                                     <label for="exampleFormControlInput2" class="form-label">Tổng tiền</label>
@@ -67,6 +74,13 @@
                                     <label for="exampleFormControlInput2" class="form-label">Tiền cọc</label>
                                     <input type="number" class="form-control" id="exampleFormControlInput2"
                                         name="tien_coc" value="" disabled>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <label for="exampleFormControlInput2" class="form-label">Ghi chú của khách</label>
+                                    <textarea name="" id="exampleFormControlInput2" cols="107" rows="3"
+                                        resize><?= $datban['ghi_chu'] ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +147,8 @@
 
                     </div>
                     <div class="card-footer mb-12 float-end">
+                        <input type="hidden" name="id" value="<?= $datban['id'] ?>">
+
                         <input type="submit" class="btn btn-warning me-lg-2 float-end" name="capnhat" value="Cập nhật">
                     </div>
                 </div>

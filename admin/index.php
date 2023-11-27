@@ -336,12 +336,20 @@ if (isset($_GET['act'])) {
 
         // !Bắt đầu chức năng đặt bàn
         case 'ds_dat_ban':
-            $listdatban = loadall_tt_datban();
+            $listdatban = loadall_tt_datban_theo_ten();
             include('modules/datban/danhsach.php');
             break;
+
         case 'chi_tiet_dat_ban':
-        include('modules/datban/thongtindatban.php');
-        break;
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+                $datban = loadone_tt_datban($_GET['id']);
+            }
+            $listdatban = loadall_tt_datban();
+            include('modules/datban/thongtindatban.php');
+            break;
+
+
+
         // !Kết thúc chức năng đặt bàn
 
         // *Bắt đầu chức năng thống kê
