@@ -25,73 +25,46 @@
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Số lượng người</th>
                                 <th scope="col">Ngày & giờ đặt bàn</th>
-                                <th scope="col">Ngày & giờ kết thúc</th>
-                                <th scope="col">Số bàn khách đặt</th>
+                                <th scope="col">Trạng thái</th>
                                 <th scope="col">CHỨC NĂNG</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach ($listdatban as $list): ?>
                             <tr>
                                 <td><input type="checkbox" name="" id="" /></td>
-                                <th scope="row">1</th>
-                                <td scope="row">Tuấn</td>
-                                <td scope="row">0123456789</td>
-                                <td scope="row">3</td>
-                                <td scope="row">06:37:57 17/10/2023</td>
-                                <td scope="row">06:37:57 18/10/2023</td>
-                                <td scope="row">12</td>
-                                <td>
-                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <th scope="row">
+                                    <?= $list['id'] ?>
+                                </th>
+                                <td scope="row">
+                                    <?= $list['ten_kh'] ?>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" id="" /></td>
-                                <th scope="row">1</th>
-                                <td scope="row">Tuấn</td>
-                                <td scope="row">0123456789</td>
-                                <td scope="row">3</td>
-                                <td scope="row">06:37:57 17/10/2023</td>
-                                <td scope="row">06:37:57 18/10/2023</td>
-                                <td scope="row">12</td>
-                                <td>
-                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <td scope="row">
+                                    <?= $list['sdt'] ?>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" id="" /></td>
-                                <th scope="row">1</th>
-                                <td scope="row">Tuấn</td>
-                                <td scope="row">0123456789</td>
-                                <td scope="row">3</td>
-                                <td scope="row">06:37:57 17/10/2023</td>
-                                <td scope="row">06:37:57 18/10/2023</td>
-                                <td scope="row">12</td>
-                                <td>
-                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <td scope="row">
+                                    <?= $list['so_nguoi'] ?>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" name="" id="" /></td>
-                                <th scope="row">1</th>
-                                <td scope="row">Tuấn</td>
-                                <td scope="row">0123456789</td>
-                                <td scope="row">3</td>
-                                <td scope="row">06:37:57 17/10/2023</td>
-                                <td scope="row">06:37:57 18/10/2023</td>
-                                <td scope="row">12</td>
-                                <td>
-                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <td scope="row">
+                                    <?= $list['thoi_gian_dat_ban'] ?>
                                 </td>
-                            </tr>
+                                <td scope="row">
+                                    <select class="form-select form-select-lg mb-3"
+                                        aria-label=".form-select-lg example">
+                                        <option value="0">Hủy đơn</option>
+                                        <option value="1" selected>Đơn hàng mới</option>
+                                        <option value="2">Chờ thanh toán cọc</option>
+                                        <option value="3">Đặt bàn thành công</option>
+                                        <option value="4">Đã hoàn thành đơn hàng</option>
+                                    </select>
+                                </td>
 
+                                <td>
+                                    <a href="index.php?act=suakh" class="btn btn-primary"><i
+                                            class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
 
                         </tbody>
                     </table>

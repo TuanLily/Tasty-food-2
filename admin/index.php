@@ -9,6 +9,7 @@ require_once "../global/global.php";
 
 include "../dao/danhmuc.php";
 include "../dao/monan.php";
+include "../dao/datban.php";
 include "../dao/delete_list.php";
 
 
@@ -333,25 +334,18 @@ if (isset($_GET['act'])) {
 
         // *Kết thúc chức năng khách hàng
 
-        // Bắt đầu chức năng bill
-
-        // Kết thúc chức năng bill
-
-        // *Bắt đầu chức năng cart
-
-        // *Kết thúc chức năng cart
-
         // !Bắt đầu chức năng đặt bàn
-
+        case 'ds_dat_ban':
+            $listdatban = loadall_tt_datban();
+            include('modules/datban/danhsach.php');
+            break;
         // !Kết thúc chức năng đặt bàn
 
         // *Bắt đầu chức năng thống kê
 
         // *Kết thúc chức năng thống kê
 
-        case 'ds_dat_ban':
-            include('modules/datban/danhsach.php');
-            break;
+
 
         default:
             include('error/404.php');
