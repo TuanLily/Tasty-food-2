@@ -1,136 +1,136 @@
 <div class="khung_thông_tin_dat_ban">
-    <div class="order-info">
-        <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
-        <div class="boxcontent">
-            <div class="padding_margin">
-                <table class="user-table">
-                    <tr>
-                        <td>Người đặt hàng:</td>
-                        <td>
-                            <?php echo $ten_kh; ?>
-                        </td>
-                    </tr>
+  <div class="order-info">
+    <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
+    <div class="boxcontent">
+      <div class="padding_margin">
+        <table class="user-table">
+          <tr>
+            <td>Người đặt hàng:</td>
+            <td>
+              <?php echo $ten_kh; ?>
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>Email:</td>
-                        <td>
-                            <?php echo $email; ?>
-                        </td>
-                    </tr>
+          <tr>
+            <td>Email:</td>
+            <td>
+              <?php echo $email; ?>
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>Điện thoại:</td>
-                        <td>
-                            <?php echo $sdt; ?>
-                        </td>
-                    </tr>
+          <tr>
+            <td>Điện thoại:</td>
+            <td>
+              <?php echo $sdt; ?>
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>Số người:</td>
-                        <td>
-                            <?php echo $so_nguoi; ?>
-                        </td>
-                    </tr>
+          <tr>
+            <td>Số người:</td>
+            <td>
+              <?php echo $so_nguoi; ?>
+            </td>
+          </tr>
 
-                    <tr>
-                        <td>Thời gian đặt bàn:</td>
-                        <td>
-                            <?php echo $thoi_gian_dat_ban; ?>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
-
-            <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
-            <div class="boxcontent_thong_tin_gio_hang">
-                <table class="bang_thongtin_mon_an">
-                    <thead>
-                        <tr>
-                            <th>Hình ảnh</th>
-                            <th>Tên món ăn</th>
-                            <th>Giá bán</th>
-                            <th>Số lượng</th>
-                            <th>Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($selectedItems as $item): ?>
-                        <tr>
-                            <td><img src="<?php echo $item['hinh']; ?>" alt="Hình ảnh"></td>
-                            <td>
-                                <?php echo $item['ten']; ?>
-                            </td>
-                            <td>
-                                <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
-                            </td>
-                            <td>
-                                <?php echo $item['so_luong']; ?>
-                            </td>
-                            <td>
-                                <?php echo number_format($item['thanh_tien'], 0, ',', '.') . 'đ'; ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <tr>
-                            <td colspan="4" align="right"><strong>Tổng thành tiền:</strong></td>
-                            <td>
-                                <?php echo number_format($totalPrice, 0, ',', '.') . 'đ'; ?>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
+          <tr>
+            <td>Thời gian đặt bàn:</td>
+            <td>
+              <?php echo $thoi_gian_dat_ban; ?>
+            </td>
+          </tr>
+        </table>
+      </div>
 
 
+      <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
+      <div class="boxcontent_thong_tin_gio_hang">
+        <table class="bang_thongtin_mon_an">
+          <thead>
+            <tr>
+              <th>Hình ảnh</th>
+              <th>Tên món ăn</th>
+              <th>Giá bán</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($selectedItems as $item): ?>
+              <tr>
+                <td><img src="<?php echo $item['hinh']; ?>" alt="Hình ảnh"></td>
+                <td>
+                  <?php echo $item['ten']; ?>
+                </td>
+                <td>
+                  <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+                </td>
+                <td>
+                  <?php echo $item['so_luong']; ?>
+                </td>
+                <td>
+                  <?php echo number_format($item['thanh_tien'], 0, ',', '.') . 'đ'; ?>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+            <tr>
+              <td colspan="4" align="right"><strong>Tổng thành tiền:</strong></td>
+              <td>
+                <?php echo number_format($totalPrice, 0, ',', '.') . 'đ'; ?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
 
 
-            </div>
 
 
-        </div>
+      </div>
+
+
     </div>
-    <div class="payment-info">
-        <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
-        <div class="boxcontent">
-            <table>
-                <tr>
-                    <td>Tạm tính</td>
-                </tr>
-                <tr>
-                    <td>Khuyến mãi</td>
-                </tr>
-            </table>
-            <hr class="hr_thong_tin_dat_ban">
-            <table>
-                <tr>
-                    <td>Tổng cộng(VAT)</td>
-                </tr>
-            </table>
-            <hr class="hr_thong_tin_dat_ban">
-            <table>
-                <tr>
-                    <td><input type="radio" name="payment-method" value="cash" checked />Thanh toán tại nhà hàng</td>
-                </tr>
-                <tr>
-                    <td><input type="radio" name="payment-method" value="bank-transfer" />Chuyển khoản ngân hàng</td>
-                </tr>
-                <tr>
-                    <td><input type="radio" name="payment-method" value="online-payment" />Thanh toán Momo</td>
-                </tr>
-            </table>
-            <hr class="hr_thong_tin_dat_ban">
-            <table>
-                <tr>
-                    <td><input type="radio" name="payment-method" value="cash" checked />Thanh toán toàn bộ</td>
-                </tr>
-                <tr>
-                    <td><input type="radio" name="payment-method" value="bank-transfer" />Đặt cọc một phần</td>
-                </tr>
-            </table>
-            <button class="btn-thanh-toan">Thanh toán</button>
-        </div>
+  </div>
+  <div class="payment-info">
+    <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
+    <div class="boxcontent">
+      <table>
+        <tr>
+          <td>Tạm tính</td>
+        </tr>
+        <tr>
+          <td>Khuyến mãi</td>
+        </tr>
+      </table>
+      <hr class="hr_thong_tin_dat_ban">
+      <table>
+        <tr>
+          <td>Tổng cộng(VAT)</td>
+        </tr>
+      </table>
+      <hr class="hr_thong_tin_dat_ban">
+      <table>
+        <tr>
+          <td><input type="radio" name="payment-method" value="cash" checked />Thanh toán tại nhà hàng</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="payment-method" value="bank-transfer" />Chuyển khoản ngân hàng</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="payment-method" value="online-payment" />Thanh toán Momo</td>
+        </tr>
+      </table>
+      <hr class="hr_thong_tin_dat_ban">
+      <table>
+        <tr>
+          <td><input type="radio" name="payment-method" value="cash" checked />Thanh toán toàn bộ</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="payment-method" value="bank-transfer" />Đặt cọc một phần</td>
+        </tr>
+      </table>
+      <button class="btn-thanh-toan">Thanh toán</button>
     </div>
+  </div>
 </div>
 <!-- <style>
   .khung_thông_tin_dat_ban {

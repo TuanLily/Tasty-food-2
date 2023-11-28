@@ -122,7 +122,7 @@
                         <div class="collapse" id="dat_bang" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="index.php?act=ds_dat_ban">Danh Sách</a>
+                                <a class="nav-link" href="index.php?act=ds_dat_ban&page=1">Danh Sách</a>
                             </nav>
                         </div>
                     </div>
