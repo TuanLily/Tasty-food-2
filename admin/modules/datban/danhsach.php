@@ -20,6 +20,7 @@
                         <thead class="table-dark text-center">
                             <tr>
                                 <th scope="col">Tất cả</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">Họ Tên khách hàng</th>
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Số lượng người</th>
@@ -29,38 +30,56 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($listdatban as $list): ?>
-                            <tr>
-                                <td><input type="checkbox" name="" id="" /></td>
-                                <td scope="row">
-                                    <?= $list['ten_kh'] ?>
-                                </td>
-                                <td scope="row">
-                                    <?= $list['sdt'] ?>
-                                </td>
-                                <td scope="row" class="text-center">
-                                    <?= $list['so_nguoi'] ?>
-                                </td>
-                                <td scope="row">
-                                    <?= $list['thoi_gian_dat_ban'] ?>
-                                </td>
-                                <td scope="row">
-                                    <select class="form-select form-select-lg mb-3"
-                                        style="height: 2.6rem; font-size:0.8rem;" aria-label=".form-select-lg example">
-                                        <option value="0">Hủy đơn</option>
-                                        <option value="1" selected>Đơn hàng mới</option>
-                                        <option value="2">Chờ thanh toán cọc</option>
-                                        <option value="3">Đặt bàn thành công</option>
-                                        <option value="4">Đã hoàn thành đơn hàng</option>
-                                    </select>
-                                </td>
 
-                                <td>
-                                    <?php $ct_datban = "index.php?act=chi_tiet_dat_ban&id=" . $list['id']; ?>
-                                    <a href="<?= $ct_datban ?>" class="btn btn-primary"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                </td>
-                            </tr>
+                            <?php foreach ($listdatban as $list): ?>
+
+                                <?php
+                                $trang_thai = $list['trang_thai'];
+                                ?>
+                                <tr>
+                                    <td><input type="checkbox" name="" id="" /></td>
+                                    <td scope="row">
+                                        <?= $list['id'] ?>
+                                    </td>
+                                    <td scope="row">
+                                        <?= $list['ten_kh'] ?>
+                                    </td>
+                                    <td scope="row">
+                                        <?= $list['sdt'] ?>
+                                    </td>
+                                    <td scope="row" class="text-center">
+                                        <?= $list['so_nguoi'] ?>
+                                    </td>
+                                    <td scope="row">
+                                        <?= date('d/m/Y - H:i:s ', strtotime($list['thoi_gian_dat_ban'])) ?>
+                                    </td>
+                                    <td scope="row" class="text-center">
+                                        <?php
+                                        $trang_thai_styles = array(
+                                            0 => 'btn-danger',
+                                            1 => 'btn-light',
+                                            2 => 'btn-warning',
+                                            3 => 'btn-info',
+                                            4 => 'btn-success',
+                                        );
+
+                                        ?>
+
+                                        <?php foreach ($trang_thai_styles as $i => $style_class): ?>
+                                            <?php
+                                            if ($i == $trang_thai) {
+                                                echo '<span class="btn btn-sm cs-default ' . $style_class . '" readonly>' . get_trang_thai_datban($i) . '</span>';
+                                            }
+                                            ?>
+                                        <?php endforeach; ?>
+                                    </td>
+
+                                    <td>
+                                        <?php $ct_datban = "index.php?act=chi_tiet_dat_ban&id=" . $list['id']; ?>
+                                        <a href="<?= $ct_datban ?>" class="btn btn-primary"><i
+                                                class="fa-solid fa-pen-to-square"></i></a>
+                                    </td>
+                                </tr>
                             <?php endforeach; ?>
 
                         </tbody>

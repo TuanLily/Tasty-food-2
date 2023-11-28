@@ -44,7 +44,7 @@ function loadall_tt_datban_theo_ten()
   $listdatban = pdo_query($sql);
   return $listdatban;
 }
-
+// SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
 /**
  * Hiển thị 1 list thông tin đặt bàn
  * @param mixed $id
@@ -53,11 +53,25 @@ function loadall_tt_datban_theo_ten()
 function loadone_tt_datban($id)
 {
   $sql = "SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id";
-  $sql .= " FROM dat_ban WHERE id = '".$id."' GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC";
+  $sql .= " FROM dat_ban WHERE id = '" . $id . "' GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC";
   $info_datban = pdo_query_one($sql);
   return $info_datban;
 }
+// SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban WHERE id = id GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
 
+
+function load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban)
+{
+  $sql = "SELECT GROUP_CONCAT(id) AS id, ten_kh, thoi_gian_dat_ban, GROUP_CONCAT(mon_an_id) AS mon_an_id, GROUP_CONCAT(ten) AS ten, GROUP_CONCAT(gia) AS gia, GROUP_CONCAT(hinh) AS hinh, GROUP_CONCAT(so_luong) AS so_luong";
+  $sql .= " FROM dat_ban WHERE  ten_kh= '" . $ten_kh . "' AND thoi_gian_dat_ban= '" . $thoi_gian_dat_ban . "' GROUP BY ten_kh, thoi_gian_dat_ban";
+  $info_datban_monan = pdo_query($sql);
+  return $info_datban_monan;
+}
+
+//* GROUP_CONCAT là một hàm tính toán trong SQL được sử dụng để kết hợp các giá trị của một cột thành một chuỗi duy nhất, 
+//* với các giá trị được phân tách bằng một ký tự hoặc chuỗi được chỉ định.
+
+// SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, GROUP_CONCAT(mon_an_id ORDER BY thoi_gian_dat_ban ASC) AS mon_an_id, GROUP_CONCAT(ten ORDER BY thoi_gian_dat_ban ASC) AS danh_sach_mon_an, GROUP_CONCAT(so_luong ORDER BY thoi_gian_dat_ban ASC) AS so_luong_mon_an, GROUP_CONCAT(gia ORDER BY thoi_gian_dat_ban ASC) AS gia_mon_an, MAX(trang_thai) AS trang_thai FROM dat_ban WHERE id = id GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
 function get_trang_thai_datban($n)
 {
   switch ($n) {
@@ -77,9 +91,8 @@ function get_trang_thai_datban($n)
       $tt = 'Đơn đặt bàn đã hoàn thành';
       break;
     default:
-      $tt = 'Thanh toán khi nhận hàng';
+      $tt = 'Đơn hàng mới';
       break;
   }
   return $tt;
 }
-// SELECT dm.id AS danh_muc_id, dm.ten_dm, ma.id AS mon_an_id, ma.ten, ma.hinh, ma.gia, ma.trang_thai FROM danh_muc dm JOIN mon_an ma ON dm.id = ma.danh_muc_id WHERE dm.id = danh_muc_id and ma.trang_thai = 1 ORDER BY ma.gia DESC

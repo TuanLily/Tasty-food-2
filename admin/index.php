@@ -344,7 +344,11 @@ if (isset($_GET['act'])) {
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
                 $datban = loadone_tt_datban($_GET['id']);
             }
-            $listdatban = loadall_tt_datban();
+            if (isset($_GET['ten_kh']) && isset($_GET['thoi_gian_dat_ban'])) {
+                $load_tt_monan = load_tt_monan_theo_ten($_GET['ten_kh'], $_GET['thoi_gian_dat_ban']);
+
+            }
+            $listdatban = loadall_tt_datban_theo_ten();
             include('modules/datban/thongtindatban.php');
             break;
 

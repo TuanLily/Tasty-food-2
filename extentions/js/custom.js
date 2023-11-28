@@ -91,3 +91,9 @@ function incrementQuantity(id) {
   // Tăng giá trị
   inputElement.value = currentValue + 1;
 }
+
+// In hóa đơn
+document.getElementById("print").addEventListener("click", function () {
+  // Gọi hàm in trang
+  window.print();
+});
