@@ -9,8 +9,8 @@ function viewcart()
 
     foreach ($_SESSION['mycart'] as $cart) {
         $hinh = $img_path . $cart['img'];
-        $thanhtien = $cart['soluong'] * $cart['price'];
-        $gia = $cart['price'];
+        $thanhtien = $cart['so_luong'] * $cart['gia'];
+        $gia = $cart['gia'];
         $tong += $thanhtien;
         $xoasp = '<a href="index.php?act=delcart&idcart=' . $i . '"><input type="button" value="Xóa"></a>';
         echo '
@@ -36,7 +36,7 @@ function viewcart()
     echo '
               <td colspan="5">Tổng đơn hàng</td>
                     
-              <td>$' . number_format($tong, 0, ",", ".") . '</td>
+              <td>' . number_format($tong, 0, ",", ".") . '</td>
 
             ';
 

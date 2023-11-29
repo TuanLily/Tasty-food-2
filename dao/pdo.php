@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mở kết nối đến CSDL sử dụng PDO
  */
@@ -61,9 +62,8 @@ function pdo_execute_lastInsertId($sql)
  * @return array mảng các bản ghi
  * @throws PDOException lỗi thực thi câu lệnh
  */
-function pdo_query($sql)
+function pdo_query($sql, ...$sql_args)
 {
-    $sql_args = array_slice(func_get_args(), 1);
     try {
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);

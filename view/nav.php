@@ -79,7 +79,7 @@
                                 </a></div>
                             <div class="dropdown-content">
                                 <a href="index.php?act=update">Cập nhật tài khoản</a>
-                                <a href="">Giỏ hàng</a>
+                                <a href="index.php?act=xemgiohang">Giỏ hàng</a>
                                 <a href="index.php?act=updatepw">Đổi mật khẩu</a>
 
                                 <?php

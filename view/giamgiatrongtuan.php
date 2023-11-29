@@ -14,7 +14,7 @@
                         <div class="detail-box">
                             <h5>Ngày Hội Burger</h5>
                             <h6><span>20%</span> Giảm giá toàn món</h6>
-                            <a href="">
+                            <a href="index.php?act=monan">
                                 Xem chi tiết tại đây
                                 <i class="fa-solid fa-circle-info"></i>
                             </a>
@@ -29,7 +29,7 @@
                         <div class="detail-box">
                             <h5>Ngày Pizza</h5>
                             <h6><span>15%</span> Giảm giá toàn món</h6>
-                            <a href="">
+                            <a href="index.php?act=monan">
                                 Xem chi tiết tại đây
                                 <i class="fa-solid fa-circle-info"></i>
                             </a>
@@ -44,7 +44,7 @@
                         <div class="detail-box">
                             <h5>Ngày Hội Burger</h5>
                             <h6><span>20%</span> Giảm giá toàn món</h6>
-                            <a href="">
+                            <a href="index.php?act=monan">
                                 Xem chi tiết tại đây
                                 <i class="fa-solid fa-circle-info"></i>
                             </a>
@@ -59,7 +59,7 @@
                         <div class="detail-box">
                             <h5>Ngày Pizza</h5>
                             <h6><span>15%</span> Giảm giá toàn món</h6>
-                            <a href="">
+                            <a href="index.php?act=monan">
                                 Xem chi tiết tại đây
                                 <i class="fa-solid fa-circle-info"></i>
                             </a>

@@ -12,10 +12,10 @@ include "dao/datban.php";
 include 'dao/danhmuc.php';
 include 'dao/monan.php';
 include "dao/taikhoan.php";
-
 $mail = new Mailer();
 
 $show_monan = loadall_monan_home();
+if (!isset($_SESSION['mycart'])) $_SESSION['mycart'] = [];
 
 // Gọi hàm kiểm tra đăng nhập tự động
 if (autoLoginIfRemembered()) {
@@ -106,6 +106,14 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "pages/lienhe.php";
             include "view/footer.php";
             break;
+        case 'xemgiohang':
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            include "./pages/xemgiohang.php";
+            include "view/footer.php";
+            break;
+
 
 
         case 'dangky':
@@ -373,6 +381,9 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
+
+
+
         case 'datbanngay':
             if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
                 $ten_kh = $_POST['ten_kh'];
@@ -382,60 +393,12 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
                 $ghi_chu = $_POST['ghi_chu'];
                 $check = 1;
+                $tong_tien = 0;
 
-
-                // Kiểm tra trường "Họ và tên"
-                if (empty($ten_kh)) {
-                    $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif (strlen($ten_kh) > 30) {
-                    $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
-                    $check = 0;
-                }
-
-                // Kiểm tra trường "Email"
-                if (empty($email)) {
-                    $_SESSION['error']['email']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
-                    $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
-                    $check = 0;
-                }
-
-                // Kiểm tra trường "Số điện thoại"
-                if (empty($sdt)) {
-                    $_SESSION['error']['sdt']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif (!preg_match('/^\+?\d{10,15}$/', $sdt)) {
-                    $_SESSION['error']['sdt']['dinhdang'] = 'Không quá 15 số';
-                    $check = 0;
-                }
-
-                // Kiểm tra trường "Số người"
-                if (empty($so_nguoi)) {
-                    $_SESSION['error']['so_nguoi']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif ($so_nguoi > 20) {
-                    $_SESSION['error']['so_nguoi']['dinhdang'] = 'Không quá 20 người';
-                    $check = 0;
-                }
-
-                // Kiểm tra trường "Thời gian đặt bàn"
-                $min_date = date('Y-m-d\TH:i');
-                $max_date = date('Y-m-d\TH:i', strtotime('+1 month'));
-
-                if (empty($thoi_gian_dat_ban)) {
-                    $_SESSION['error']['thoi_gian_dat_ban']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif (strtotime($thoi_gian_dat_ban) < time() || strtotime($thoi_gian_dat_ban) > strtotime($max_date)) {
-                    $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'] = 'Không quá 30 ngày';
-                    $check = 0;
-                }
 
                 if ($check == 1) {
                     $listmonan = loadall_monan();
-                    $selectedItems = array(); // Mảng chứa thông tin về các món ăn được chọn
-
+                    $selectedItems = array();
                     foreach ($listmonan as $monan) {
                         $hinh_ma = "uploads/" . $monan['hinh'];
                         $id = $monan['id'];
@@ -444,39 +407,169 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $hinh = $monan['hinh'];
                         $ten = $monan['ten'];
                         $mon_an_id = $id;
+                        // Kiểm tra trường "Họ và tên"
+                        if (empty($ten_kh)) {
+                            $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
+                            $check = 0;
+                        } elseif (strlen($ten_kh) > 30) {
+                            $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
+                            $check = 0;
+                        }
 
+                        // Kiểm tra trường "Email"
+                        if (empty($email)) {
+                            $_SESSION['error']['email']['invalid'] = 'Không được để trống';
+                            $check = 0;
+                        } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
+                            $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
+                            $check = 0;
+                        }
+
+                        // Kiểm tra trường "Số điện thoại"
+                        if (empty($sdt)) {
+                            $_SESSION['error']['sdt']['invalid'] = 'Không được để trống';
+                            $check = 0;
+                        } elseif (!preg_match('/^\+?\d{10,15}$/', $sdt)) {
+                            $_SESSION['error']['sdt']['dinhdang'] = 'Không quá 15 số';
+                            $check = 0;
+                        }
+
+                        // Kiểm tra trường "Số người"
+                        if (empty($so_nguoi)) {
+                            $_SESSION['error']['so_nguoi']['invalid'] = 'Không được để trống';
+                            $check = 0;
+                        } elseif ($so_nguoi > 20) {
+                            $_SESSION['error']['so_nguoi']['dinhdang'] = 'Không quá 20 người';
+                            $check = 0;
+                        }
+
+                        // Kiểm tra trường "Thời gian đặt bàn"
+                        $min_date = date('Y-m-d\TH:i');
+                        $max_date = date('Y-m-d\TH:i', strtotime('+1 month'));
+
+                        if (empty($thoi_gian_dat_ban)) {
+                            $_SESSION['error']['thoi_gian_dat_ban']['invalid'] = 'Không được để trống';
+                            $check = 0;
+                        } elseif (strtotime($thoi_gian_dat_ban) < time() || strtotime($thoi_gian_dat_ban) > strtotime($max_date)) {
+                            $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'] = 'Không quá 30 ngày';
+                            $check = 0;
+                        }
                         if ($so_luong > 0) {
                             insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-                            echo '<script>alert("Cập nhật thành công thành công, bạn sẽ được chuyển đến trang thông tin dặt bàn")</script>';
-                            echo '<script>
-                              setTimeout(function() {
-                                  window.location.href = "index.php?act=thongtindatban";
-                              }, 0);
-                          </script>';
+                            // echo '<script>alert("Cập nhật thành công, bạn sẽ được chuyển đến trang thông tin đặt bàn")</script>';
+                            $thanh_tien = $gia * $so_luong; // Tính thành tiền cho mỗi món
+                            $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+
+                            $themvaogiohang = [
+                                $hinh_ma,
+                                $ten,
+                                $gia,
+                                $so_luong,
+                                $thoi_gian_dat_ban,
+                                $so_nguoi,
+                                $ghi_chu
+                            ];
+                            array_push($_SESSION['mycart'], $themvaogiohang);
+
+
+
+                            // Lưu thông tin vào session
+                            $selectedItems = [
+                                'ten_kh' => $ten_kh,
+                                'email' => $email,
+                                'sdt' => $sdt,
+                                'so_nguoi' => $so_nguoi,
+                                'thoi_gian_dat_ban' => $thoi_gian_dat_ban,
+                                'ghi_chu' => $ghi_chu,
+                                'tong_tien' => $tong_tien
+                            ];
+                            $_SESSION['info_datban'] = $selectedItems;
                         }
                     }
                 }
-
-
             }
-            // if (!empty($_SESSION['error'])) {
 
-            // }
 
-            include "./pages/formdatban.php";
+            if ($check == 1) {
+                include "view/header.php";
+                include "view/nav.php";
+                include "view/margintop.php";
+                include "./pages/thongtindatban.php";
+                include "view/footer.php";
+            } else {
+                // Lỗi xảy ra, vẫn ở lại trang biểu mẫu
+                include "view/header.php";
+                include "view/nav.php";
+                include "view/margintop.php";
+                include "./pages/formdatban.php";
+                include "view/footer.php";
+            }
+            break;
+        case 'xoagiohang':
+            if (isset($_GET['idgiohang'])) {
+                $idgiohang = $_GET['idgiohang'];
+                if (isset($_SESSION['mycart'][$idgiohang])) {
+                    unset($_SESSION['mycart'][$idgiohang]); // Xóa sản phẩm khỏi giỏ hàng
+                    $_SESSION['mycart'] = array_values($_SESSION['mycart']); // Cập nhật lại chỉ số của mảng
+                }
+            } else {
+                $_SESSION['mycart'] = [];
+            }
+
+            header('Location: index.php?act=thongtindatban');
+            exit();
+            break;
+
+
+
+        case "thongtindatban":
+            if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
+                $listmonan = loadall_monan();
+                $ten_kh = isset($_POST['ten_kh']) ? $_POST['ten_kh'] : '';
+                $email = isset($_POST['email']) ? $_POST['email'] : '';
+                $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : '';
+                $so_nguoi = isset($_POST['so_nguoi']) ? $_POST['so_nguoi'] : '';
+                $thoi_gian_dat_ban = isset($_POST['thoi_gian_dat_ban']) ? $_POST['thoi_gian_dat_ban'] : '';
+                $ghi_chu = isset($_POST['ghi_chu']) ? $_POST['ghi_chu'] : '';
+                $check = 1;
+                $selectedItems = array();
+                $totalPrice = 0;
+
+                foreach ($listmonan as $monan) {
+                    $hinh_ma = "uploads/" . $monan['hinh'];
+                    $id = $monan['id'];
+                    $so_luong = isset($_POST['so_luong' . $id]) ? $_POST['so_luong' . $id] : 0;
+                    $gia = isset($_POST['gia_' . $id]) ? $_POST['gia_' . $id] : 0;
+                    $hinh = $monan['hinh'];
+                    $ten = $monan['ten'];
+                    $mon_an_id = $id;
+
+                    if ($so_luong > 0) {
+                        insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+                        $selectedItems[] = array(
+                            'hinh' => $hinh_ma,
+                            'ten' => $ten,
+                            'gia' => $gia,
+                            'so_luong' => $so_luong,
+                            'thanh_tien' => $gia * $so_luong
+                        );
+                    }
+                }
+
+                $totalPrice = 0;
+                foreach ($selectedItems as $item) {
+                    $totalPrice += $item['thanh_tien'];
+                }
+            }
+
             // Hiển thị biểu mẫu sau khi đặt bàn thành công hoặc có lỗi
             include "view/header.php";
             include "view/nav.php";
             include "view/margintop.php";
-
-
-
-
-
+            include "./pages/thongtindatban.php";
             include "view/footer.php";
+
             break;
-
-
 
         case "thoat":
             session_unset();
@@ -484,41 +577,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
             break;
 
-        // case 'datbanngay':
-        //     include "view/header.php";
-        //     include "view/nav.php";
 
-        //     if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
-        //         $ten_kh = $_POST['ten_kh'];
-        //         $email = $_POST['email'];
-        //         $sdt = $_POST['sdt'];
-        //         $so_nguoi = $_POST['so_nguoi'];
-        //         $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
-        //         $ghi_chu = $_POST['ghi_chu'];
-
-        //         // Lưu thông tin món ăn vào cơ sở dữ liệu
-        //         $listmonan = loadall_monan();
-        //         $pdo = pdo_get_connection();
-        //         $stmt = pdo_prepare($pdo, 'INSERT INTO datban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu) VALUES (:ten_kh, :email, :sdt, :so_nguoi, :thoi_gian_dat_ban, :ghi_chu)');
-
-        //         foreach ($listmonan as $monan) {
-        //             $id = $monan['id'];
-        //             $so_luong = isset($_POST['so_luong' . $id]) ? $_POST['so_luong' . $id] : 0;
-        //             $gia = $monan['gia'];
-        //             $hinh = $monan['hinh'];
-        //             $ten = $monan['ten'];
-        //             $mon_an_id = $id;
-
-        //             if ($so_luong > 0) {
-        //                 insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-        //             }
-        //         }
-        //     }
-
-        //     // Hiển thị biểu mẫu sau khi đặt bàn thành công
-        //     include "./pages/formdatban.php";
-        //     include "view/footer.php";
-        //     break;
 
         case 'updatepw':
 

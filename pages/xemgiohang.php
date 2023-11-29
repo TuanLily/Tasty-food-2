@@ -1,6 +1,6 @@
 <!-- <?php $load_tt = $_SESSION['info_datban'];
-var_dump($load_tt);
-?> -->
+      var_dump($load_tt);
+      ?> -->
 <form id="dat_ban_form" action="thongtinmonan.php" method="post"></form>
 <div class="khung_thông_tin_dat_ban">
   <div class="order-info">
@@ -10,39 +10,27 @@ var_dump($load_tt);
         <table class="user-table">
           <tr>
             <td>Người đặt hàng:</td>
-            <td>
-              <?php echo $load_tt['ten_kh']; ?>
-            </td>
+            <td><?php echo $load_tt['ten_kh']; ?></td>
           </tr>
           <tr>
             <td>Email:</td>
-            <td>
-              <?php echo $load_tt['email']; ?>
-            </td>
+            <td><?php echo $load_tt['email']; ?></td>
           </tr>
           <tr>
             <td>Điện thoại:</td>
-            <td>
-              <?php echo $load_tt['sdt']; ?>
-            </td>
+            <td><?php echo $load_tt['sdt']; ?></td>
           </tr>
           <tr>
             <td>Số người:</td>
-            <td>
-              <?php echo $load_tt['so_nguoi']; ?>
-            </td>
+            <td><?php echo $load_tt['so_nguoi']; ?></td>
           </tr>
           <tr>
             <td>Thời gian đặt bàn:</td>
-            <td>
-              <?php echo date('H:i:s, d/m/Y', strtotime($load_tt['thoi_gian_dat_ban'])); ?>
-            </td>
+            <td><?php echo date('H:i:s, d/m/Y', strtotime($load_tt['thoi_gian_dat_ban'])); ?></td>
           </tr>
           <tr>
             <td>Ghi chú:</td>
-            <td>
-              <?php echo $load_tt['ghi_chu']; ?>
-            </td>
+            <td><?php echo $load_tt['ghi_chu']; ?></td>
           </tr>
         </table>
       </div>
@@ -67,38 +55,26 @@ var_dump($load_tt);
               $thanh_tien = $item[2] * $item[3]; // Tính thành tiền cho mỗi món
               $tong_tien += $thanh_tien; // Cộng vào tổng tiền
               $i++;
-              ?>
+            ?>
               <tr>
                 <td><img src="<?php echo $item[0]; ?>" alt=""></td>
-                <td>
-                  <?php echo $item[1]; ?>
-                </td>
-                <td>
-                  <?php echo number_format($item[2], 0, ',', '.') . 'đ'; ?>
-                </td>
-                <td>
-                  <?php echo $item[3]; ?>
-                </td>
+                <td><?php echo $item[1]; ?></td>
+                <td><?php echo number_format($item[2], 0, ',', '.') . 'đ'; ?></td>
+                <td><?php echo $item[3]; ?></td>
                 <td>
                   <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
                 </td>
-                <td>
-                  <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
-                </td>
+                <td><?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?></td>
               </tr>
             <?php } ?>
             <tr>
               <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-              <td colspan="5">
-                <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-              </td>
+              <td colspan="5"><?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?></td>
             </tr>
           </tbody>
         </table>
         <br>
-        <a href="index.php?act=datbanngay" class="btn btn-primary" name="datbanngay">
-          Chọn thêm món
-        </a>
+        <a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.back()'; ?>" class="btn btn-primary">Chọn thêm món</a>
 
       </div>
     </div>
@@ -122,24 +98,18 @@ var_dump($load_tt);
       <table>
         <tr>
           <td>Tạm tính</td>
-          <td>
-            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-          </td>
+          <td><?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?></td>
         </tr>
         <tr>
           <td>Khuyến mãi</td>
-          <td>
-            <?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?>
-          </td>
+          <td><?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?></td>
         </tr>
       </table>
       <hr class="hr_thong_tin_dat_ban">
       <table>
         <tr>
           <td>Tổng cộng (sau khuyến mãi)</td>
-          <td>
-            <?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?>
-          </td>
+          <td><?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?></td>
         </tr>
       </table>
       <hr class="hr_thong_tin_dat_ban">
