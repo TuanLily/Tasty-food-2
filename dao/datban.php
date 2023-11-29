@@ -105,3 +105,9 @@ function get_trang_thai_datban($n)
   }
   return $tt;
 }
+
+function update_trang_thai_datban($id, $trang_thai)
+{
+  $sql = "UPDATE dat_ban SET trang_thai='" . $trang_thai . "' WHERE id=" . $id;
+  pdo_execute($sql);
+}

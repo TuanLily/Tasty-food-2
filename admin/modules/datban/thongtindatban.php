@@ -31,7 +31,7 @@ foreach ($info_datban_monan as $n => $item) {
                 <a href="index.php?act=ds_dat_ban" class="breadcrumb-item">QUẢN LÝ ĐẶT BÀN</a>
                 <li class="breadcrumb-item active">CHI TIẾT ĐƠN ĐẶT BÀN</li>
             </ol>
-            <form class="row g-3" method="post" action="index.php?act=chi_tiet_dat_ban" enctype="multipart/form-data">
+            <form class="row g-3" method="post" action="index.php?act=sua_tt_datban" enctype="multipart/form-data">
 
                 <div class="card mb-2">
                     <div class="card-header">
@@ -78,7 +78,7 @@ foreach ($info_datban_monan as $n => $item) {
                                 </div>
                                 <div class="mb-3 col-6">
                                     <label for="exampleFormControlInput1" class="form-label">Trạng thái</label>
-                                    <select class="form-select form-select-lg mb-3"
+                                    <select class="form-select form-select-lg mb-3" name="trang_thai"
                                         style="height: 2.6rem; font-size: 0.8rem;" aria-label=".form-select-lg example">
                                         <?php for ($i = 0; $i <= 4; $i++) : ?>
                                         <option value="<?php echo $i; ?>"
@@ -162,8 +162,8 @@ foreach ($info_datban_monan as $n => $item) {
                     </div>
                     <div class="card-footer mb-12 float-end">
                         <input type="hidden" name="id" value="<?= $datban['id'] ?>">
-                        <input type="hidden" name="id" value="<?= $datban['ten_kh'] ?>">
-                        <input type="hidden" name="id" value="<?= $datban['thoi_gian_dat_ban'] ?>">
+                        <input type="hidden" name="ten_kh" value="<?= $datban['ten_kh'] ?>">
+                        <input type="hidden" name="thoi_gian_dat_ban" value="<?= $datban['thoi_gian_dat_ban'] ?>">
                         <input type="submit" class="btn btn-warning me-lg-2 float-end" name="capnhat" value="Cập nhật">
                     </div>
                 </div>

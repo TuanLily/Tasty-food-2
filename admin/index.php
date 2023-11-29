@@ -362,7 +362,6 @@ if (isset($_GET['act'])) {
 
         // *Kết thúc chức năng khách hàng
 
-        // Bắt đầu chức năng bill
 
         // !Bắt đầu chức năng đặt bàn
         case 'ds_dat_ban':
@@ -382,6 +381,40 @@ if (isset($_GET['act'])) {
             include('modules/datban/thongtindatban.php');
             break;
 
+        case 'sua_tt_datban':
+            if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
+                // Kiểm tra các điều kiện cập nhật khác nếu cần
+
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Lấy giá trị trang_thai từ form
+                    $trang_thai = $_POST['trang_thai'];
+
+                    // Lấy ID của đơn đặt bàn (chỉ là ví dụ, bạn cần điều chỉnh cách lấy ID tùy vào cách bạn tổ chức dữ liệu)
+                    $id = $_POST['id'];
+
+                    // Gọi hàm để cập nhật trạng thái
+                    update_trang_thai_datban($id, $trang_thai);
+
+                    // Chuyển hướng hoặc thông báo cập nhật thành công
+                    echo '<script>
+                    alert("Cập nhật thành công");
+                    setTimeout(function() {
+                        window.location.href = "index.php?act=ds_dat_ban&page=1";
+                    }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
+                </script>';
+                } else {
+                    echo '<script>
+                        alert("Có lỗi trong quá trình cập nhật trạng thái !");
+                    </script>';
+                }
+            }
+
+            $listdatban = loadall_tt_datban_theo_ten();
+            include('modules/datban/danhsach.php');
+            break;
+
+
+        // !Kết thúc chức năng đặt bàn
 
 
         // *Bắt đầu chức năng thống kê
@@ -389,11 +422,13 @@ if (isset($_GET['act'])) {
             $listthongke = loadall_thongke();
             include('modules/thongke/thongke_mon_an.php');
             break;
-        // *Kết thúc chức năng thống kê
+
         case "bieudo":
             $listthongke = loadall_thongke();
             include('modules/thongke/bieudo.php');
             break;
+        // *Kết thúc chức năng thống kê
+
 
 
         default:
