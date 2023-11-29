@@ -96,11 +96,11 @@ function update_password($email, $mat_khau)
  * Hiển thị tất cả tài khoản
  * @return array
  */
-function loadall_taikhoan()
+function loadall_dskh()
 {
-    $sql = "select * from taikhoan order by id desc";
-    $listaikhoan = pdo_query($sql);
-    return $listaikhoan;
+    $sql = "SELECT * FROM khach_hang WHERE 1";
+    $list_dskh = pdo_query($sql);
+    return $list_dskh;
 }
 
 
@@ -121,19 +121,18 @@ function delete_taikhoan($id)
  * @param mixed $id
  * @return array
  */
-function loadone_taikhoan($id)
+function loadone_khachhang($id)
 {
-    $sql = "select * from taikhoan where id=" . $id;
-    $tk = pdo_query_one($sql);
-    return $tk;
+    $sql = "select * from khach_hang where id=" . $id;
+    $dskh = pdo_query_one($sql);
+    return $dskh;
 }
 
-function update_edit_pass($email, $mat_khau)
+function update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi)
 {
-    $sql = "update taikhoan set pass = '$mat_khau' where email = '$email'";
-    pdo_execute($sql);
+    $sql = "UPDATE khach_hang SET ten = ?, ho_ten = ?, email = ?, sdt = ?, dia_chi = ? WHERE id = ?";
+    pdo_execute($sql, $ten, $ho_ten, $email, $sdt, $dia_chi, $id);
 }
-
 function check_only_user($ten)
 {
     $sql = "select * from taikhoan where user='" . $ten . "'";

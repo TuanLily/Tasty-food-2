@@ -11,6 +11,7 @@ include "../dao/danhmuc.php";
 include "../dao/monan.php";
 include "../dao/datban.php";
 include "../dao/delete_list.php";
+include "../dao/taikhoan.php";
 
 
 // Giao diện
@@ -59,7 +60,6 @@ if (isset($_GET['act'])) {
         case 'xoadm':
             if (isset($_GET['id']) && ($_GET['id'] > 0)) {
                 delete_danhmuc($_GET['id']);
-
             }
             $listdanhmuc = loadall_danhmuc();
             include('modules/danhmuc/danhsach.php');
@@ -331,8 +331,37 @@ if (isset($_GET['act'])) {
         // !Kết thúc chức năng sản phẩm
 
         // *Bắt đầu chức năng khách hàng
+        case 'dskh':
+            $list_dskh = loadall_dskh();
+            include('modules/khachhang/danhsach.php');
+            break;
+
+        case 'sua':
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+                $khachhang = loadone_khachhang($_GET['id']);
+            }
+            include('modules/khachhang/sua.php');
+            break;
+
+        case 'capnhatds':
+            if (isset($_POST['updateds'])) {
+                // Retrieve form data
+                $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+                $ten = isset($_POST['ten']) ? htmlspecialchars($_POST['ten']) : '';
+                $ho_ten = isset($_POST['ho_ten']) ? htmlspecialchars($_POST['ho_ten']) : '';
+                $email = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+                $sdt = isset($_POST['sdt']) ? htmlspecialchars($_POST['sdt']) : '';
+                $dia_chi = isset($_POST['dia_chi']) ? htmlspecialchars($_POST['dia_chi']) : '';
+
+                update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi);
+                header('location: index.php?act=dskh');
+                exit();
+            }
+            break;
 
         // *Kết thúc chức năng khách hàng
+
+        // Bắt đầu chức năng bill
 
         // !Bắt đầu chức năng đặt bàn
         case 'ds_dat_ban':
@@ -353,8 +382,6 @@ if (isset($_GET['act'])) {
             break;
 
 
-
-        // !Kết thúc chức năng đặt bàn
 
         // *Bắt đầu chức năng thống kê
 
