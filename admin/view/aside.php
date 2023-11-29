@@ -143,7 +143,7 @@
                         <div class="collapse" id="thong_ke" aria-labelledby="headingOne"
                             data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="#">Danh Sách</a>
+                                <a class="nav-link" href="index.php?act=thongkema">Thống kê món ăn</a>
                             </nav>
                         </div>
                     </div>

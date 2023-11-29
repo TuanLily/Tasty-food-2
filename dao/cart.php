@@ -232,9 +232,9 @@ function delete_bill($id)
 
 function loadall_thongke()
 {
-    $sql = "select danhmuc.name as tendm, danhmuc.id as madm, count(sanpham.id) as countsp, min(sanpham.price) as minprice, max(sanpham.price) as maxprice, avg(sanpham.price) as avgprice";
-    $sql .= " from sanpham left join danhmuc on danhmuc.id=sanpham.iddm where 1";
-    $sql .= " group by danhmuc.id order by danhmuc.id asc";
+    $sql = "select danh_muc.ten_dm as ten_dm, danh_muc.id as ma_dm, count(mon_an.id) as count_ma, min(mon_an.gia) as min_gia, max(mon_an.gia) as max_gia, avg(mon_an.gia) as avg_gia";
+    $sql .= " from mon_an left join danh_muc on danh_muc.id=mon_an.danh_muc_id where 1";
+    $sql .= " group by danh_muc.id order by danh_muc.id asc";
     $listthongke = pdo_query($sql);
     return $listthongke;
 }

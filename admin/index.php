@@ -13,6 +13,7 @@ include "../dao/datban.php";
 include "../dao/delete_list.php";
 include "../dao/taikhoan.php";
 
+include "../dao/cart.php";
 
 // Giao diện
 include('view/header.php');
@@ -384,15 +385,22 @@ if (isset($_GET['act'])) {
 
 
         // *Bắt đầu chức năng thống kê
-
+        case "thongkema":
+            $listthongke = loadall_thongke();
+            include('modules/thongke/thongke_mon_an.php');
+            break;
         // *Kết thúc chức năng thống kê
-
+        case "bieudo":
+            $listthongke = loadall_thongke();
+            include('modules/thongke/bieudo.php');
+            break;
 
 
         default:
             include('error/404.php');
     }
 } else {
+    $listthongke = loadall_thongke();
     include('view/home.php');
 }
 include('view/footer.php');
