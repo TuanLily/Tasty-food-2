@@ -86,11 +86,11 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
                                     <td scope="row" class="text-center">
                                         <?php
                                         $trang_thai_styles = array(
-                                            0 => 'btn-danger',
-                                            1 => 'btn-light',
-                                            2 => 'btn-warning',
-                                            3 => 'btn-info',
-                                            4 => 'btn-success',
+                                            1 => 'btn-danger',
+                                            2 => 'btn-light',
+                                            3 => 'btn-warning',
+                                            4 => 'btn-info',
+                                            5 => 'btn-success',
                                         );
 
                                         ?>

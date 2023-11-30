@@ -86,27 +86,6 @@
                     </div>
                     <!-- Kết thúc chức năng quản lý Món Ăn -->
 
-                    <!-- Bắt đầu chức năng quản lý Bàn -->
-                    <!-- <div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#quan_ly_ban"
-                            aria-expanded="false" aria-controls="quan_ly_ban">
-                            <div class="sb-nav-link-icon">
-                                <i class="fa-solid fa-table"></i>
-                            </div>
-                            Bàn
-                            <div class="sb-sidenav-collapse-arrow">
-                                <i class="fas fa-angle-down"></i>
-                            </div>
-                        </a>
-                        <div class="collapse" id="quan_ly_ban" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="index.php?act=dsdh">Danh Sách</a>
-                            </nav>
-                        </div>
-                    </div> -->
-                    <!-- Kết thúc chức năng quản lý Bàn -->
-
                     <!-- Bắt đầu chức năng quản lý Đặt Bàn -->
                     <div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#dat_bang"
@@ -128,7 +107,7 @@
                     </div>
                     <!-- Kết thúc chức năng quản lý Đặt Bàn -->
 
-                    <!-- Bắt đầu chức năng quản lý Đơn Hàng -->
+                    <!-- Bắt đầu chức năng quản lý Thống Kê -->
                     <div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#thong_ke"
                             aria-expanded="false" aria-controls="thong_ke">
@@ -147,7 +126,32 @@
                             </nav>
                         </div>
                     </div>
-                    <!-- Kết thúc chức năng quản lý Đơn Hàng -->
+                    <!-- Kết thúc chức năng quản lý Thống Kê -->
+
+
+                    <div class="sb-sidenav-menu-heading">Cài đặt</div>
+
+                    <!-- Bắt đầu chức năng Setting -->
+                    <div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#setting"
+                            aria-expanded="false" aria-controls="setting">
+                            <div class="sb-nav-link-icon">
+                                <i class="fa-solid fa-gear"></i>
+                            </div>
+                            Thiết lập
+                            <div class="sb-sidenav-collapse-arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        <div class="collapse" id="setting" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="index.php?act=phanquyen">Phân quyền quản trị</a>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- Kết thúc chức năng Setting -->
+
 
                     <div class="sb-sidenav-menu-heading">Interface</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"

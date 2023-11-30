@@ -80,7 +80,7 @@ foreach ($info_datban_monan as $n => $item) {
                                     <label for="exampleFormControlInput1" class="form-label">Trạng thái</label>
                                     <select class="form-select form-select-lg mb-3" name="trang_thai"
                                         style="height: 2.6rem; font-size: 0.8rem;" aria-label=".form-select-lg example">
-                                        <?php for ($i = 0; $i <= 4; $i++) : ?>
+                                        <?php for ($i = 1; $i <= 5; $i++) : ?>
                                         <option value="<?php echo $i; ?>"
                                             <?php echo ($trang_thai == $i) ? 'selected' : ''; ?>>
                                             <?php echo get_trang_thai_datban($i); ?>

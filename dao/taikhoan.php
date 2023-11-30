@@ -166,3 +166,26 @@ function getTaiKhoan_limit($start, $limit)
     $tk = pdo_query($sql);
     return $tk;
 }
+
+function get_vai_tro($n)
+{
+    switch ($n) {
+        case '0':
+            $vt = 'Quản trị viên';
+            break;
+        case '2':
+            $vt = 'Khách hàng';
+            break;
+
+        default:
+            $vt = 'Khách hàng';
+            break;
+    }
+    return $vt;
+}
+
+function update_vai_tro($id, $vai_tro)
+{
+    $sql = "UPDATE khach_hang SET vai_tro='" . $vai_tro . "' WHERE id=" . $id;
+    pdo_execute($sql);
+}

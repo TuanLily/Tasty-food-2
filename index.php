@@ -15,7 +15,8 @@ include "dao/taikhoan.php";
 $mail = new Mailer();
 
 $show_monan = loadall_monan_home();
-if (!isset($_SESSION['mycart'])) $_SESSION['mycart'] = [];
+if (!isset($_SESSION['mycart']))
+    $_SESSION['mycart'] = [];
 
 // Gọi hàm kiểm tra đăng nhập tự động
 if (autoLoginIfRemembered()) {

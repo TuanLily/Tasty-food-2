@@ -429,7 +429,48 @@ if (isset($_GET['act'])) {
             break;
         // *Kết thúc chức năng thống kê
 
+        // Bắt đầu phần phân quyền
+        case "phanquyen":
+            $list_dskh = loadall_dskh();
+            include('modules/phanquyen/danhsach.php');
+            break;
 
+        case "sua_vaitro":
+            if (isset($_GET['id']) && ($_GET['id'] > 0)) {
+                $khachhang = loadone_khachhang($_GET['id']);
+                include('modules/phanquyen/sua.php');
+            }
+
+            if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
+                // Kiểm tra các điều kiện cập nhật khác nếu cần
+
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    // Lấy giá trị trang_thai từ form
+                    $vai_tro = $_POST['vai_tro'];
+
+                    // Lấy ID của đơn đặt bàn (chỉ là ví dụ, bạn cần điều chỉnh cách lấy ID tùy vào cách bạn tổ chức dữ liệu)
+                    $id = $_POST['id'];
+
+                    // Gọi hàm để cập nhật vai trò
+                    update_vai_tro($id, $vai_tro);
+                    // Chuyển hướng hoặc thông báo cập nhật thành công
+                    echo '<script>
+                    alert("Cập nhật thành công");
+                    setTimeout(function() {
+                        window.location.href = "index.php?act=phanquyen";
+                    }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
+                </script>';
+                } else {
+                    echo '<script>
+                        alert("Có lỗi trong quá trình cập nhật vai trò !");
+                    </script>';
+                }
+            }
+
+            $list_dskh = loadall_dskh();
+            include('modules/phanquyen/danhsach.php');
+            break;
+        // Kết thúc phần phân quyền
 
         default:
             include('error/404.php');

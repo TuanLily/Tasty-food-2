@@ -84,19 +84,19 @@ function load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban)
 function get_trang_thai_datban($n)
 {
   switch ($n) {
-    case '0':
+    case '1':
       $tt = 'Hủy đơn';
       break;
-    case '1':
+    case '2':
       $tt = 'Đơn hàng mới';
       break;
-    case '2':
+    case '3':
       $tt = 'Chờ thanh toán cọc';
       break;
-    case '3':
+    case '4':
       $tt = 'Đặt cọc thành công';
       break;
-    case '4':
+    case '5':
       $tt = 'Đơn đặt bàn đã hoàn thành';
       break;
     default:
