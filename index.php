@@ -10,6 +10,7 @@ include 'global/global.php';
 // DAO
 include "dao/datban.php";
 include 'dao/danhmuc.php';
+include 'dao/cart.php';
 include 'dao/monan.php';
 include "dao/taikhoan.php";
 $mail = new Mailer();
@@ -107,13 +108,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "pages/lienhe.php";
             include "view/footer.php";
             break;
-        case 'xemgiohang':
-            include "view/header.php";
-            include "view/nav.php";
-            include "view/margintop.php";
-            include "./pages/xemgiohang.php";
-            include "view/footer.php";
-            break;
+
 
 
 
@@ -382,11 +377,52 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
+        case 'xemgiohang':
+            if (isset($_SESSION['mycart']) && isset($_SESSION['info_datban'])) {
+                // Hiển thị giỏ hàng
+                include "view/header.php";
+                include "view/nav.php";
+                include "view/margintop.php";
+                include "./pages/xemgiohang.php";
+                include "view/footer.php";
+            } else {
+                include "view/header.php";
+                include "pages/pocup.php";
+                include "view/nav.php";
+                include "view/slider.php";
+                include "view/giamgiatrongtuan.php";
+                include "view/home.php";
+                include "view/footer.php";
+            }
+            break;
+        case 'datban':
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            include "./pages/formdatban.php";
+            include "view/footer.php";
 
+            break;
 
+        case 'thanhtoan':
+            if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
+                $dat_ban_id = $_POST['dat_ban_id'];
+                $phuong_thuc = isset($_POST['phuong_thuc']) ? $_POST['phuong_thuc'] : '';
+                $ngay_thanh_toan = date('Y-m-d H:i:s');
+                $tong_tien = tongdonhang();
+                insert_thanhtoan($phuong_thuc, $ngay_thanh_toan, $tong_tien, $dat_ban_id);
+            }
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            include "./pages/hoa_don.php";
+            include "view/margintop.php";
+            include "view/footer.php";
+            break;
 
         case 'datbanngay':
             if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
+                $id = $_POST['id'];
                 $ten_kh = $_POST['ten_kh'];
                 $email = $_POST['email'];
                 $sdt = $_POST['sdt'];
@@ -395,6 +431,52 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $ghi_chu = $_POST['ghi_chu'];
                 $check = 1;
                 $tong_tien = 0;
+                if (empty($ten_kh)) {
+                    $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
+                    $check = 0;
+                } elseif (strlen($ten_kh) > 30) {
+                    $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
+                    $check = 0;
+                }
+
+                // Kiểm tra trường "Email"
+                if (empty($email)) {
+                    $_SESSION['error']['email']['invalid'] = 'Không được để trống';
+                    $check = 0;
+                } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
+                    $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
+                    $check = 0;
+                }
+
+                // Kiểm tra trường "Số điện thoại"
+                if (empty($sdt)) {
+                    $_SESSION['error']['sdt']['invalid'] = 'Không được để trống';
+                    $check = 0;
+                } elseif (!preg_match('/^\+?\d{10,15}$/', $sdt)) {
+                    $_SESSION['error']['sdt']['dinhdang'] = 'Không quá 15 số';
+                    $check = 0;
+                }
+
+                // Kiểm tra trường "Số người"
+                if (empty($so_nguoi)) {
+                    $_SESSION['error']['so_nguoi']['invalid'] = 'Không được để trống';
+                    $check = 0;
+                } elseif ($so_nguoi > 20) {
+                    $_SESSION['error']['so_nguoi']['dinhdang'] = 'Không quá 20 người';
+                    $check = 0;
+                }
+
+                // Kiểm tra trường "Thời gian đặt bàn"
+                $min_date = date('Y-m-d\TH:i');
+                $max_date = date('Y-m-d\TH:i', strtotime('+1 month'));
+
+                if (empty($thoi_gian_dat_ban)) {
+                    $_SESSION['error']['thoi_gian_dat_ban']['invalid'] = 'Không được để trống';
+                    $check = 0;
+                } elseif (strtotime($thoi_gian_dat_ban) < time() || strtotime($thoi_gian_dat_ban) > strtotime($max_date)) {
+                    $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'] = 'Không quá 30 ngày';
+                    $check = 0;
+                }
 
 
                 if ($check == 1) {
@@ -408,56 +490,12 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $hinh = $monan['hinh'];
                         $ten = $monan['ten'];
                         $mon_an_id = $id;
-                        // Kiểm tra trường "Họ và tên"
-                        if (empty($ten_kh)) {
-                            $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
-                            $check = 0;
-                        } elseif (strlen($ten_kh) > 30) {
-                            $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
-                            $check = 0;
-                        }
 
-                        // Kiểm tra trường "Email"
-                        if (empty($email)) {
-                            $_SESSION['error']['email']['invalid'] = 'Không được để trống';
-                            $check = 0;
-                        } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
-                            $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
-                            $check = 0;
-                        }
 
-                        // Kiểm tra trường "Số điện thoại"
-                        if (empty($sdt)) {
-                            $_SESSION['error']['sdt']['invalid'] = 'Không được để trống';
-                            $check = 0;
-                        } elseif (!preg_match('/^\+?\d{10,15}$/', $sdt)) {
-                            $_SESSION['error']['sdt']['dinhdang'] = 'Không quá 15 số';
-                            $check = 0;
-                        }
-
-                        // Kiểm tra trường "Số người"
-                        if (empty($so_nguoi)) {
-                            $_SESSION['error']['so_nguoi']['invalid'] = 'Không được để trống';
-                            $check = 0;
-                        } elseif ($so_nguoi > 20) {
-                            $_SESSION['error']['so_nguoi']['dinhdang'] = 'Không quá 20 người';
-                            $check = 0;
-                        }
-
-                        // Kiểm tra trường "Thời gian đặt bàn"
-                        $min_date = date('Y-m-d\TH:i');
-                        $max_date = date('Y-m-d\TH:i', strtotime('+1 month'));
-
-                        if (empty($thoi_gian_dat_ban)) {
-                            $_SESSION['error']['thoi_gian_dat_ban']['invalid'] = 'Không được để trống';
-                            $check = 0;
-                        } elseif (strtotime($thoi_gian_dat_ban) < time() || strtotime($thoi_gian_dat_ban) > strtotime($max_date)) {
-                            $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'] = 'Không quá 30 ngày';
-                            $check = 0;
-                        }
                         if ($so_luong > 0) {
-                            insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+                            // insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
                             // echo '<script>alert("Cập nhật thành công, bạn sẽ được chuyển đến trang thông tin đặt bàn")</script>';
+                            header('Location: index.php?act=thongtindatban');
                             $thanh_tien = $gia * $so_luong; // Tính thành tiền cho mỗi món
                             $tong_tien += $thanh_tien; // Cộng vào tổng tiền
 
@@ -468,7 +506,13 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                                 $so_luong,
                                 $thoi_gian_dat_ban,
                                 $so_nguoi,
-                                $ghi_chu
+                                $ghi_chu,
+                                $ten_kh,
+                                $email,
+                                $sdt,
+                                $id,
+                                $mon_an_id
+
                             ];
                             array_push($_SESSION['mycart'], $themvaogiohang);
 
@@ -476,6 +520,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
                             // Lưu thông tin vào session
                             $selectedItems = [
+                                'id' => $id,
                                 'ten_kh' => $ten_kh,
                                 'email' => $email,
                                 'sdt' => $sdt,
@@ -491,13 +536,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             }
 
 
-            if ($check == 1) {
-                include "view/header.php";
-                include "view/nav.php";
-                include "view/margintop.php";
-                include "./pages/thongtindatban.php";
-                include "view/footer.php";
-            } else {
+            if ($check == 0) {
                 // Lỗi xảy ra, vẫn ở lại trang biểu mẫu
                 include "view/header.php";
                 include "view/nav.php";
@@ -524,46 +563,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
 
         case "thongtindatban":
-            if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
-                $listmonan = loadall_monan();
-                $ten_kh = isset($_POST['ten_kh']) ? $_POST['ten_kh'] : '';
-                $email = isset($_POST['email']) ? $_POST['email'] : '';
-                $sdt = isset($_POST['sdt']) ? $_POST['sdt'] : '';
-                $so_nguoi = isset($_POST['so_nguoi']) ? $_POST['so_nguoi'] : '';
-                $thoi_gian_dat_ban = isset($_POST['thoi_gian_dat_ban']) ? $_POST['thoi_gian_dat_ban'] : '';
-                $ghi_chu = isset($_POST['ghi_chu']) ? $_POST['ghi_chu'] : '';
-                $check = 1;
-                $selectedItems = array();
-                $totalPrice = 0;
-
-                foreach ($listmonan as $monan) {
-                    $hinh_ma = "uploads/" . $monan['hinh'];
-                    $id = $monan['id'];
-                    $so_luong = isset($_POST['so_luong' . $id]) ? $_POST['so_luong' . $id] : 0;
-                    $gia = isset($_POST['gia_' . $id]) ? $_POST['gia_' . $id] : 0;
-                    $hinh = $monan['hinh'];
-                    $ten = $monan['ten'];
-                    $mon_an_id = $id;
-
-                    if ($so_luong > 0) {
-                        insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-                        $selectedItems[] = array(
-                            'hinh' => $hinh_ma,
-                            'ten' => $ten,
-                            'gia' => $gia,
-                            'so_luong' => $so_luong,
-                            'thanh_tien' => $gia * $so_luong
-                        );
-                    }
-                }
-
-                $totalPrice = 0;
-                foreach ($selectedItems as $item) {
-                    $totalPrice += $item['thanh_tien'];
-                }
-            }
-
-            // Hiển thị biểu mẫu sau khi đặt bàn thành công hoặc có lỗi
             include "view/header.php";
             include "view/nav.php";
             include "view/margintop.php";

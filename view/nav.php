@@ -104,7 +104,7 @@
                         <?php
                         }
                         ?>
-                        <a href="index.php?act=datbanngay" class="order_online">
+                        <a href="index.php?act=datban" class="order_online">
                             Đặt bàn Online
                         </a>
 

@@ -2,6 +2,22 @@
     <div class="container">
         <div class="khungdatban">
             <form action="index.php?act=datbanngay" method="post">
+                <?php if (isset($_SESSION['info_datban'])) {
+                    $ten_kh = $_SESSION['info_datban']['ten_kh'];
+                    $email = $_SESSION['info_datban']['email'];
+                    $sdt = $_SESSION['info_datban']['sdt'];
+                    $so_nguoi = $_SESSION['info_datban']['so_nguoi'];
+                    $thoi_gian_dat_ban = $_SESSION['info_datban']['thoi_gian_dat_ban'];
+                    $ghi_chu = $_SESSION['info_datban']['ghi_chu'];
+                } else {
+                    $ten_kh = "";
+                    $email = "";
+                    $sdt = "";
+                    $so_nguoi = "";
+                    $thoi_gian_dat_ban = "";
+                    $ghi_chu = "";
+                }
+                ?>
                 <div class="tieuDe">
                     <h1>Thông tin đặt bàn</h1>
                 </div>
@@ -10,7 +26,7 @@
                 <div class="form-group">
                     <div class="form-group-input">
                         <label for="ten_kh">Họ và tên<span style="color: red;">*</span></label>
-                        <input type="text" placeholder="Nhập vào họ và tên" name="ten_kh" value="<?php echo (isset($ten)) ? $ten : '' ?>">
+                        <input type="text" placeholder="Nhập vào họ và tên" name="ten_kh" value="<?php echo (isset($ten_kh)) ? $ten_kh : '' ?>">
                         <div class="thongbao">
                             <?php
                             if (isset($_SESSION['error']['ten_kh']) && $_SESSION['error']['ten_kh'] != "") {
@@ -80,27 +96,26 @@
                     <div class="form-group-input">
                         <label for="thoi_gian_dat_ban">Thời gian đặt bàn:<span style="color: red;">*</span></label>
                         <?php
-                        $ngay_hien_tai = date('h:i:sa d/m/Y');
+                        $ngay_hien_tai = date('Y-m-d\TH:i');
                         ?>
-                        <input type="datetime-local" id="thoi_gian_dat_ban" name="thoi_gian_dat_ban" min="<?php echo $ngay_hien_tai; ?>">
+                        <input type="datetime-local" name="thoi_gian_dat_ban" id="thoi_gian_dat_ban" <?php if (!empty($thoi_gian_dat_ban)) { ?>value="<?php echo $thoi_gian_dat_ban; ?>" <?php } ?> min="<?php echo $ngay_hien_tai; ?>">
                         <div class="thongbao">
                             <?php
                             if (isset($_SESSION['error']['thoi_gian_dat_ban']) && $_SESSION['error']['thoi_gian_dat_ban'] != "") {
                                 if (isset($_SESSION['error']['thoi_gian_dat_ban']['invalid'])) {
                                     echo $_SESSION['error']['thoi_gian_dat_ban']['invalid'];
-                                    unset($_SESSION['error']['thoi_gian_dat_ban']);
+                                    unset($_SESSION['error']['thoi_gian_dat_ban']['invalid']);
                                 }
 
                                 if (isset($_SESSION['error']['thoi_gian_dat_ban']['dinhdang'])) {
                                     echo $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'];
-                                    unset($_SESSION['error']['thoi_gian_dat_ban']);
+                                    unset($_SESSION['error']['thoi_gian_dat_ban']['dinhdang']);
                                 }
                             } else {
                                 unset($_SESSION['error']['thoi_gian_dat_ban']);
                             }
                             ?>
                         </div>
-
                     </div>
                     <div class="form-group-input">
                         <label for="so_nguoi">Số lượng khách:<span style="color: red;">*</span></label>
