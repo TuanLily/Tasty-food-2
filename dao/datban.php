@@ -1,18 +1,28 @@
 <?php
+// function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
+// {
+//   $ngay_dat_ban = date('Y-m-d', strtotime($thoi_gian_dat_ban));
+//   $gio_dat_ban = date('H:i:s', strtotime($thoi_gian_dat_ban));
+//   $trang_thai = 1; // Giá trị mặc định cho trạng thái là 1 (đơn mới)
+
+//   $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu, so_luong, gia, hinh, ten, mon_an_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+//   try {
+//     pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+//   } catch (PDOException $e) {
+//     echo "Lỗi: " . $e->getMessage();
+//   }
+// }
+
 function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
 {
-  $ngay_dat_ban = date('Y-m-d', strtotime($thoi_gian_dat_ban));
-  $gio_dat_ban = date('H:i:s', strtotime($thoi_gian_dat_ban));
-  $trang_thai = 1; // Giá trị mặc định cho trạng thái là 1 (đơn mới)
+  global $conn;
 
   $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu, so_luong, gia, hinh, ten, mon_an_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-  try {
-    pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-  } catch (PDOException $e) {
-    echo "Lỗi: " . $e->getMessage();
-  }
+  pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
 }
+
 
 function loadMonAn_tu_danhMuc($danh_muc_id)
 {
@@ -53,6 +63,30 @@ function loadall_tt_datban_theo_ten()
   $listdatban = pdo_query($sql);
   return $listdatban;
 }
+
+function lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban)
+{
+    try { 
+        $pdo = pdo_get_connection();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "SELECT id FROM dat_ban WHERE ten_kh = :ten_kh AND thoi_gian_dat_ban = :thoi_gian_dat_ban ORDER BY id DESC LIMIT 1";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':ten_kh', $ten_kh, PDO::PARAM_STR);
+        $stmt->bindParam(':thoi_gian_dat_ban', $thoi_gian_dat_ban, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result ? $result['id'] : null;
+    } catch (PDOException $e) {
+        // Xử lý ngoại lệ theo cách bạn muốn
+        echo "Error: " . $e->getMessage();
+        return null;
+    }
+}
+
+
 // SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
 /**
  * Hiển thị 1 list thông tin đặt bàn
@@ -110,4 +144,55 @@ function update_trang_thai_datban($id, $trang_thai)
 {
   $sql = "UPDATE dat_ban SET trang_thai='" . $trang_thai . "' WHERE id=" . $id;
   pdo_execute($sql);
+}
+
+
+function datBan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $trang_thai, $khach_hang_id, $so_luong, $gia, $hinh, $ten, $mon_an_id)
+{
+  try {
+    // Kết nối đến cơ sở dữ liệu (thay đổi thông tin kết nối phù hợp với hệ thống của bạn)
+
+
+    $conn = pdo_get_connection();
+
+    // Thiết lập chế độ báo lỗi
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Chuyển định dạng thời gian đặt bàn
+    $formatted_time = date('Y-m-d H:i:s', strtotime($thoi_gian_dat_ban));
+
+    // Chuẩn bị truy vấn INSERT
+    $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, thoi_gian_dat_ban, ghi_chu, trang_thai, khach_hang_id, so_luong, gia, hinh, ten, mon_an_id) 
+              VALUES (:ten_kh, :email, :sdt, :thoi_gian_dat_ban, :ghi_chu, :trang_thai, :khach_hang_id, :so_luong, :gia, :hinh, :ten, :mon_an_id)";
+
+    // Chuẩn bị câu lệnh truy vấn
+    $stmt = $conn->prepare($sql);
+
+    // Bind các tham số vào câu lệnh truy vấn
+    $stmt->bindParam(':ten_kh', $ten_kh);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':sdt', $sdt);
+    $stmt->bindParam(':thoi_gian_dat_ban', $formatted_time);
+    $stmt->bindParam(':ghi_chu', $ghi_chu);
+    $stmt->bindParam(':trang_thai', $trang_thai);
+    $stmt->bindParam(':khach_hang_id', $khach_hang_id);
+    $stmt->bindParam(':so_luong', $so_luong);
+    $stmt->bindParam(':gia', $gia);
+    $stmt->bindParam(':hinh', $hinh);
+    $stmt->bindParam(':ten', $ten);
+    $stmt->bindParam(':mon_an_id', $mon_an_id);
+
+    // Thực hiện truy vấn
+    $stmt->execute();
+
+    // Lấy id của đơn đặt bàn vừa thêm
+    $lastInsertId = $conn->lastInsertId();
+
+    // Đóng kết nối
+    $conn = null;
+
+    return $lastInsertId;
+  } catch (PDOException $e) {
+    echo "Lỗi: " . $e->getMessage();
+  }
 }

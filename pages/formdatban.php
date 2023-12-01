@@ -26,7 +26,8 @@
                 <div class="form-group">
                     <div class="form-group-input">
                         <label for="ten_kh">Họ và tên<span style="color: red;">*</span></label>
-                        <input type="text" placeholder="Nhập vào họ và tên" name="ten_kh" value="<?php echo (isset($ten_kh)) ? $ten_kh : '' ?>">
+                        <input type="text" placeholder="Nhập vào họ và tên" name="ten_kh"
+                            value="<?php echo (isset($ten_kh)) ? $ten_kh : '' ?>">
                         <div class="thongbao">
                             <?php
                             if (isset($_SESSION['error']['ten_kh']) && $_SESSION['error']['ten_kh'] != "") {
@@ -98,7 +99,11 @@
                         <?php
                         $ngay_hien_tai = date('Y-m-d\TH:i');
                         ?>
-                        <input type="datetime-local" name="thoi_gian_dat_ban" id="thoi_gian_dat_ban" <?php if (!empty($thoi_gian_dat_ban)) { ?>value="<?php echo $thoi_gian_dat_ban; ?>" <?php } ?> min="<?php echo $ngay_hien_tai; ?>">
+
+                        <input type="datetime-local" name="thoi_gian_dat_ban" id="thoi_gian_dat_ban"
+                            value="<?= !empty($thoi_gian_dat_ban) ? $thoi_gian_dat_ban : $ngay_hien_tai; ?>"
+                            min="<?= $ngay_hien_tai; ?>">
+
                         <div class="thongbao">
                             <?php
                             if (isset($_SESSION['error']['thoi_gian_dat_ban']) && $_SESSION['error']['thoi_gian_dat_ban'] != "") {
@@ -119,7 +124,8 @@
                     </div>
                     <div class="form-group-input">
                         <label for="so_nguoi">Số lượng khách:<span style="color: red;">*</span></label>
-                        <input type="number" id="so_nguoi" name="so_nguoi" value="<?php echo (isset($so_nguoi)) ? $so_nguoi : '' ?>" />
+                        <input type="number" id="so_nguoi" name="so_nguoi"
+                            value="<?php echo (isset($so_nguoi)) ? $so_nguoi : '' ?>" />
                         <div class="thongbao">
                             <?php
                             if (isset($_SESSION['error']['so_nguoi']) && $_SESSION['error']['so_nguoi'] != "") {
@@ -140,7 +146,8 @@
                     </div>
                     <div class="form-group-input-note">
                         <label for="ghi_chu">Ghi chú cho nhà hàng</label>
-                        <textarea name="ghi_chu" id="ghi_chu" cols="60" rows="5"><?php echo isset($_SESSION['ghi_chu']) ? $_SESSION['ghi_chu'] : ''; ?></textarea>
+                        <textarea name="ghi_chu" id="ghi_chu" cols="60"
+                            rows="5"><?php echo isset($_SESSION['ghi_chu']) ? $_SESSION['ghi_chu'] : ''; ?></textarea>
                     </div>
                 </div>
                 <div class="heading_container heading_center">
@@ -148,55 +155,64 @@
                 </div>
                 <ul class="nav nav-pills mb-3 filters_menu" id="pills-tab" role="tablist">
                     <!--  Kiểm tra và hiển thị danh sách danh mục -->
-                    <?php if (!empty($danhsachdanhmuc)) : ?>
-                        <?php foreach ($danhsachdanhmuc as $danhMuc) : ?>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="tab-<?= $danhMuc['id'] ?>" data-bs-toggle="pill" data-bs-target="#pills-<?= $danhMuc['id'] ?>" type="button" role="tab" aria-controls="pills-<?= $danhMuc['id'] ?>" aria-selected="true">
-                                    <?= $danhMuc['ten_dm'] ?>
-                                </button>
-                            </li>
-                        <?php endforeach; ?>
+                    <?php if (!empty($danhsachdanhmuc)): ?>
+                    <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tab-<?= $danhMuc['id'] ?>" data-bs-toggle="pill"
+                            data-bs-target="#pills-<?= $danhMuc['id'] ?>" type="button" role="tab"
+                            aria-controls="pills-<?= $danhMuc['id'] ?>" aria-selected="true">
+                            <?= $danhMuc['ten_dm'] ?>
+                        </button>
+                    </li>
+                    <?php endforeach; ?>
                     <?php endif; ?>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
 
-                    <?php if (!empty($danhsachdanhmuc)) : ?>
-                        <?php foreach ($danhsachdanhmuc as $danhMuc) : ?>
-                            <div class="tab-pane fade show" id="pills-<?= $danhMuc['id'] ?>" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                                <table class="bang_thongtin_mon_an">
-                                    <tbody>
-                                        <?php $listmonan = loadMonAn_tu_danhMuc($danhMuc['id']); ?>
-                                        <?php foreach ($listmonan as $monan) : ?>
-                                            <?php
+                    <?php if (!empty($danhsachdanhmuc)): ?>
+                    <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                    <div class="tab-pane fade show" id="pills-<?= $danhMuc['id'] ?>" role="tabpanel"
+                        aria-labelledby="pills-home-tab" tabindex="0">
+                        <table class="bang_thongtin_mon_an">
+                            <tbody>
+                                <?php $listmonan = loadMonAn_tu_danhMuc($danhMuc['id']); ?>
+                                <?php foreach ($listmonan as $monan): ?>
+                                <?php
                                             $ten = $monan['ten'];
                                             $hinh_ma = "uploads/" . $monan['hinh'];
                                             $gia = $monan['gia'];
                                             ?>
-                                            <tr>
-                                                <td class="bang_thongtin_mon_an-ten-mon-an">
-                                                    <?= $ten ?>
-                                                </td>
-                                                <td><img src="  <?= $hinh_ma ?>" alt="Hình ảnh món ăn" /></td>
-                                                <td class="bang_thongtin_mon_an-gia-ban">
-                                                    <?= number_format($gia, 0, ',', '.') ?>đ
-                                                </td>
-                                                <td>
-                                                    <div class="quantity-input">
-                                                        <button type="button" class="decrement" onclick="decrementQuantity(<?= $monan['mon_an_id'] ?>)">-</button>
-                                                        <input type="text" id="so_luong<?= $monan['mon_an_id'] ?>" name="so_luong<?= $monan['mon_an_id'] ?>" value="0" />
-                                                        <input type="hidden" name="gia_<?= $monan['mon_an_id'] ?>" value="<?= $monan['gia'] ?>" />
-                                                        <button type="button" class="increment" onclick="incrementQuantity(<?= $monan['mon_an_id'] ?>)" max="10">+</button>
-                                                        <input type="hidden" name="danh_muc_id" value="<?= $monan['danh_muc_id'] ?>">
+                                <tr>
+                                    <td class="bang_thongtin_mon_an-ten-mon-an">
+                                        <?= $ten ?>
+                                    </td>
+                                    <td><img src="  <?= $hinh_ma ?>" alt="Hình ảnh món ăn" /></td>
+                                    <td class="bang_thongtin_mon_an-gia-ban">
+                                        <?= number_format($gia, 0, ',', '.') ?>đ
+                                    </td>
+                                    <td>
+                                        <div class="quantity-input">
+                                            <button type="button" class="decrement"
+                                                onclick="decrementQuantity(<?= $monan['mon_an_id'] ?>)">-</button>
+                                            <input type="text" id="so_luong<?= $monan['mon_an_id'] ?>"
+                                                name="so_luong<?= $monan['mon_an_id'] ?>" value="0" />
+                                            <input type="hidden" name="gia_<?= $monan['mon_an_id'] ?>"
+                                                value="<?= $monan['gia'] ?>" />
+                                            <button type="button" class="increment"
+                                                onclick="incrementQuantity(<?= $monan['mon_an_id'] ?>)"
+                                                max="10">+</button>
+                                            <input type="hidden" name="danh_muc_id"
+                                                value="<?= $monan['danh_muc_id'] ?>">
 
-                                                    </div>
+                                        </div>
 
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <?php endforeach; ?>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php endforeach; ?>
                     <?php endif; ?>
 
                 </div>

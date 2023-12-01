@@ -138,7 +138,9 @@ foreach ($info_datban_monan as $n => $item) {
                                         <?php 
                                             $thanh_tien = $item['gia'][$index] * $item['so_luong'][$index];
                                             $tong_tien += $thanh_tien;
-                                            $thanh_tien_format = number_format($tong_tien, 0, ',', '.');
+                                            $khuyen_mai = $tong_tien * 0.1;
+                                            $tong_cong = $tong_tien - $khuyen_mai;
+                                            $thanh_tien_format = number_format($tong_cong, 0, ',', '.');
                                             ?>
                                         <?php endforeach; ?>
 

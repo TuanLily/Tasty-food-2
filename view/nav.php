@@ -72,39 +72,39 @@
 
                             ?>
 
-                        <div class="dropdown">
-                            <div class="user_kh"><a href="">Xin chào,
-                                    <?= $ten ?><ion-icon name="caret-down-outline">
-                                    </ion-icon>
-                                </a></div>
-                            <div class="dropdown-content">
-                                <a href="index.php?act=update">Cập nhật tài khoản</a>
-                                <a href="index.php?act=xemgiohang">Giỏ hàng</a>
-                                <a href="index.php?act=updatepw">Đổi mật khẩu</a>
+                            <div class="dropdown">
+                                <div class="user_kh"><a href="">Xin chào,
+                                        <?= $ten ?><ion-icon name="caret-down-outline">
+                                        </ion-icon>
+                                    </a></div>
+                                <div class="dropdown-content">
+                                    <a href="index.php?act=update">Cập nhật tài khoản</a>
+                                    <a href="index.php?act=xemgiohang">Giỏ hàng</a>
+                                    <a href="index.php?act=updatepw">Đổi mật khẩu</a>
 
-                                <?php
+                                    <?php
                                     if ($vai_tro == 0) {
                                         ?>
-                                <a href="admin/index.php">Đăng nhập admin</a>
-                                <?php } ?>
+                                        <a href="admin/index.php">Đăng nhập admin</a>
+                                    <?php } ?>
 
-                                <a href="index.php?act=thoat">Đăng xuất</a>
+                                    <a href="index.php?act=thoat">Đăng xuất</a>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <?php
+                            <?php
                         } else {
 
 
                             ?>
-                        <a href="index.php?act=dangnhap" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </a>
-                        <?php
+                            <a href="index.php?act=dangnhap" class="user_link">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                            <?php
                         }
                         ?>
-                        <a href="index.php?act=datban" class="order_online">
+                        <a href="index.php?act=datbanngay" class="order_online">
                             Đặt bàn Online
                         </a>
 

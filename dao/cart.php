@@ -243,28 +243,38 @@ function xemgiohang()
     $i = 0;
     $tong_tien = 0; // Khởi tạo biến tổng tiền
     foreach ($_SESSION['mycart'] as $item) {
-        $thanh_tien = $item[2] * $item[3]; // Tính thành tiền cho mỗi món
+        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
         $i++;
-?>
-        <tr>
-            <td><img src="<?php echo $item[0]; ?>" alt=""></td>
-            <td><?php echo $item[1]; ?></td>
-            <td><?php echo number_format($item[2], 0, ',', '.') . 'đ'; ?></td>
-            <td><?php echo $item[3]; ?></td>
-            <td>
-                <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
-            </td>
-            <td><?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?></td>
-        </tr>
-    <?php
+        ?>
+<tr>
+    <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
+    <td>
+        <?php echo $item['ten']; ?>
+    </td>
+    <td>
+        <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+    </td>
+    <td>
+        <?php echo $item['so_luong']; ?>
+    </td>
+    <td>
+        <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
+    </td>
+    <td>
+        <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
+    </td>
+</tr>
+<?php
     }
     ?>
-    <tr>
-        <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-        <td colspan="5"><?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?></td>
-    </tr>
-    </tbody>
+<tr>
+    <td colspan="5"><strong>Tổng thành tiền:</strong></td>
+    <td colspan="5">
+        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+    </td>
+</tr>
+</tbody>
 <?php
 
 
@@ -274,11 +284,13 @@ function tongdonhang()
 {
     $tong_tien = 0; // Khởi tạo biến tổng tiền
     foreach ($_SESSION['mycart'] as $item) {
-        $thanh_tien = $item[2] * $item[3]; // Tính thành tiền cho mỗi món
+        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+        $km = $tong_tien * 0.1;
+        $tong_cong = $tong_tien - $km;
     }
 
-    return $tong_tien;
+    return $tong_cong;
 }
 function thanhtoan()
 {
@@ -292,12 +304,11 @@ function thanhtoan()
 //     return pdo_execute_lastInsertId($sql, [$thanh_toan_ten, $thanh_toan_email, $thanh_toan_sdt, $thanh_toan_so_nguoi, $thanh_toan_thoigiandatban, $thanh_toan_ghi_chu, $ngay_thanh_toan, $tongtien]);
 // }
 
-function insert_thanhtoan($phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id)
+function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id)
 {
-    $sql = "INSERT INTO thanh_toan (phuong_thuc, tong_tien, ngay_thanh_toan, dat_ban_id) VALUES (?, ?, ?, ?)";
-    return pdo_execute_lastInsertId($sql, [$phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id]);
+    $sql = "INSERT INTO thanh_toan (thanh_toan_ten,thanh_toan_email,thanh_toan_sdt,thanh_toan_thoigiandatban,thanh_toan_ghi_chu,thanh_toan_so_nguoi,phuong_thuc, tong_tien, ngay_thanh_toan, dat_ban_id) VALUES (?, ?, ?, ?,?,?,?, ?, ?,?)";
+    return pdo_execute($sql, $ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id);
 }
-
 // function insert_datban($khach_hang_id, $mon_an_id, $hinh, $ten, $gia, $so_luong, $thanh_tien, $id_thanh_toan)
 // {
 //     $sql = "insert into cart(khach_hang_id,mon_an_id,hinh,ten,gia,so_luong,thanh_tien,id_thanh_toan) values('$khach_hang_id','$mon_an_id','$hinh','$ten','$gia','$so_luong','$thanh_tien','$id_thanh_toan')";

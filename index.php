@@ -110,8 +110,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
-
-
         case 'dangky':
             if (isset($_POST['dangky']) && ($_POST['dangky'])) {
                 $email = $_POST['email'];
@@ -328,7 +326,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
         case 'update':
-
+            include "view/header.php";
+            include "view/nav.php";
             if (isset($_POST['capnhat']) && ($_POST['capnhat'])) {
 
                 $ho_ten = $_POST['ho_ten'];
@@ -370,8 +369,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 }
             }
 
-            include "view/header.php";
-            include "view/nav.php";
+
             include 'pages/account/update.php';
             include "view/footer.php";
             break;
@@ -395,32 +393,11 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 include "view/footer.php";
             }
             break;
-        case 'datban':
-            include "view/header.php";
-            include "view/nav.php";
-            include "view/margintop.php";
-            include "./pages/formdatban.php";
-            include "view/footer.php";
-
-            break;
-
-        case 'thanhtoan':
-            if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
-                $dat_ban_id = $_POST['dat_ban_id'];
-                $phuong_thuc = isset($_POST['phuong_thuc']) ? $_POST['phuong_thuc'] : '';
-                $ngay_thanh_toan = date('Y-m-d H:i:s');
-                $tong_tien = tongdonhang();
-                insert_thanhtoan($phuong_thuc, $ngay_thanh_toan, $tong_tien, $dat_ban_id);
-            }
-            include "view/header.php";
-            include "view/nav.php";
-            include "view/margintop.php";
-            include "./pages/hoa_don.php";
-            include "view/margintop.php";
-            include "view/footer.php";
-            break;
 
         case 'datbanngay':
+            include 'view/header.php';
+            include 'view/nav.php';
+
             if (isset($_POST['datbanngay']) && $_POST['datbanngay']) {
                 $id = $_POST['id'];
                 $ten_kh = $_POST['ten_kh'];
@@ -431,6 +408,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $ghi_chu = $_POST['ghi_chu'];
                 $check = 1;
                 $tong_tien = 0;
+
                 if (empty($ten_kh)) {
                     $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
                     $check = 0;
@@ -478,12 +456,11 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $check = 0;
                 }
 
-
+                // Bắt đầu xử lý nếu không có lỗi
                 if ($check == 1) {
                     $listmonan = loadall_monan();
-                    $selectedItems = array();
+
                     foreach ($listmonan as $monan) {
-                        $hinh_ma = "uploads/" . $monan['hinh'];
                         $id = $monan['id'];
                         $so_luong = $_POST['so_luong' . $id];
                         $gia = $_POST['gia_' . $id];
@@ -491,33 +468,34 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $ten = $monan['ten'];
                         $mon_an_id = $id;
 
-
                         if ($so_luong > 0) {
-                            // insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
-                            // echo '<script>alert("Cập nhật thành công, bạn sẽ được chuyển đến trang thông tin đặt bàn")</script>';
-                            header('Location: index.php?act=thongtindatban');
-                            $thanh_tien = $gia * $so_luong; // Tính thành tiền cho mỗi món
-                            $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+                            insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+                            $thanh_tien = $gia * $so_luong;
+                            $tong_tien += $thanh_tien;
+
+                            $hinh_ma = "uploads/" . $hinh;
 
                             $themvaogiohang = [
-                                $hinh_ma,
-                                $ten,
-                                $gia,
-                                $so_luong,
-                                $thoi_gian_dat_ban,
-                                $so_nguoi,
-                                $ghi_chu,
-                                $ten_kh,
-                                $email,
-                                $sdt,
-                                $id,
-                                $mon_an_id
-
+                                'hinh' => $hinh_ma,
+                                'ten' => $ten,
+                                'gia' => $gia,
+                                'so_luong' => $so_luong,
+                                'thoi_gian_dat_ban' => $thoi_gian_dat_ban,
+                                'so_nguoi' => $so_nguoi,
+                                'ghi_chu' => $ghi_chu,
+                                'ten_kh' => $ten_kh,
+                                'email' => $email,
+                                'sdt' => $sdt,
+                                'id' => $id,
+                                'mon_an_id' => $mon_an_id
                             ];
-                            array_push($_SESSION['mycart'], $themvaogiohang);
 
+                            $_SESSION['mycart'][] = $themvaogiohang;
 
-
+                            if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
+                                // Xóa hết dữ liệu trong Session 'mycart'
+                                unset($_SESSION['mycart']);
+                            }
                             // Lưu thông tin vào session
                             $selectedItems = [
                                 'id' => $id,
@@ -530,21 +508,26 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                                 'tong_tien' => $tong_tien
                             ];
                             $_SESSION['info_datban'] = $selectedItems;
+
+
+
+
                         }
                     }
+
+                    echo '<script>alert("Điền thông tin và chọn món thành công, sẽ chuyển đến trang thanh toán")</script>';
+                    echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "index.php?act=thongtindatban";
+                            }, 0);
+                        </script>';
                 }
             }
 
-
-            if ($check == 0) {
-                // Lỗi xảy ra, vẫn ở lại trang biểu mẫu
-                include "view/header.php";
-                include "view/nav.php";
-                include "view/margintop.php";
-                include "./pages/formdatban.php";
-                include "view/footer.php";
-            }
+            include 'pages/formdatban.php';
+            include 'view/footer.php';
             break;
+
         case 'xoagiohang':
             if (isset($_GET['idgiohang'])) {
                 $idgiohang = $_GET['idgiohang'];
@@ -566,9 +549,71 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/header.php";
             include "view/nav.php";
             include "view/margintop.php";
-            include "./pages/thongtindatban.php";
-            include "view/footer.php";
 
+            // Gọi hàm $_SESSION['info_datban'] ra để lấy thông tin 
+            $infor_datban = $_SESSION['info_datban'];
+
+            // Kiểm tra xem có tồn tại giá trị của ten_kh và thoi_gian_dat_ban không
+            $ten_kh = $infor_datban['ten_kh'];
+            $thoi_gian_dat_ban = $infor_datban['thoi_gian_dat_ban'];
+
+            // Kiểm tra nếu cả hai giá trị đều tồn tại trước khi gọi hàm
+            if ($ten_kh !== null && $thoi_gian_dat_ban !== null) {
+                $lay_id_dat_ban = lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban);
+                var_dump($lay_id_dat_ban);
+
+                // Lưu dat_ban_id vào Session nếu có giá trị
+                if (!empty($lay_id_dat_ban)) {
+                    $_SESSION['dat_ban_id'] = $lay_id_dat_ban;
+                }
+            } else {
+                // Xử lý nếu giá trị không tồn tại (có thể hiển thị thông báo hoặc điều hướng người dùng)
+                echo "Vui lòng điền đầy đủ thông tin!";
+            }
+            include "pages/thongtindatban.php";
+            include "view/footer.php";
+            break;
+
+
+
+        case 'thanhtoan':
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
+                $dat_ban_id = isset($_SESSION['dat_ban_id']) ? $_SESSION['dat_ban_id'] : null;
+                var_dump($dat_ban_id);
+                $ten_kh = $_POST['ten_kh'];
+                $email = $_POST['email'];
+                $sdt = $_POST['sdt'];
+                $so_nguoi = $_POST['so_nguoi'];
+                $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
+                $ghi_chu = $_POST['ghi_chu'];
+                $phuong_thuc = isset($_POST['phuong_thuc']) ? intval($_POST['phuong_thuc']) : 1;
+                $ngay_thanh_toan = date('Y-m-d H:i:s');
+                $tong_tien = tongdonhang();
+                insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id);
+                unset($_SESSION['dat_ban_id']);
+
+                echo '<script>alert("Đặt bàn thành công!, Sau đây là trang xem lại đơn đặt hàng, cám ơn vì đã sử dụng dịch vụ")</script>';
+                echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "index.php?act=cam_on";
+                            }, 0);
+                        </script>';
+
+            }
+
+            include "./pages/hoa_don.php";
+            include "view/footer.php";
+            break;
+
+        case "cam_on":
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            include "./pages/hoa_don.php";
+            include "view/margintop.php";
             break;
 
         case "thoat":
@@ -580,7 +625,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
 
         case 'updatepw':
-
+            include "view/header.php";
+            include "view/nav.php";
             if (isset($_POST['update']) && ($_POST['update'])) {
                 $email = $_POST['email'];
                 $mat_khau1 = $_POST['mat_khau_1'];
@@ -649,8 +695,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             }
 
             // update_password($email, $mat_khau);
-            include "view/header.php";
-            include "view/nav.php";
+
             include 'pages/account/update_pw.php';
             include "view/footer.php";
             break;

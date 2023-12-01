@@ -1,8 +1,3 @@
-<?php // Thêm mục hàng vào giỏ hàng
-
-
-// Hiển thị nội dung của session
-var_dump($_SESSION['mycart']); ?>
 <form action="index.php?act=thanhtoan" method="post">
   <div class="khung_thông_tin_dat_ban">
 
@@ -47,7 +42,8 @@ var_dump($_SESSION['mycart']); ?>
             </tr>
             <tr>
               <td>Thời gian đặt bàn:</td>
-              <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>"></td>
+              <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>">
+              </td>
             </tr>
             <tr>
               <td>Ghi chú:</td>
@@ -85,7 +81,7 @@ var_dump($_SESSION['mycart']); ?>
         $i = 0;
         $tong_tien = 0; // Khởi tạo biến tổng tiền
         foreach ($_SESSION['mycart'] as $item) {
-          $thanh_tien = $item[2] * $item[3]; // Tính thành tiền cho mỗi món
+          $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
           $tong_tien += $thanh_tien; // Cộng vào tổng tiền
           $i++;
         }
@@ -97,18 +93,24 @@ var_dump($_SESSION['mycart']); ?>
         <table>
           <tr>
             <td>Tạm tính</td>
-            <td><?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?></td>
+            <td>
+              <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+            </td>
           </tr>
           <tr>
             <td>Khuyến mãi</td>
-            <td><?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?></td>
+            <td>
+              <?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?>
+            </td>
           </tr>
         </table>
         <hr class="hr_thong_tin_dat_ban">
         <table>
           <tr>
             <td>Tổng cộng (sau khuyến mãi)</td>
-            <td><?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?></td>
+            <td>
+              <?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?>
+            </td>
           </tr>
         </table>
         <hr class="hr_thong_tin_dat_ban">
@@ -134,7 +136,9 @@ var_dump($_SESSION['mycart']); ?>
         </table>
         <div class="nut_thanh_toan">
           <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
-          <input type="text" name="dat_ban_id" value="<?php echo $dat_ban_id; ?>" class="btnthanhtoan">
+          <input type="hidden" name="ten_kh" value="<?= $infor_datban['ten_kh'] ?>" class="btnthanhtoan">
+          <input type="hidden" name="thoi_gian_dat_ban" value="<?= $infor_datban['thoi_gian_dat_ban'] ?>"
+            class="btnthanhtoan">
         </div>
 
 
