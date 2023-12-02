@@ -420,10 +420,20 @@ if (isset($_GET['act'])) {
 
         // *Bắt đầu chức năng thống kê
         case "thongkema":
+            
             $listthongke = loadall_thongke();
             include('modules/thongke/thongke_mon_an.php');
             break;
-
+        case "thongketk":
+            
+            $listthongketk = loadall_thongke_taikhoan();
+            include('modules/thongke/thongke_taikhoan.php');
+            break;  
+        case "thongkedb":
+            
+            $listthongkedb = loadall_thongke_datban();
+            
+            break;     
         case "bieudo":
             $listthongke = loadall_thongke();
             include('modules/thongke/bieudo.php');
@@ -477,7 +487,10 @@ if (isset($_GET['act'])) {
             include('error/404.php');
     }
 } else {
+    $listthongkedb = loadall_thongke_datban();
+    $listthongketk = loadall_thongke_taikhoan();
     $listthongke = loadall_thongke();
     include('view/home.php');
+    
 }
 include('view/footer.php');

@@ -225,6 +225,18 @@ function loadall_thongke()
     $listthongke = pdo_query($sql);
     return $listthongke;
 }
+function loadall_thongke_taikhoan()
+{
+    $sql = "select count(id) as count_tk from khach_hang";
+    $listthongke_tk = pdo_query($sql);
+    return $listthongke_tk;
+}
+function loadall_thongke_datban()
+{
+    $sql = "select count(id) as count_db from dat_ban";
+    $listthongke_db = pdo_query($sql);
+    return $listthongke_db;
+}
 
 
 function getBill_limit($start, $limit)
