@@ -159,10 +159,9 @@ function login_user($email, $mat_khau)
     return true;
 }
 
-function getTaiKhoan_limit($start, $limit)
+function getdskh_limit($start, $limit)
 {
-
-    $sql = "select * from taikhoan order by id desc limit $start,$limit";
+    $sql = "select * from khach_hang order by id desc limit $start,$limit";
     $tk = pdo_query($sql);
     return $tk;
 }

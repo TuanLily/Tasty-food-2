@@ -2,6 +2,7 @@
 if (is_array($khachhang)) {
     extract($khachhang);
 }
+var_dump($khachhang);
 ?>
 
 <div class="layoutSidenav_content">
@@ -27,30 +28,39 @@ if (is_array($khachhang)) {
                         <div class="row g-3">
                             <div class="mb-2">
                                 <label for="username" class="form-label">Tên đăng nhập</label>
-                                <input type="text" class="form-control" id="username" name="ten" value="<?php echo isset($ten) ? htmlspecialchars($ten) : ''; ?>" required>
+                                <input type="text" class="form-control" id="username" name="ten"
+                                    value="<?=$khachhang['ten']?>">
                             </div>
                             <div class="mb-2">
                                 <label for="fullName" class="form-label">Họ tên</label>
-                                <input type="text" class="form-control" id="fullName" name="ho_ten" value="<?php echo isset($ho_ten) ? htmlspecialchars($ho_ten) : ''; ?>" required>
+                                <input type="text" class="form-control" id="fullName" name="ho_ten"
+                                    value="<?=$khachhang['ho_ten']?>">
                             </div>
                             <div class="mb-2">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>" required>
+                                <input type="text" class="form-control" id="email" name="email"
+                                    value="<?=$khachhang['email']?>">
                             </div>
                             <div class="mb-2">
                                 <label for="phoneNumber" class="form-label">Số điện thoại</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="sdt" value="<?php echo isset($sdt) ? htmlspecialchars($sdt) : ''; ?>" required>
+                                <input type="text" class="form-control" id="phoneNumber" name="sdt"
+                                    value="<?=$khachhang['sdt']?>">
+                                <div class="thongbao">
+                                    <?php echo (isset($_SESSION['error']['sdt'])) ? $_SESSION['error']['sdt'] : '' ?>
+                                </div>
                             </div>
                             <div class="mb-2">
                                 <label for="address" class="form-label">Địa chỉ</label>
-                                <input type="text" class="form-control" id="address" name="dia_chi" value="<?php echo isset($dia_chi) ? htmlspecialchars($dia_chi) : ''; ?>" required>
+                                <input type="text" class="form-control" id="address" name="dia_chi"
+                                    value="<?=$khachhang['dia_chi']?>">
                             </div>
                         </div>
                     </div>
 
                     <div class="card-footer mb-12" style="float:right;">
-                        <input type="hidden" name="id" value="<?php echo isset($id) ? htmlspecialchars($id) : ''; ?>">
-                        <input type="submit" class="btn btn-info me-lg-2 float-end" name="updateds" value="Lưu thay đổi">
+                        <input type="hidden" name="id" value="<?=$khachhang['id']?>">
+                        <input type="submit" class="btn btn-info me-lg-2 float-end" name="updateds"
+                            value="Lưu thay đổi">
                         <input type="reset" class="btn btn-warning me-2 float-end" value="Nhập lại">
                     </div>
                 </form>
@@ -61,7 +71,8 @@ if (is_array($khachhang)) {
     <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
-                <div class="text-muted"><span class="text-ft">Fasty Food</span> - Copyright &copy; 2023 All Rights Reserved.</div>
+                <div class="text-muted"><span class="text-ft">Fasty Food</span> - Copyright &copy; 2023 All Rights
+                    Reserved.</div>
                 <div>
                     <a href="#">Privacy Policy</a>
                     &middot;

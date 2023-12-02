@@ -1,3 +1,33 @@
+<?php
+// Truy vấn sử dụng PDO
+$pdo = pdo_get_connection();
+
+$stmt = $pdo->query("SELECT * FROM khach_hang WHERE 1 ");
+$dskh = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Tổng các bảng ghi
+$total = count($dskh);
+
+//Giới hạn hiển thị
+$limit = 5;
+
+//Tổng trang
+$total_page = ceil($total / $limit);
+
+// Lấy trang hiện tại
+$cr_page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$start = ($cr_page - 1) * $limit;
+
+// Hàm để lấy danh sách sản phẩm với giới hạn
+$list_dskh = getdskh_limit($start, $limit);
+
+
+if (isset($_GET['page']) && !empty($_GET['page'])) {
+    $listmonan = $list_dskh;
+}
+
+?>
 <div class="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
@@ -54,7 +84,39 @@
                         </tbody>
                     </table>
                 </div>
-                
+                <div class="card-footer">
+            <!-- Phân trang  -->
+            <div class="pag float-end">
+                <nav aria-label="Page navigation example" class="pag">
+                    <ul class="pagination">
+                        <?php if ($cr_page > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page - 1 ?>"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+
+                        <?php for ($i = 1; $i <= $total_page; $i++): ?>
+                            <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
+                                <a class="page-link" href="index.php?act=dskh&page=<?= $i ?>">
+                                    <?= $i ?>
+                                </a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <?php if ($cr_page < $total_page): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page + 1 ?>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
+        </div>    
             </div>
         </div>
     </main>

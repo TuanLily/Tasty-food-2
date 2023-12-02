@@ -1,7 +1,7 @@
 <?php
 session_start();
 ob_start();
-session_unset();
+// session_unset();
 
 require_once "../dao/pdo.php";
 require_once "../global/global.php";
@@ -26,7 +26,7 @@ $previousPage = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'in
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
-        // *Bắt đầu chức năng danh mục
+            // *Bắt đầu chức năng danh mục
 
 
         case 'themdm': //Kiểm tra người dùng có ấn vào nút add hay không?
@@ -131,9 +131,9 @@ if (isset($_GET['act'])) {
             include('modules/danhmuc/danhsach.php');
             break;
 
-        // *Kết thúc chức năng danh mục
+            // *Kết thúc chức năng danh mục
 
-        // !Bắt đầu chức năng sản phẩm
+            // !Bắt đầu chức năng sản phẩm
         case 'them':
             if (isset($_POST['them']) && ($_POST['them'])) {
                 $tensp = $_POST['tensp'];
@@ -329,9 +329,9 @@ if (isset($_GET['act'])) {
             include('modules/monan/danhsach.php');
             break;
 
-        // !Kết thúc chức năng sản phẩm
+            // !Kết thúc chức năng sản phẩm
 
-        // *Bắt đầu chức năng khách hàng
+            // *Bắt đầu chức năng khách hàng
         case 'dskh':
             $list_dskh = loadall_dskh();
             include('modules/khachhang/danhsach.php');
@@ -345,25 +345,32 @@ if (isset($_GET['act'])) {
             break;
 
         case 'capnhatds':
-            if (isset($_POST['updateds'])) {
+            if (isset($_POST['updateds']) && ($_POST['updateds'])) {
                 // Retrieve form data
-                $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
-                $ten = isset($_POST['ten']) ? htmlspecialchars($_POST['ten']) : '';
-                $ho_ten = isset($_POST['ho_ten']) ? htmlspecialchars($_POST['ho_ten']) : '';
-                $email = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
-                $sdt = isset($_POST['sdt']) ? htmlspecialchars($_POST['sdt']) : '';
-                $dia_chi = isset($_POST['dia_chi']) ? htmlspecialchars($_POST['dia_chi']) : '';
+                $id = $_POST['id'];
+                $ten = $_POST['ten'];
+                $ho_ten = $_POST['ho_ten'];
+                $email = $_POST['email'];
+                $sdt = $_POST['sdt'];
+                $dia_chi = $_POST['dia_chi'];
+                $check = 1;
+                $phonePattern = '/^(84|0[35789])+([0-9]{8})\b$/';
 
-                update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi);
-                header('location: index.php?act=dskh');
-                exit();
+                    update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi);
+                    echo '<script>
+                    alert("Cập nhật thành công!");
+                    setTimeout(function() {
+                        window.location.href = "index.php?act=dskh&page=1";
+                    }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
+                 </script>';
+                
             }
             break;
 
-        // *Kết thúc chức năng khách hàng
+            // *Kết thúc chức năng khách hàng
 
 
-        // !Bắt đầu chức năng đặt bàn
+            // !Bắt đầu chức năng đặt bàn
         case 'ds_dat_ban':
             $listdatban = loadall_tt_datban_theo_ten();
             include('modules/datban/danhsach.php');
@@ -375,7 +382,6 @@ if (isset($_GET['act'])) {
             }
             if (isset($_GET['ten_kh']) && isset($_GET['thoi_gian_dat_ban'])) {
                 $load_tt_monan = load_tt_monan_theo_ten($_GET['ten_kh'], $_GET['thoi_gian_dat_ban']);
-
             }
             $listdatban = loadall_tt_datban_theo_ten();
             include('modules/datban/thongtindatban.php');
@@ -415,10 +421,10 @@ if (isset($_GET['act'])) {
             break;
 
 
-        // !Kết thúc chức năng đặt bàn
+            // !Kết thúc chức năng đặt bàn
 
 
-        // *Bắt đầu chức năng thống kê
+            // *Bắt đầu chức năng thống kê
         case "thongkema":
             
             $listthongke = loadall_thongke();
@@ -438,7 +444,7 @@ if (isset($_GET['act'])) {
             $listthongke = loadall_thongke();
             include('modules/thongke/bieudo.php');
             break;
-        // *Kết thúc chức năng thống kê
+            // *Kết thúc chức năng thống kê
 
         // Bắt đầu phần phân quyền
         case "phanquyen":
