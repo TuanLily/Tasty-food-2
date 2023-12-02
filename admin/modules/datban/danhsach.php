@@ -64,27 +64,27 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 
                             <?php foreach ($listdatban as $list): ?>
 
-                                <?php
+                            <?php
                                 $trang_thai = $list['trang_thai'];
                                 ?>
-                                <tr>
-                                    <td scope="row">
-                                        <?= $list['id'] ?>
-                                    </td>
-                                    <td scope="row">
-                                        <?= $list['ten_kh'] ?>
-                                    </td>
-                                    <td scope="row">
-                                        <?= $list['sdt'] ?>
-                                    </td>
-                                    <td scope="row" class="text-center">
-                                        <?= $list['so_nguoi'] ?>
-                                    </td>
-                                    <td scope="row">
-                                        <?= date('d/m/Y - H:i:s ', strtotime($list['thoi_gian_dat_ban'])) ?>
-                                    </td>
-                                    <td scope="row" class="text-center">
-                                        <?php
+                            <tr>
+                                <td scope="row">
+                                    <?= $list['id'] ?>
+                                </td>
+                                <td scope="row">
+                                    <?= $list['ten_kh'] ?>
+                                </td>
+                                <td scope="row">
+                                    <?= $list['sdt'] ?>
+                                </td>
+                                <td scope="row" class="text-center">
+                                    <?= $list['so_nguoi'] ?>
+                                </td>
+                                <td scope="row">
+                                    <?= date('d/m/Y - H:i:s ', strtotime($list['thoi_gian_dat_ban'])) ?>
+                                </td>
+                                <td scope="row" class="text-center">
+                                    <?php
                                         $trang_thai_styles = array(
                                             1 => 'btn-danger',
                                             2 => 'btn-light',
@@ -95,21 +95,22 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 
                                         ?>
 
-                                        <?php foreach ($trang_thai_styles as $i => $style_class): ?>
-                                            <?php
+                                    <?php foreach ($trang_thai_styles as $i => $style_class): ?>
+                                    <?php
+
                                             if ($i == $trang_thai) {
                                                 echo '<span class="btn btn-sm cs-default ' . $style_class . '" readonly>' . get_trang_thai_datban($i) . '</span>';
                                             }
                                             ?>
-                                        <?php endforeach; ?>
-                                    </td>
+                                    <?php endforeach; ?>
+                                </td>
 
-                                    <td>
-                                        <?php $ct_datban = "index.php?act=chi_tiet_dat_ban&id=" . $list['id']; ?>
-                                        <a href="<?= $ct_datban ?>" class="btn btn-primary"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>
-                                    </td>
-                                </tr>
+                                <td>
+                                    <?php $ct_datban = "index.php?act=chi_tiet_dat_ban&id=" . $list['id']; ?>
+                                    <a href="<?= $ct_datban ?>" class="btn btn-primary"><i
+                                            class="fa-solid fa-pen-to-square"></i></a>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
 
                         </tbody>
@@ -121,29 +122,29 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
                         <nav aria-label="Page navigation example" class="pag">
                             <ul class="pagination">
                                 <?php if ($cr_page > 1): ?>
-                                    <li class="page-item">
-                                        <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $cr_page - 1 ?>"
-                                            aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $cr_page - 1 ?>"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
                                 <?php endif; ?>
 
                                 <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                                    <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
-                                        <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $i ?>">
-                                            <?= $i ?>
-                                        </a>
-                                    </li>
+                                <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
+                                    <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $i ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
                                 <?php endfor; ?>
 
                                 <?php if ($cr_page < $total_page): ?>
-                                    <li class="page-item">
-                                        <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $cr_page + 1 ?>"
-                                            aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?act=ds_dat_ban&page=<?= $cr_page + 1 ?>"
+                                        aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
                                 <?php endif; ?>
                             </ul>
                         </nav>

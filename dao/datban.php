@@ -63,27 +63,28 @@ function loadall_tt_datban_theo_ten()
   $listdatban = pdo_query($sql);
   return $listdatban;
 }
-
+// SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
+// SELECT MAX(id) AS id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS max_trang_thai, MIN(trang_thai) AS min_trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC;
 function lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban)
 {
-    try { 
-        $pdo = pdo_get_connection();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  try {
+    $pdo = pdo_get_connection();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "SELECT id FROM dat_ban WHERE ten_kh = :ten_kh AND thoi_gian_dat_ban = :thoi_gian_dat_ban ORDER BY id DESC LIMIT 1";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':ten_kh', $ten_kh, PDO::PARAM_STR);
-        $stmt->bindParam(':thoi_gian_dat_ban', $thoi_gian_dat_ban, PDO::PARAM_STR);
-        $stmt->execute();
+    $sql = "SELECT id FROM dat_ban WHERE ten_kh = :ten_kh AND thoi_gian_dat_ban = :thoi_gian_dat_ban ORDER BY id DESC LIMIT 1";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ten_kh', $ten_kh, PDO::PARAM_STR);
+    $stmt->bindParam(':thoi_gian_dat_ban', $thoi_gian_dat_ban, PDO::PARAM_STR);
+    $stmt->execute();
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        return $result ? $result['id'] : null;
-    } catch (PDOException $e) {
-        // Xử lý ngoại lệ theo cách bạn muốn
-        echo "Error: " . $e->getMessage();
-        return null;
-    }
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result ? $result['id'] : null;
+  } catch (PDOException $e) {
+    // Xử lý ngoại lệ theo cách bạn muốn
+    echo "Error: " . $e->getMessage();
+    return null;
+  }
 }
 
 
@@ -140,10 +141,20 @@ function get_trang_thai_datban($n)
   return $tt;
 }
 
-function update_trang_thai_datban($id, $trang_thai)
+
+function update_trang_thai_datban($ten_kh, $thoi_gian_dat_ban, $trang_thai)
 {
-  $sql = "UPDATE dat_ban SET trang_thai='" . $trang_thai . "' WHERE id=" . $id;
-  pdo_execute($sql);
+  $sql = "UPDATE dat_ban SET trang_thai=:trang_thai WHERE ten_kh=:ten_kh AND thoi_gian_dat_ban=:thoi_gian_dat_ban";
+  $params = array(
+    ':ten_kh' => $ten_kh,
+    ':thoi_gian_dat_ban' => $thoi_gian_dat_ban,
+    ':trang_thai' => $trang_thai
+  );
+
+  // Thêm dòng sau để đảm bảo số lượng tham số và giá trị tương ứng đúng
+  $sql = bindValues($sql, $params);
+
+  pdo_execute($sql, $params);
 }
 
 

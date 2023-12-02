@@ -390,10 +390,11 @@ if (isset($_GET['act'])) {
                     $trang_thai = $_POST['trang_thai'];
 
                     // Lấy ID của đơn đặt bàn (chỉ là ví dụ, bạn cần điều chỉnh cách lấy ID tùy vào cách bạn tổ chức dữ liệu)
-                    $id = $_POST['id'];
+                    $ten_kh = $_POST['ten_kh'];
+                    $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
 
                     // Gọi hàm để cập nhật trạng thái
-                    update_trang_thai_datban($id, $trang_thai);
+                    update_trang_thai_datban($ten_kh, $thoi_gian_dat_ban, $trang_thai);
 
                     // Chuyển hướng hoặc thông báo cập nhật thành công
                     echo '<script>

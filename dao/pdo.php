@@ -143,3 +143,14 @@ function pdo_prepare($pdo, $sql)
     // Trả về kết quả
     return $stmt;
 }
+
+// Hàm bindValues này nhìn chung có vẻ giống với việc thay thế các giá trị tham số 
+// trong câu truy vấn SQL bằng các giá trị tương ứng
+
+function bindValues($sql, $params)
+{
+    foreach ($params as $key => $value) {
+        $sql = str_replace($key, "'" . $value . "'", $sql);
+    }
+    return $sql;
+}
