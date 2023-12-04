@@ -19,9 +19,12 @@
         <div class="header_title"><a href="">Hóa đơn thanh toán dịch vụ</a></div>
     </div>
     <div class="header_top">
-        <p class="header_top_left"><i class="fa-regular fa-calendar-days"></i> Thứ năm, 30/11/2023
+        <p class="header_top_left"><i class="fa-regular fa-calendar-days"></i>
+            <?= $_SESSION['info_datban']['thoi_gian_dat_ban'] ?>
         </p>
-        <p class="header_top_right"><i class="fa-solid fa-money-bills"></i> Hóa đơn : số 100</p>
+        <p class="header_top_right"><i class="fa-solid fa-money-bills"></i> Hóa đơn : TF -
+            <?= $_SESSION['info_datban']['id'] + 22 ?>
+        </p>
     </div>
     <h2>Thông tin đặt bàn</h2>
     <table class="table">
@@ -75,13 +78,13 @@
         </thead>
         <tbody>
             <?php
-			$i = 0;
-			$tong_tien = 0; // Khởi tạo biến tổng tiền
-			foreach ($_SESSION['mycart'] as $item) {
-				$thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-				$tong_tien += $thanh_tien; // Cộng vào tổng tiền
-				$i++;
-				?>
+            $i = 0;
+            $tong_tien = 0; // Khởi tạo biến tổng tiền
+            foreach ($_SESSION['mycart'] as $item) {
+                $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+                $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+                $i++;
+                ?>
             <tr>
                 <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
                 <td>
@@ -103,16 +106,16 @@
     </table>
 
     <?php
-	$i = 0;
-	$tong_tien = 0; // Khởi tạo biến tổng tiền
-	foreach ($_SESSION['mycart'] as $item) {
-		$thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-		$tong_tien += $thanh_tien; // Cộng vào tổng tiền
-		$i++;
-	}
-	$khuyen_mai = $tong_tien * 0.1;
-	$tong_cong = $tong_tien - $khuyen_mai;
-	?>
+    $i = 0;
+    $tong_tien = 0; // Khởi tạo biến tổng tiền
+    foreach ($_SESSION['mycart'] as $item) {
+        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+        $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+        $i++;
+    }
+    $khuyen_mai = $tong_tien * 0.1;
+    $tong_cong = $tong_tien - $khuyen_mai;
+    ?>
 
 
     <table>

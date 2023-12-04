@@ -560,7 +560,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             // Kiểm tra nếu cả hai giá trị đều tồn tại trước khi gọi hàm
             if ($ten_kh !== null && $thoi_gian_dat_ban !== null) {
                 $lay_id_dat_ban = lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban);
-                var_dump($lay_id_dat_ban);
 
                 // Lưu dat_ban_id vào Session nếu có giá trị
                 if (!empty($lay_id_dat_ban)) {
@@ -582,7 +581,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/margintop.php";
             if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
                 $dat_ban_id = isset($_SESSION['dat_ban_id']) ? $_SESSION['dat_ban_id'] : null;
-                var_dump($dat_ban_id);
                 $ten_kh = $_POST['ten_kh'];
                 $email = $_POST['email'];
                 $sdt = $_POST['sdt'];

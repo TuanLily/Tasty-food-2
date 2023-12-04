@@ -40,7 +40,7 @@
                                         <div class="detail-box">
                                             <h5>' . $ten . '</h5>
                                             <div class="options">
-                                                <h6 style="text-decoration:line-through;">' . number_format($gia, 0, ',', '.') . 'đ</h6>
+                                                <h6>' . number_format($gia, 0, ',', '.') . 'đ</h6>
                                                 <a href="" class="btn btn-warning">
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 </a>

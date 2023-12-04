@@ -64,7 +64,6 @@ function loadall_tt_datban_theo_ten()
   return $listdatban;
 }
 // SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC
-// SELECT MAX(id) AS id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS max_trang_thai, MIN(trang_thai) AS min_trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC;
 function lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban)
 {
   try {
