@@ -9,12 +9,15 @@ $thoi_gian_dat_ban = $datban['thoi_gian_dat_ban']; // Thay bằng thời gian đ
 
 $info_datban_monan = load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban);
 
+
 foreach ($info_datban_monan as $n => $item) {
     $item['mon_an_id'] = explode(',', $item['mon_an_id']);
     $item['ten'] = explode(',', $item['ten']);
     $item['gia'] = explode(',', $item['gia']);
     $item['so_luong'] = explode(',', $item['so_luong']);
+    $item['hinh'] = explode(',', $item['hinh']);
 }
+
 
 ?>
 
@@ -36,7 +39,7 @@ foreach ($info_datban_monan as $n => $item) {
                 <div class="card mb-2">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Chi tiết thông tin khách đặt bàn - <strong>id = <?= $datban['id']?></strong>
+                        Chi tiết thông tin khách đặt bàn - <strong>id = <?= $datban['id'] ?></strong>
                     </div>
 
 
@@ -113,45 +116,52 @@ foreach ($info_datban_monan as $n => $item) {
                         <table class="table">
                             <thead>
                                 <tr class="table-warning">
-                                    <th scope="col">Tên khách hàng</th>
-                                    <th scope="col" class="text-center">Ngày đặt bàn</th>
-                                    <th scope="col" class="text-center">Thông tin món ăn khách đặt </th>
+                                    <th scope="col">Tên món ăn</th>
+                                    <th scope="col">Hình món ăn</th>
+                                    <th scope="col" class="text-center">Số lượng món ăn </th>
+                                    <th scope="col" class="text-center">Giá món ăn </th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $tong_tien = 0;
+                                $khuyen_mai = 0;
+                                $tong_cong = 0;
+                                ?>
+                                <?php foreach ($item['ten'] as $index => $ten) : ?>
                                 <tr class="table-light">
-                                    <?php $tong_tien = 0?>
-                                    <td><?= $item['ten_kh'] ?></td>
-                                    <td class="text-center">
-                                        <?= date('d/m/Y - H:i:s ', strtotime($item['thoi_gian_dat_ban'])) ?></td>
-                                    <td>
-                                        <?php foreach ($item['ten'] as $index => $ten): ?>
-                                        <?php
+                                    <?php
+                                        $hinh = $item['hinh'][$index];
+                                        $hinhpath = '../uploads/' . $hinh;
+                                        if (is_file($hinhpath)) {
+                                            $hinhanh = "<img src='" . $hinhpath . "' height='80'>";
+                                        } else {
+                                            $hinhanh = "Không có hình ảnh";
+                                        }
                                         ?>
-                                        <div>
-                                            <strong>Tên món:</strong> <?= $ten ?><br>
-                                            <strong>Giá:</strong>
-                                            <?= number_format($item['gia'][$index],0,',','.') ?>đ<br>
-                                            <strong>Số lượng:</strong> <?= $item['so_luong'][$index] ?><br>
-                                        </div>
-                                        <hr>
-                                        <?php 
-                                            $thanh_tien = $item['gia'][$index] * $item['so_luong'][$index];
-                                            $tong_tien += $thanh_tien;
-                                            $khuyen_mai = $tong_tien * 0.1;
-                                            $tong_cong = $tong_tien - $khuyen_mai;
-                                            $thanh_tien_format = number_format($tong_cong, 0, ',', '.');
-                                            ?>
-                                        <?php endforeach; ?>
-
-                                    </td>
+                                    <td><?= $ten ?></td>
+                                    <td><?= $hinhanh ?></td>
+                                    <td><?= $item['so_luong'][$index] ?></td>
+                                    <td><?= number_format($item['gia'][$index], 0, ',', '.') ?>đ</td>
+                                    <?php
+                                        $thanh_tien = $item['gia'][$index] * $item['so_luong'][$index];
+                                        $tong_tien += $thanh_tien;
+                                        ?>
                                 </tr>
+                                <?php endforeach; ?>
+
+                                <?php
+                                $khuyen_mai = $tong_tien * 0.1;
+                                $tong_cong = $tong_tien - $khuyen_mai;
+                                $thanh_tien_format = number_format($tong_cong, 0, ',', '.');
+                                ?>
 
                             </tbody>
                         </table>
                         <div class="row mt-3">
                             <div class="mb-3 col-6">
-                                <label for="exampleFormControlInput2" class="form-label">Tổng tiền</label>
+                                <label for="exampleFormControlInput2" class="form-label">Tổng tiền (Đã bao gồm khuyến
+                                    mãi 10%)</label>
                                 <input type="text" class="form-control" id="exampleFormControlInput2" name="tong_tien"
                                     value="<?= $thanh_tien_format ?>đ" disabled>
                             </div>
