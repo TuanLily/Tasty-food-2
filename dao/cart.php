@@ -233,10 +233,12 @@ function loadall_thongke_taikhoan()
 }
 function loadall_thongke_datban()
 {
-    $sql = "select count(id) as count_db from dat_ban";
+    $sql = "SELECT COUNT(DISTINCT ten_kh) AS count_db FROM dat_ban";
     $listthongke_db = pdo_query($sql);
     return $listthongke_db;
 }
+
+// Hàm DISTINCT trong SQL được sử dụng để lọc các giá trị duy nhất từ một cột hoặc nhiều cột trong kết quả của một truy vấn SELECT. Nó giúp loại bỏ các giá trị trùng lặp, chỉ giữ lại mỗi giá trị duy nhất một lần
 
 
 function getBill_limit($start, $limit)
@@ -259,35 +261,35 @@ function xemgiohang()
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
         $i++;
         ?>
-<tr>
-    <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
-    <td>
-        <?php echo $item['ten']; ?>
-    </td>
-    <td>
-        <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
-    </td>
-    <td>
-        <?php echo $item['so_luong']; ?>
-    </td>
-    <td>
-        <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
-    </td>
-    <td>
-        <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
-    </td>
-</tr>
-<?php
+        <tr>
+            <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
+            <td>
+                <?php echo $item['ten']; ?>
+            </td>
+            <td>
+                <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+            </td>
+            <td>
+                <?php echo $item['so_luong']; ?>
+            </td>
+            <td>
+                <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
+            </td>
+            <td>
+                <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
+            </td>
+        </tr>
+        <?php
     }
     ?>
-<tr>
-    <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-    <td colspan="5">
-        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
-</tbody>
-<?php
+    <tr>
+        <td colspan="5"><strong>Tổng thành tiền:</strong></td>
+        <td colspan="5">
+            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+        </td>
+    </tr>
+    </tbody>
+    <?php
 
 
 }
