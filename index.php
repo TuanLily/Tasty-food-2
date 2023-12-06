@@ -51,7 +51,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             } else {
                 $keyw = "";
             }
-            $dsma = loadall_monan($keyw, $danh_muc_id);
+            $dsma = loadall_monan($keyw, $danh_muc_id = '');
             include "view/margintop.php";
             include "pages/menu.php";
             include "view/footer.php";

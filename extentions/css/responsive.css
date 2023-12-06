@@ -1,6 +1,8 @@
-@media (max-width: 1300px) {}
+@media (max-width: 1300px) {
+}
 
-@media (max-width: 1120px) {}
+@media (max-width: 1120px) {
+}
 
 @media (max-width: 992px) {
   .hero_area {
@@ -9,11 +11,12 @@
 
   .custom_nav-container .navbar-nav {
     padding-top: 15px;
-padding-left: 0;
+    padding-left: 0;
     align-items: center;
+    background-color: rgb(34, 40, 49);
   }
 
-  .user_option{
+  .user_option {
     justify-content: center;
     margin-top: 15px;
   }
@@ -39,7 +42,6 @@ padding-left: 0;
 }
 
 @media (max-width: 767px) {
-
   .about_section .detail-box,
   .book_section .form_container {
     margin-bottom: 45px;
@@ -60,9 +62,11 @@ padding-left: 0;
   }
 }
 
-@media (max-width: 576px) {}
+@media (max-width: 576px) {
+}
 
-@media (max-width: 480px) {}
+@media (max-width: 480px) {
+}
 
 @media (max-width: 430px) {
   .offer_section .box {
@@ -74,11 +78,45 @@ padding-left: 0;
     margin-right: 0;
     margin-bottom: 15px;
   }
+
+  .custom_nav-container .navbar-nav {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 0;
+    align-items: center;
+    background-color: rgb(34, 40, 49);
+    margin: -15px 20px 0px 20px;
+    max-width: 400px !important;
+    z-index: -1;
+  }
+
+  #slider {
+    width: 100%;
+    margin-top: 90px;
+  }
+
+  /* !Reponsive trang đặt bàn online */
+  form .form-group .form-group-input {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    margin: 8px 0;
+  }
 }
 
 @media (max-width: 376px) {
   .slider_section .detail-box h1 {
     font-size: 3rem;
+  }
+  .custom_nav-container .navbar-nav {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 0;
+    align-items: center;
+    background-color: rgb(34, 40, 49);
+    margin: -15px 10px 0px 10px;
+    max-width: 400px !important;
+    z-index: -1;
   }
 }
 
@@ -88,8 +126,7 @@ padding-left: 0;
   }
 }
 
-
-@media (min-width:576px) and (max-width:991px) {
+@media (min-width: 576px) and (max-width: 991px) {
   .rent_solution_container .col-md-4.col-sm-6 {
     float: left;
     width: 50%;

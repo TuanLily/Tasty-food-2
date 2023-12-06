@@ -131,6 +131,7 @@ a:focus {
   top: 0;
   left: 0;
   width: 100%;
+  min-height: 90px !important;
   z-index: 999;
   background-color: rgb(34, 40, 49);
 }
@@ -1280,4 +1281,8 @@ input[type="submit"] {
 
 .close-btn:hover {
   background-color: #666666;
+}
+
+.custom_nav-container {
+  padding: 20px 0 20px 0 !important;
 }
