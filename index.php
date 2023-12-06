@@ -631,18 +631,30 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
         case "in_hoa_don":
-            $danh_sach_don_hang_da_dat = loadall_don_hang_da_dat($_SESSION["email"]['id']);
+            // Kiểm tra xem có ID được truyền qua POST không
+            if (isset($_GET['id_hoa_don']) && $_GET['id_hoa_don']) {
 
-            if ($danh_sach_don_hang_da_dat) {
-                include "view/header.php";
-                include "view/nav.php";
-                include "view/margintop.php";
-                include "./pages/in_hoa_don.php";
-                include "view/footer.php";
+                $id_hoa_don = $_GET['id_hoa_don'];
+
+                // Gọi hàm để load thông tin đơn hàng theo ID
+                $danh_sach_don_hang_da_dat = loadall_don_hang_da_dat($_SESSION['email']['id']);
+
+                if ($danh_sach_don_hang_da_dat) {
+                    include "view/header.php";
+                    include "view/nav.php";
+                    include "view/margintop.php";
+                    loadone_id_datban($id_hoa_don);
+                    include "pages/in_hoa_don.php";
+                } else {
+                    echo "Không có đơn hàng nào.";
+                }
             } else {
-                echo "Không có đơn hàng nào.";
+                echo "Không có ID đơn hàng được cung cấp.";
             }
             break;
+
+
+
 
 
 

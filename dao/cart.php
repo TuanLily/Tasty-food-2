@@ -260,37 +260,37 @@ function xemgiohang()
         $i++;
         ?>
 
-<tr>
-    <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
-    <td>
-        <?php echo $item['ten']; ?>
-    </td>
-    <td>
-        <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
-    </td>
-    <td>
-        <?php echo $item['so_luong']; ?>
-    </td>
-    <td>
-        <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
-    </td>
-    <td>
-        <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
-    </td>
-</tr>
+        <tr>
+            <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
+            <td>
+                <?php echo $item['ten']; ?>
+            </td>
+            <td>
+                <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+            </td>
+            <td>
+                <?php echo $item['so_luong']; ?>
+            </td>
+            <td>
+                <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
+            </td>
+            <td>
+                <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
+            </td>
+        </tr>
 
-<?php
+        <?php
     }
     ?>
-<tr>
-    <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-    <td colspan="5">
-        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
-</tbody>
+    <tr>
+        <td colspan="5"><strong>Tổng thành tiền:</strong></td>
+        <td colspan="5">
+            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+        </td>
+    </tr>
+    </tbody>
 
-<?php
+    <?php
 
 }
 
@@ -344,6 +344,13 @@ function loadall_don_hang_da_dat($khach_hang_id)
     $danh_sach_don_hang_da_dat = pdo_query($sql);
     return $danh_sach_don_hang_da_dat;
 }
+function loadone_id_datban($id)
+{
+    $sql = "SELECT tt.*, db.id AS dat_ban_id FROM thanh_toan AS tt";
+    $sql .= "JOIN dat_ban AS db ON tt.dat_ban_id = db.id WHERE tt.id = '" . $id . "'";
+    $danh_sach_don_hang_da_dat = pdo_query($sql);
+    return $danh_sach_don_hang_da_dat;
+}
 function load_ma_hoa_don()
 {
     $sql = "select * from thanh_toan where 1 order by id desc limit 0,9";
@@ -351,17 +358,6 @@ function load_ma_hoa_don()
     return $load_ma_hoa_don;
 }
 
-// function load_dat_ban_theo_id($dat_ban_id)
-// {
-//     $sql = "SELECT * FROM dat_ban WHERE id = " . $dat_ban_id;
-//     $result = pdo_query($sql);
-
-//     if ($result && count($result) > 0) {
-//         return $result[0]; // Return the first (and only) row of the result
-//     } else {
-//         return null; // Return null if no data is found
-//     }
-// }
 function get_phuong_thuc_don_hang($n)
 {
     switch ($n) {
@@ -387,56 +383,6 @@ function load_so_luong_mon_an($dat_ban_id)
     $thanh_toan = pdo_query($sql);
     return count($thanh_toan);
 }
-
-// function get_booking_history_with_dishes()
-// {
-//     $sql = "SELECT
-//                 dat_ban.id as dat_ban_id,
-//                 thanh_toan.id as thanh_toan_id,
-//                 thanh_toan.thanh_toan_ten,
-//                 SUM(thanh_toan.tong_tien) as total_price,
-//                 thanh_toan.ngay_thanh_toan,
-//                 thanh_toan.khach_hang_id,
-//                 GROUP_CONCAT(mon_an.ten) as dish_names
-//             FROM
-//                 dat_ban
-//             INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
-//             INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
-//             GROUP BY
-//                 dat_ban.id, thanh_toan.id";
-
-//     $result = pdo_query($sql);
-
-//     return $result;
-// }
-
-
-// function get_booking_history_with_dishes()
-// {
-//     $sql = "SELECT
-//         dat_ban.id as dat_ban_id,
-//         thanh_toan.id as thanh_toan_id,
-//         thanh_toan.thanh_toan_ten,
-//         SUM(thanh_toan.tong_tien) as total_price,
-//         COUNT(mon_an.id) as total_items,
-//         thanh_toan.ngay_thanh_toan,
-//         dat_ban.thoi_gian_dat_ban,
-//         GROUP_CONCAT(mon_an.ten) as dish_names,
-//         GROUP_CONCAT(mon_an.gia) as dish_prices,
-//         GROUP_CONCAT(dat_ban.so_luong) as dish_quantities
-//     FROM
-//         dat_ban
-//     INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
-//     INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
-//     GROUP BY
-//         dat_ban.id, thanh_toan.id, thanh_toan.thanh_toan_ten, thanh_toan.ngay_thanh_toan, dat_ban.thoi_gian_dat_ban
-//     ORDER BY
-//         thanh_toan.ngay_thanh_toan DESC";
-
-//     $result = pdo_query($sql);
-
-//     return $result;
-// }
 
 
 function get_booking_history_by_customer_and_time($ten_kh, $thoi_gian_dat_ban)
@@ -520,74 +466,6 @@ function loadone_in_hoa_don($id)
     $in_hoa_don = pdo_query_one($sql, $params);
     return $in_hoa_don;
 }
-
-
-
-
-
-
-// function load_so_luong_mon_an($dat_ban_id)
-// {
-//     $sql = "SELECT COUNT(*) as so_luong FROM dat_ban WHERE id=" . $dat_ban_id;
-//     $result = pdo_query($sql);
-
-//     if ($result && isset($result[0]['so_luong'])) {
-//         return $result[0]['so_luong'];
-//     } else {
-//         return 0;
-//     }
-// }
-
-
-
-
-
-
-
-// function load_so_luong_mon_an($dat_ban_id)
-// {
-//     $sql = "SELECT MAX(id) as id, gia, SUM(so_luong) AS tong_so_luong_mon_an FROM dat_ban WHERE id = " . $dat_ban_id . " GROUP BY gia ORDER BY thoi_gian_dat_ban DESC";
-//     $thanh_toan = pdo_query($sql);
-
-//     if ($thanh_toan) {
-//         return count($thanh_toan);
-//     } else {
-//         return 0;
-//     }
-// }
-// function load_so_luong_mon_an($dat_ban_id)
-// {
-//     $sql = "SELECT COUNT(*) as num_mon_an FROM thanh_toan INNER JOIN dat_ban ON thanh_toan.dat_ban_id = dat_ban.id WHERE dat_ban_id=" . $dat_ban_id;
-//     $thanh_toan = pdo_query($sql);
-
-//     if ($thanh_toan && isset($thanh_toan[0]['num_mon_an'])) {
-//         return $thanh_toan[0]['num_mon_an'];
-//     } else {
-//         return 0;
-//     }
-// }
-
-// function load_so_luong_mon_an($dat_ban_id, $pdo)
-// {
-//     $sql = "SELECT SUM(so_luong) as tong_so_luong FROM thanh_toan WHERE dat_ban_id = :dat_ban_id";
-//     $stmt = pdo_prepare($pdo, $sql); // Truyền đối tượng PDO vào đây
-//     pdo_execute($stmt, array(':dat_ban_id' => $dat_ban_id));
-//     $result = $stmt->fetch();
-
-//     if ($result && isset($result['tong_so_luong'])) {
-//         return $result['tong_so_luong'];
-//     } else {
-//         return 0;
-//     }
-// }
-// function loadall_cart_count($idbill)
-// {
-//     $sql = "select * from cart inner join bill on cart.idbill = bill.id where idbill=" . $idbill;
-//     $cart = pdo_query($sql);
-//     return count($cart);
-// }
-
-
 
 
 ?>

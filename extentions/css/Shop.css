@@ -1379,8 +1379,8 @@ h2 {
 
 #ihd {
   /* Đặt kích thước cho nút */
-  width: 150px;
-  height: 40px;
+  width: 130px;
+  height: 39px;
 
   /* Đặt màu nền và màu chữ */
   background-color: #4caf50;
@@ -1393,7 +1393,6 @@ h2 {
 
   /* Căn giữa nút */
   text-align: center;
-  line-height: 40px;
 
   /* Đặt kiểu đường viền và bỏ viền */
   border: none;
@@ -1451,3 +1450,9 @@ h2 {
   max-height: 100px;
   margin-right: 10px;
 }
+
+@media print {
+  #printPage {
+    display: none;
+  }
+} /* Xóa đi button in trang khi được bấm vào */
