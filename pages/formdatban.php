@@ -2,7 +2,7 @@
     <div class="container">
         <div class="khungdatban">
             <form action="index.php?act=datbanngay" method="post">
-                <?php if (isset($_SESSION['info_datban'])) {
+                <?php if(isset($_SESSION['info_datban'])) {
                     $ten_kh = $_SESSION['info_datban']['ten_kh'];
                     $email = $_SESSION['info_datban']['email'];
                     $sdt = $_SESSION['info_datban']['sdt'];
@@ -30,13 +30,13 @@
                             value="<?php echo (isset($ten_kh)) ? $ten_kh : '' ?>">
                         <div class="thongbao">
                             <?php
-                            if (isset($_SESSION['error']['ten_kh']) && $_SESSION['error']['ten_kh'] != "") {
-                                if (isset($_SESSION['error']['ten_kh']['invalid'])) {
+                            if(isset($_SESSION['error']['ten_kh']) && $_SESSION['error']['ten_kh'] != "") {
+                                if(isset($_SESSION['error']['ten_kh']['invalid'])) {
                                     echo $_SESSION['error']['ten_kh']['invalid'];
                                     unset($_SESSION['error']['ten_kh']);
                                 }
 
-                                if (isset($_SESSION['error']['ten_kh']['dinhdang'])) {
+                                if(isset($_SESSION['error']['ten_kh']['dinhdang'])) {
                                     echo $_SESSION['error']['ten_kh']['dinhdang'];
                                     unset($_SESSION['error']['ten_kh']);
                                 }
@@ -51,24 +51,7 @@
                     <div class="form-group-input">
                         <label for="email">Email <span style="color: red;">*</span></label>
                         <input type="email" name="email" value="<?php echo (isset($email)) ? $email : '' ?>">
-                        <div class="thongbao">
-                            <?php
-                            if (isset($_SESSION['error']['email']) && $_SESSION['error']['email'] != "") {
-                                if (isset($_SESSION['error']['email']['invalid'])) {
-                                    echo $_SESSION['error']['email']['invalid'];
-                                    unset($_SESSION['error']['email']);
-                                }
-
-                                if (isset($_SESSION['error']['email']['dinhdang'])) {
-                                    echo $_SESSION['error']['email']['dinhdang'];
-                                    unset($_SESSION['error']['email']);
-                                }
-                            } else {
-                                unset($_SESSION['error']['email']);
-                            }
-                            ?>
-
-                        </div>
+                        <div class="thongbao"></div>
                     </div>
 
                     <div class="form-group-input">
@@ -76,13 +59,13 @@
                         <input type="tel" name="sdt" value="<?php echo (isset($sdt)) ? $sdt : '' ?>">
                         <div class="thongbao">
                             <?php
-                            if (isset($_SESSION['error']['sdt']) && $_SESSION['error']['sdt'] != "") {
-                                if (isset($_SESSION['error']['sdt']['invalid'])) {
+                            if(isset($_SESSION['error']['sdt']) && $_SESSION['error']['sdt'] != "") {
+                                if(isset($_SESSION['error']['sdt']['invalid'])) {
                                     echo $_SESSION['error']['sdt']['invalid'];
                                     unset($_SESSION['error']['sdt']);
                                 }
 
-                                if (isset($_SESSION['error']['sdt']['dinhdang'])) {
+                                if(isset($_SESSION['error']['sdt']['dinhdang'])) {
                                     echo $_SESSION['error']['sdt']['dinhdang'];
                                     unset($_SESSION['error']['sdt']);
                                 }
@@ -106,13 +89,13 @@
 
                         <div class="thongbao">
                             <?php
-                            if (isset($_SESSION['error']['thoi_gian_dat_ban']) && $_SESSION['error']['thoi_gian_dat_ban'] != "") {
-                                if (isset($_SESSION['error']['thoi_gian_dat_ban']['invalid'])) {
+                            if(isset($_SESSION['error']['thoi_gian_dat_ban']) && $_SESSION['error']['thoi_gian_dat_ban'] != "") {
+                                if(isset($_SESSION['error']['thoi_gian_dat_ban']['invalid'])) {
                                     echo $_SESSION['error']['thoi_gian_dat_ban']['invalid'];
                                     unset($_SESSION['error']['thoi_gian_dat_ban']['invalid']);
                                 }
 
-                                if (isset($_SESSION['error']['thoi_gian_dat_ban']['dinhdang'])) {
+                                if(isset($_SESSION['error']['thoi_gian_dat_ban']['dinhdang'])) {
                                     echo $_SESSION['error']['thoi_gian_dat_ban']['dinhdang'];
                                     unset($_SESSION['error']['thoi_gian_dat_ban']['dinhdang']);
                                 }
@@ -124,17 +107,20 @@
                     </div>
                     <div class="form-group-input">
                         <label for="so_nguoi">Số lượng khách:<span style="color: red;">*</span></label>
-                        <input type="number" id="so_nguoi" name="so_nguoi"
-                            value="<?php echo (isset($so_nguoi)) ? $so_nguoi : '' ?>" />
+                        <?php
+                        $so_nguoi = (isset($so_nguoi)) ? $so_nguoi : '1';
+                        ?>
+                        <input type="number" id="so_nguoi" name="so_nguoi" value="<?php echo $so_nguoi; ?>" min="1" />
+
                         <div class="thongbao">
                             <?php
-                            if (isset($_SESSION['error']['so_nguoi']) && $_SESSION['error']['so_nguoi'] != "") {
-                                if (isset($_SESSION['error']['so_nguoi']['invalid'])) {
+                            if(isset($_SESSION['error']['so_nguoi']) && $_SESSION['error']['so_nguoi'] != "") {
+                                if(isset($_SESSION['error']['so_nguoi']['invalid'])) {
                                     echo $_SESSION['error']['so_nguoi']['invalid'];
                                     unset($_SESSION['error']['so_nguoi']);
                                 }
 
-                                if (isset($_SESSION['error']['so_nguoi']['dinhdang'])) {
+                                if(isset($_SESSION['error']['so_nguoi']['dinhdang'])) {
                                     echo $_SESSION['error']['so_nguoi']['dinhdang'];
                                     unset($_SESSION['error']['so_nguoi']);
                                 }
@@ -155,8 +141,8 @@
                 </div>
                 <ul class="nav nav-pills mb-3 filters_menu" id="pills-tab" role="tablist">
                     <!--  Kiểm tra và hiển thị danh sách danh mục -->
-                    <?php if (!empty($danhsachdanhmuc)): ?>
-                        <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                    <?php if(!empty($danhsachdanhmuc)): ?>
+                        <?php foreach($danhsachdanhmuc as $danhMuc): ?>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="tab-<?= $danhMuc['id'] ?>" data-bs-toggle="pill"
                                     data-bs-target="#pills-<?= $danhMuc['id'] ?>" type="button" role="tab"
@@ -169,17 +155,17 @@
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
 
-                    <?php if (!empty($danhsachdanhmuc)): ?>
-                        <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
+                    <?php if(!empty($danhsachdanhmuc)): ?>
+                        <?php foreach($danhsachdanhmuc as $danhMuc): ?>
                             <div class="tab-pane fade show table-responsive" id="pills-<?= $danhMuc['id'] ?>" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0">
                                 <table class="bang_thongtin_mon_an ">
                                     <tbody>
                                         <?php $listmonan = loadMonAn_tu_danhMuc($danhMuc['id']); ?>
-                                        <?php foreach ($listmonan as $monan): ?>
+                                        <?php foreach($listmonan as $monan): ?>
                                             <?php
                                             $ten = $monan['ten'];
-                                            $hinh_ma = "uploads/" . $monan['hinh'];
+                                            $hinh_ma = "uploads/".$monan['hinh'];
                                             $gia = $monan['gia'];
                                             ?>
                                             <tr>
