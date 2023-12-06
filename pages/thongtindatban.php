@@ -1,6 +1,5 @@
 <form action="index.php?act=thanhtoan" method="post">
   <div class="khung_thông_tin_dat_ban">
-
     <div class="order-info">
       <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
       <div class="boxcontent">
@@ -136,9 +135,6 @@
         </table>
         <div class="nut_thanh_toan">
           <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
-          <input type="hidden" name="ten_kh" value="<?= $infor_datban['ten_kh'] ?>" class="btnthanhtoan">
-          <input type="hidden" name="thoi_gian_dat_ban" value="<?= $infor_datban['thoi_gian_dat_ban'] ?>"
-            class="btnthanhtoan">
         </div>
 
 

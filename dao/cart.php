@@ -85,36 +85,36 @@ function bill()
             ';
 }
 
-function bill_chi_tiet($listbill)
-{
+// function bill_chi_tiet($listbill)
+// {
 
-    global $img_path;
-    $tong = 0;
-    $i = 0;
-    foreach ($listbill as $cart) {
-        $hinh = $img_path . $cart['img'];
-        $thanhtien = $cart['soluong'] * $cart['price'];
-        $tong += $thanhtien;
-        $i += 1;
-        echo '
-                <tr> 
-                <td>' . $i . '</td>
-                <td><img src="' . $hinh . '" alt="" height="80px"></td>
-                <td>' . $cart['name'] . '</td>
-                <td>$' . number_format($cart['price'], 0, ",", ".") . '</td>
-                <td>' . $cart['soluong'] . '</td>
-                <td>$' . number_format($thanhtien, 0, ",", ".") . '</td>
-                            
-                </tr> 
-                ';
-    }
-    echo '
-            <tr style="background-color:rgba(194, 255, 233);">
-              <td colspan="5">Tổng đơn hàng</td>      
-              <td><strong>$' . number_format($tong, 0, ",", ".") . '</strong></td>
-            </tr>
-            ';
-}
+//     global $img_path;
+//     $tong = 0;
+//     $i = 0;
+//     foreach ($listbill as $item) {
+//         $hinh = $img_path . $item['img'];
+//         $thanhtien = $item['soluong'] * $item['price'];
+//         $tong += $thanhtien;
+//         $i += 1;
+//         echo '
+//                 <tr> 
+//                 <td>' . $i . '</td>
+//                 <td><img src="' . $hinh . '" alt="" height="80px"></td>
+//                 <td>' . $item['name'] . '</td>
+//                 <td>$' . number_format($item['price'], 0, ",", ".") . '</td>
+//                 <td>' . $item['soluong'] . '</td>
+//                 <td>$' . number_format($thanhtien, 0, ",", ".") . '</td>
+
+//                 </tr> 
+//                 ';
+//     }
+//     echo '
+//             <tr style="background-color:rgba(194, 255, 233);">
+//               <td colspan="5">Tổng đơn hàng</td>      
+//               <td><strong>$' . number_format($tong, 0, ",", ".") . '</strong></td>
+//             </tr>
+//             ';
+// }
 
 
 
@@ -131,25 +131,23 @@ function insert_cart($iduser, $idpro, $img, $name, $price, $soluong, $thanhtien,
     return pdo_execute($sql);
 }
 
-function loadone_bill($id)
+
+
+
+function loadone_hoa_don($id)
 {
-    $sql = "select * from bill where id=" . $id;
-    $bill = pdo_query_one($sql);
-    return $bill;
+    $sql = "select * from thanh_toan where id=" . $id;
+    $tt_thanh_toan = pdo_query_one($sql);
+    return $tt_thanh_toan;
 }
-function loadall_cart($idbill)
+function loadall_cart($id)
 {
-    $sql = "select * from cart where idbill=" . $idbill;
-    $cart = pdo_query($sql);
-    return $cart;
+    $sql = "select * from dat_ban where id=" . $id;
+    $thanh_toan = pdo_query($sql);
+    return $thanh_toan;
 }
 
-function loadall_cart_count($idbill)
-{
-    $sql = "select * from cart inner join bill on cart.idbill = bill.id where idbill=" . $idbill;
-    $cart = pdo_query($sql);
-    return count($cart);
-}
+
 
 function loadall_bill($keyw = "", $iduser = 0)
 {
@@ -261,36 +259,38 @@ function xemgiohang()
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
         $i++;
         ?>
-        <tr>
-            <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
-            <td>
-                <?php echo $item['ten']; ?>
-            </td>
-            <td>
-                <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
-            </td>
-            <td>
-                <?php echo $item['so_luong']; ?>
-            </td>
-            <td>
-                <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
-            </td>
-            <td>
-                <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
-            </td>
-        </tr>
-        <?php
+
+<tr>
+    <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
+    <td>
+        <?php echo $item['ten']; ?>
+    </td>
+    <td>
+        <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+    </td>
+    <td>
+        <?php echo $item['so_luong']; ?>
+    </td>
+    <td>
+        <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
+    </td>
+    <td>
+        <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
+    </td>
+</tr>
+
+<?php
     }
     ?>
-    <tr>
-        <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-        <td colspan="5">
-            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-        </td>
-    </tr>
-    </tbody>
-    <?php
+<tr>
+    <td colspan="5"><strong>Tổng thành tiền:</strong></td>
+    <td colspan="5">
+        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+    </td>
+</tr>
+</tbody>
 
+<?php
 
 }
 
@@ -318,14 +318,276 @@ function thanhtoan()
 //     return pdo_execute_lastInsertId($sql, [$thanh_toan_ten, $thanh_toan_email, $thanh_toan_sdt, $thanh_toan_so_nguoi, $thanh_toan_thoigiandatban, $thanh_toan_ghi_chu, $ngay_thanh_toan, $tongtien]);
 // }
 
-function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id)
+function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id)
 {
-    $sql = "INSERT INTO thanh_toan (thanh_toan_ten,thanh_toan_email,thanh_toan_sdt,thanh_toan_thoigiandatban,thanh_toan_ghi_chu,thanh_toan_so_nguoi,phuong_thuc, tong_tien, ngay_thanh_toan, dat_ban_id) VALUES (?, ?, ?, ?,?,?,?, ?, ?,?)";
-    return pdo_execute($sql, $ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id);
+    $sql = "INSERT INTO thanh_toan (thanh_toan_ten,thanh_toan_email,thanh_toan_sdt,thanh_toan_thoigiandatban,thanh_toan_ghi_chu,thanh_toan_so_nguoi,phuong_thuc, tong_tien, ngay_thanh_toan, dat_ban_id,khach_hang_id) VALUES (?, ?, ?, ?,?,?,?, ?, ?,?,?)";
+    return pdo_execute($sql, $ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
+}
+
+function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
+{
+    global $conn;
+
+    $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu, so_luong, gia, hinh, ten, mon_an_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
 }
 // function insert_datban($khach_hang_id, $mon_an_id, $hinh, $ten, $gia, $so_luong, $thanh_tien, $id_thanh_toan)
 // {
 //     $sql = "insert into cart(khach_hang_id,mon_an_id,hinh,ten,gia,so_luong,thanh_tien,id_thanh_toan) values('$khach_hang_id','$mon_an_id','$hinh','$ten','$gia','$so_luong','$thanh_tien','$id_thanh_toan')";
 //     return pdo_execute($sql);
 // }
+
+function loadall_don_hang_da_dat($khach_hang_id)
+{
+    $sql = "select * from thanh_toan where khach_hang_id=" . $khach_hang_id;
+    $danh_sach_don_hang_da_dat = pdo_query($sql);
+    return $danh_sach_don_hang_da_dat;
+}
+function load_ma_hoa_don()
+{
+    $sql = "select * from thanh_toan where 1 order by id desc limit 0,9";
+    $load_ma_hoa_don = pdo_query($sql);
+    return $load_ma_hoa_don;
+}
+
+// function load_dat_ban_theo_id($dat_ban_id)
+// {
+//     $sql = "SELECT * FROM dat_ban WHERE id = " . $dat_ban_id;
+//     $result = pdo_query($sql);
+
+//     if ($result && count($result) > 0) {
+//         return $result[0]; // Return the first (and only) row of the result
+//     } else {
+//         return null; // Return null if no data is found
+//     }
+// }
+function get_phuong_thuc_don_hang($n)
+{
+    switch ($n) {
+        case 1:
+            $phuong_thuc = 'Thanh toán tại nhà hàng';
+            break;
+        case 2:
+            $phuong_thuc = 'Cọc 20% giá trị đơn hàng';
+            break;
+        default:
+            $phuong_thuc = 'Thanh toán tại nhà hàng';
+            break;
+    }
+    return $phuong_thuc;
+}
+
+
+
+
+function load_so_luong_mon_an($dat_ban_id)
+{
+    $sql = "SELECT * FROM thanh_toan INNER JOIN dat_ban ON thanh_toan.dat_ban_id = dat_ban.id WHERE dat_ban_id=" . $dat_ban_id;
+    $thanh_toan = pdo_query($sql);
+    return count($thanh_toan);
+}
+
+// function get_booking_history_with_dishes()
+// {
+//     $sql = "SELECT
+//                 dat_ban.id as dat_ban_id,
+//                 thanh_toan.id as thanh_toan_id,
+//                 thanh_toan.thanh_toan_ten,
+//                 SUM(thanh_toan.tong_tien) as total_price,
+//                 thanh_toan.ngay_thanh_toan,
+//                 thanh_toan.khach_hang_id,
+//                 GROUP_CONCAT(mon_an.ten) as dish_names
+//             FROM
+//                 dat_ban
+//             INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+//             INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
+//             GROUP BY
+//                 dat_ban.id, thanh_toan.id";
+
+//     $result = pdo_query($sql);
+
+//     return $result;
+// }
+
+
+// function get_booking_history_with_dishes()
+// {
+//     $sql = "SELECT
+//         dat_ban.id as dat_ban_id,
+//         thanh_toan.id as thanh_toan_id,
+//         thanh_toan.thanh_toan_ten,
+//         SUM(thanh_toan.tong_tien) as total_price,
+//         COUNT(mon_an.id) as total_items,
+//         thanh_toan.ngay_thanh_toan,
+//         dat_ban.thoi_gian_dat_ban,
+//         GROUP_CONCAT(mon_an.ten) as dish_names,
+//         GROUP_CONCAT(mon_an.gia) as dish_prices,
+//         GROUP_CONCAT(dat_ban.so_luong) as dish_quantities
+//     FROM
+//         dat_ban
+//     INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+//     INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
+//     GROUP BY
+//         dat_ban.id, thanh_toan.id, thanh_toan.thanh_toan_ten, thanh_toan.ngay_thanh_toan, dat_ban.thoi_gian_dat_ban
+//     ORDER BY
+//         thanh_toan.ngay_thanh_toan DESC";
+
+//     $result = pdo_query($sql);
+
+//     return $result;
+// }
+
+
+function get_booking_history_by_customer_and_time($ten_kh, $thoi_gian_dat_ban)
+{
+    $sql = "SELECT
+    dat_ban.id as dat_ban_id,
+    thanh_toan.id as thanh_toan_id,
+    thanh_toan.thanh_toan_ten,
+    SUM(thanh_toan.tong_tien) as total_price,
+    COUNT(mon_an.id) as total_items,
+    thanh_toan.ngay_thanh_toan,
+    GROUP_CONCAT(mon_an.id) AS mon_an_id,
+    GROUP_CONCAT(mon_an.ten) AS ten,
+    GROUP_CONCAT(mon_an.gia) AS gia,
+    GROUP_CONCAT(mon_an.hinh) AS hinh,
+    GROUP_CONCAT(dat_ban.so_luong) AS so_luong
+FROM
+    dat_ban
+INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
+WHERE
+    thanh_toan.thanh_toan_ten = :ten_kh
+    AND thanh_toan.ngay_thanh_toan = :thoi_gian_dat_ban
+GROUP BY
+    dat_ban.id, thanh_toan.id, thanh_toan.thanh_toan_ten, thanh_toan.ngay_thanh_toan
+ORDER BY
+    thanh_toan.ngay_thanh_toan DESC";
+
+    $params = array(
+        ':ten_kh' => $ten_kh,
+        ':thoi_gian_dat_ban' => $thoi_gian_dat_ban
+    );
+
+    $result = pdo_query($sql, $params);
+
+    return $result;
+}
+
+
+function lay_thong_tin_hoa_don_theo_id($hoa_don_id)
+{
+    $sql = "SELECT
+        dat_ban.id AS dat_ban_id,
+        thanh_toan.id AS thanh_toan_id,
+        thanh_toan.thanh_toan_ten,
+        SUM(thanh_toan.tong_tien) AS total_price,
+        COUNT(mon_an.id) AS total_items,
+        thanh_toan.ngay_thanh_toan,
+        GROUP_CONCAT(mon_an.id) AS mon_an_id,
+        GROUP_CONCAT(mon_an.ten) AS ten,
+        GROUP_CONCAT(mon_an.gia) AS gia,
+        GROUP_CONCAT(mon_an.hinh) AS hinh,
+        GROUP_CONCAT(dat_ban.so_luong) AS so_luong
+    FROM
+        dat_ban
+    INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+    INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
+    WHERE
+        thanh_toan.id = :hoa_don_id
+    GROUP BY
+        dat_ban.id, thanh_toan.id, thanh_toan.thanh_toan_ten, thanh_toan.ngay_thanh_toan
+    ORDER BY
+        thanh_toan.ngay_thanh_toan DESC";
+
+    $params = array(':hoa_don_id' => $hoa_don_id);
+
+    $result = pdo_query($sql, $params);
+
+    return $result;
+}
+
+
+function loadone_in_hoa_don($id)
+{
+    $sql = "SELECT * FROM dat_ban
+            INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+            WHERE dat_ban.id = :id";
+
+    $params = array(':id' => $id);
+
+    $in_hoa_don = pdo_query_one($sql, $params);
+    return $in_hoa_don;
+}
+
+
+
+
+
+
+// function load_so_luong_mon_an($dat_ban_id)
+// {
+//     $sql = "SELECT COUNT(*) as so_luong FROM dat_ban WHERE id=" . $dat_ban_id;
+//     $result = pdo_query($sql);
+
+//     if ($result && isset($result[0]['so_luong'])) {
+//         return $result[0]['so_luong'];
+//     } else {
+//         return 0;
+//     }
+// }
+
+
+
+
+
+
+
+// function load_so_luong_mon_an($dat_ban_id)
+// {
+//     $sql = "SELECT MAX(id) as id, gia, SUM(so_luong) AS tong_so_luong_mon_an FROM dat_ban WHERE id = " . $dat_ban_id . " GROUP BY gia ORDER BY thoi_gian_dat_ban DESC";
+//     $thanh_toan = pdo_query($sql);
+
+//     if ($thanh_toan) {
+//         return count($thanh_toan);
+//     } else {
+//         return 0;
+//     }
+// }
+// function load_so_luong_mon_an($dat_ban_id)
+// {
+//     $sql = "SELECT COUNT(*) as num_mon_an FROM thanh_toan INNER JOIN dat_ban ON thanh_toan.dat_ban_id = dat_ban.id WHERE dat_ban_id=" . $dat_ban_id;
+//     $thanh_toan = pdo_query($sql);
+
+//     if ($thanh_toan && isset($thanh_toan[0]['num_mon_an'])) {
+//         return $thanh_toan[0]['num_mon_an'];
+//     } else {
+//         return 0;
+//     }
+// }
+
+// function load_so_luong_mon_an($dat_ban_id, $pdo)
+// {
+//     $sql = "SELECT SUM(so_luong) as tong_so_luong FROM thanh_toan WHERE dat_ban_id = :dat_ban_id";
+//     $stmt = pdo_prepare($pdo, $sql); // Truyền đối tượng PDO vào đây
+//     pdo_execute($stmt, array(':dat_ban_id' => $dat_ban_id));
+//     $result = $stmt->fetch();
+
+//     if ($result && isset($result['tong_so_luong'])) {
+//         return $result['tong_so_luong'];
+//     } else {
+//         return 0;
+//     }
+// }
+// function loadall_cart_count($idbill)
+// {
+//     $sql = "select * from cart inner join bill on cart.idbill = bill.id where idbill=" . $idbill;
+//     $cart = pdo_query($sql);
+//     return count($cart);
+// }
+
+
+
+
 ?>

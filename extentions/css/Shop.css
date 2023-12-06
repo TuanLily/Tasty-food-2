@@ -1243,3 +1243,211 @@ input[type="radio"]:checked {
 .close-btn:hover {
   background-color: #666666;
 }
+
+.container_hoadon {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.header_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 10px 20px;
+}
+
+.header_top p {
+  margin: 0;
+}
+
+.header_top_left i,
+.header_top_right i {
+  margin-right: 5px;
+}
+
+.header_bottom_taikhoan i,
+.header_bottom_giohang i {
+  margin-right: 5px;
+}
+
+.header_bottom_taikhoan a,
+.header_bottom_giohang a {
+  color: #000;
+}
+
+.header_top_left i:hover,
+.header_top_right i:hover {
+  color: #ea8025;
+}
+
+p.header_top_left:hover,
+p.header_top_right:hover {
+  color: #ea8025;
+}
+
+.header_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+}
+
+.logo_header a {
+  font-family: "Roboto Mono", monospace;
+  font-size: 40px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+.header_title a {
+  font-family: "Roboto Mono", monospace;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+.logo h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #333333;
+}
+
+.contact-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #333333;
+}
+
+h2 {
+  color: #333333;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid #cccccc;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  text-align: left;
+  font-size: 14px;
+  color: #333333;
+}
+
+.table td img {
+  max-width: 80px;
+  height: auto;
+}
+
+.footer_hoadon {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.footer_hoadon p {
+  margin: 0;
+}
+
+#ihd {
+  /* Đặt kích thước cho nút */
+  width: 150px;
+  height: 40px;
+
+  /* Đặt màu nền và màu chữ */
+  background-color: #4caf50;
+  /* Màu xanh lá cây */
+  color: white;
+
+  /* Định dạng văn bản */
+  font-size: 16px;
+  font-weight: bold;
+
+  /* Căn giữa nút */
+  text-align: center;
+  line-height: 40px;
+
+  /* Đặt kiểu đường viền và bỏ viền */
+  border: none;
+  border-radius: 5px;
+
+  /* Tạo hiệu ứng khi rê chuột */
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hiệu ứng khi rê chuột vào nút */
+#ihd:hover {
+  background-color: #45a049;
+  /* Màu xanh lá cây nhạt hơn */
+}
+
+.lsdb-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.lsdb-order {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.lsdb-heading {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.lsdb-info {
+  margin-bottom: 10px;
+}
+
+.lsdb-items {
+  margin-top: 10px;
+}
+
+.lsdb-item {
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.lsdb-item img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+}

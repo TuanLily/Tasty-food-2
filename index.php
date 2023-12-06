@@ -26,7 +26,7 @@ if (autoLoginIfRemembered()) {
     exit();
 }
 include "view/header.php";
-
+$load_ma_hoa_don = load_ma_hoa_don();
 $show_monan = loadall_monan_home();
 $danhsachdanhmuc = loadall_danhmuc(); // làm cho form dat bàn
 
@@ -508,10 +508,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                                 'tong_tien' => $tong_tien
                             ];
                             $_SESSION['info_datban'] = $selectedItems;
-
-
-
-
                         }
                     }
 
@@ -561,6 +557,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             if ($ten_kh !== null && $thoi_gian_dat_ban !== null) {
                 $lay_id_dat_ban = lay_id_datban_moi_nhat($ten_kh, $thoi_gian_dat_ban);
 
+
                 // Lưu dat_ban_id vào Session nếu có giá trị
                 if (!empty($lay_id_dat_ban)) {
                     $_SESSION['dat_ban_id'] = $lay_id_dat_ban;
@@ -579,7 +576,14 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/header.php";
             include "view/nav.php";
             include "view/margintop.php";
+
             if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
+                if (isset($_SESSION["email"])) {
+                    $khach_hang_id = $_SESSION["email"]['id'];
+                } else {
+                    $khach_hang_id = 0;
+                }
+
                 $dat_ban_id = isset($_SESSION['dat_ban_id']) ? $_SESSION['dat_ban_id'] : null;
                 $ten_kh = $_POST['ten_kh'];
                 $email = $_POST['email'];
@@ -588,31 +592,61 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $thoi_gian_dat_ban = $_POST['thoi_gian_dat_ban'];
                 $ghi_chu = $_POST['ghi_chu'];
                 $phuong_thuc = isset($_POST['phuong_thuc']) ? intval($_POST['phuong_thuc']) : 1;
+                $phuong_thuc = ($phuong_thuc >= 1 && $phuong_thuc <= 2) ? $phuong_thuc : 1;
                 $ngay_thanh_toan = date('Y-m-d H:i:s');
                 $tong_tien = tongdonhang();
-                insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id);
+
+                insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
                 unset($_SESSION['dat_ban_id']);
 
-                echo '<script>alert("Đặt bàn thành công!, Sau đây là trang xem lại đơn đặt hàng, cám ơn vì đã sử dụng dịch vụ")</script>';
+                echo '<script>alert("Đặt bàn thành công! Sau đây là trang xem lại đơn đặt hàng, cám ơn vì đã sử dụng dịch vụ")</script>';
                 echo '<script>
-                            setTimeout(function() {
-                                window.location.href = "index.php?act=cam_on";
-                            }, 0);
-                        </script>';
-
+            setTimeout(function() {
+                window.location.href = "index.php?act=cam_on";
+            }, 0);
+        </script>';
             }
 
             include "./pages/hoa_don.php";
             include "view/footer.php";
             break;
 
+
+
         case "cam_on":
             include "view/header.php";
             include "view/nav.php";
             include "view/margintop.php";
             include "./pages/hoa_don.php";
+            $_SESSION['mycart'] = [];
             include "view/margintop.php";
             break;
+        case "don_hang_da_dat":
+            $danh_sach_don_hang_da_dat = loadall_don_hang_da_dat($_SESSION["email"]['id']);
+            include "view/header.php";
+            include "view/nav.php";
+            include "view/margintop.php";
+            include "./pages/don_hang_da_dat.php";
+            include "view/footer.php";
+            break;
+
+        case "in_hoa_don":
+            $danh_sach_don_hang_da_dat = loadall_don_hang_da_dat($_SESSION["email"]['id']);
+
+            if ($danh_sach_don_hang_da_dat) {
+                include "view/header.php";
+                include "view/nav.php";
+                include "view/margintop.php";
+                include "./pages/in_hoa_don.php";
+                include "view/footer.php";
+            } else {
+                echo "Không có đơn hàng nào.";
+            }
+            break;
+
+
+
+
 
         case "thoat":
             session_unset();

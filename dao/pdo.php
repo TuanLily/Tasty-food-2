@@ -64,6 +64,8 @@ function pdo_execute_lastInsertId($sql)
  */
 function pdo_query($sql, ...$sql_args)
 {
+    $conn = null; // Initialize the $conn variable
+
     try {
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);
@@ -71,9 +73,14 @@ function pdo_query($sql, ...$sql_args)
         $rows = $stmt->fetchAll();
         return $rows;
     } catch (PDOException $e) {
-        throw $e;
+        // Handle the exception or log the error message
+        // instead of re-throwing the exception immediately
+        error_log("PDOException: " . $e->getMessage());
+        return false; // Return a falsy value to indicate error
     } finally {
-        unset($conn);
+        if ($conn !== null) {
+            unset($conn);
+        }
     }
 }
 /**
@@ -130,7 +137,7 @@ function pdo_query_value($sql)
     }
 }
 
-function pdo_prepare($pdo, $sql)
+function pdo_prepare($pdo, $sql, $params = [])
 {
     // Kiểm tra kết nối PDO
     if (!$pdo) {
@@ -140,9 +147,48 @@ function pdo_prepare($pdo, $sql)
     // Tạo đối tượng PDOStatement
     $stmt = $pdo->prepare($sql);
 
+    // Kiểm tra lỗi khi chuẩn bị truy vấn
+    if (!$stmt) {
+        return false;
+    }
+
+    // Gắn các tham số vào câu truy vấn
+    foreach ($params as $key => $value) {
+        $stmt->bindValue($key, $value);
+    }
+
     // Trả về kết quả
     return $stmt;
 }
+// function pdo_prepare($pdo, $sql, $params = [])
+// {
+//     // Kiểm tra kết nối PDO
+//     if (!$pdo) {
+//         return false;
+//     }
+
+//     try {
+//         // Tạo đối tượng PDOStatement
+//         $stmt = $pdo->prepare($sql);
+
+//         // Kiểm tra lỗi khi chuẩn bị truy vấn
+//         if (!$stmt) {
+//             return false;
+//         }
+
+//         // Gắn các tham số vào câu truy vấn
+//         foreach ($params as $key => $value) {
+//             $stmt->bindValue($key, $value);
+//         }
+
+//         // Trả về kết quả
+//         return $stmt;
+//     } catch (PDOException $e) {
+//         // Handle PDOException if needed
+//         return false;
+//     }
+// }
+
 
 // Hàm bindValues này nhìn chung có vẻ giống với việc thay thế các giá trị tham số 
 // trong câu truy vấn SQL bằng các giá trị tương ứng

@@ -1,13 +1,14 @@
 <body>
     <?php
     // Lấy đường dẫn hiện tại
-        $current_url = $_SERVER['REQUEST_URI'];
+    $current_url = $_SERVER['REQUEST_URI'];
 
-        // Kiểm tra đường dẫn và thêm lớp active tương ứng
-        function is_active($page) {
-            global $current_url;
-            return strpos($current_url, $page) !== false;
-        }
+    // Kiểm tra đường dẫn và thêm lớp active tương ứng
+    function is_active($page)
+    {
+        global $current_url;
+        return strpos($current_url, $page) !== false;
+    }
     ?>
 
     <header class="header_section">
@@ -83,36 +84,36 @@
 
                             ?>
 
-                        <div class="dropdown">
-                            <div class="user_kh"><a href="">Xin chào,
-                                    <?= $ten ?><ion-icon name="caret-down-outline">
-                                    </ion-icon>
-                                </a></div>
-                            <div class="dropdown-content">
-                                <a href="index.php?act=update">Cập nhật tài khoản</a>
-                                <a href="index.php?act=xemgiohang">Giỏ hàng</a>
-                                <a href="index.php?act=updatepw">Đổi mật khẩu</a>
+                            <div class="dropdown">
+                                <div class="user_kh"><a href="">Xin chào,
+                                        <?= $ten ?><ion-icon name="caret-down-outline">
+                                        </ion-icon>
+                                    </a></div>
+                                <div class="dropdown-content">
+                                    <a href="index.php?act=update">Cập nhật tài khoản</a>
+                                    <a href="index.php?act=xemgiohang">Giỏ hàng</a>
+                                    <a href="index.php?act=updatepw">Đổi mật khẩu</a>
 
-                                <?php
+                                    <?php
                                     if ($vai_tro == 0) {
                                         ?>
-                                <a href="admin/index.php">Đăng nhập admin</a>
-                                <?php } ?>
+                                        <a href="admin/index.php">Đăng nhập admin</a>
+                                    <?php } ?>
 
-                                <a href="index.php?act=thoat">Đăng xuất</a>
+                                    <a href="index.php?act=thoat">Đăng xuất</a>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <?php
+                            <?php
                         } else {
 
 
                             ?>
-                        <a href="index.php?act=dangnhap" class="user_link">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                        </a>
-                        <?php
+                            <a href="index.php?act=dangnhap" class="user_link">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                            <?php
                         }
                         ?>
                         <a href="index.php?act=datbanngay" class="order_online">
