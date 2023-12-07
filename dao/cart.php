@@ -258,10 +258,10 @@ function xemgiohang()
         $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
         $i++;
-        ?>
+?>
 
         <tr>
-            <td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
+            <td><img src="<?php echo $item['hinh']; ?>" alt="" ></td>
             <td>
                 <?php echo $item['ten']; ?>
             </td>
@@ -279,7 +279,7 @@ function xemgiohang()
             </td>
         </tr>
 
-        <?php
+    <?php
     }
     ?>
     <tr>
@@ -290,22 +290,29 @@ function xemgiohang()
     </tr>
     </tbody>
 
-    <?php
+<?php
 
 }
 
 function tongdonhang()
 {
+    if (empty($_SESSION['mycart'])) {
+        return 0; // Return 0 when the shopping cart is empty
+    }
+
     $tong_tien = 0; // Khởi tạo biến tổng tiền
+
     foreach ($_SESSION['mycart'] as $item) {
         $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
-        $km = $tong_tien * 0.1;
-        $tong_cong = $tong_tien - $km;
     }
+
+    $km = $tong_tien * 0.1;
+    $tong_cong = $tong_tien - $km;
 
     return $tong_cong;
 }
+
 function thanhtoan()
 {
 }
@@ -374,7 +381,12 @@ function get_phuong_thuc_don_hang($n)
     return $phuong_thuc;
 }
 
-
+function get_lich_su_limit($start, $limit)
+{
+    $sql = "SELECT * FROM thanh_toan WHERE phuong_thuc = 1 ORDER BY id DESC LIMIT $start,$limit";
+    $danh_sach_don_hang_da_dat = pdo_query($sql);
+    return $danh_sach_don_hang_da_dat;
+}
 
 
 function load_so_luong_mon_an($dat_ban_id)

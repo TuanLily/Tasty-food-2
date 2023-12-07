@@ -23,7 +23,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 
     // Đánh dấu đã hiển thị hóa đơn
     $daHienThiHoaDon = true;
-    ?>
+?>
     <div class="lsdb-container">
       <div class="lsdb-order">
         <div class="lsdb-heading">Hóa đơn:
@@ -48,7 +48,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
           foreach ($info_datban_monan as $info) {
             $mon_an_ids = explode(',', $info['mon_an_id']);
             $total_items = count(array_unique($mon_an_ids));
-            ?>
+        ?>
             <div class="lsdb-items">
               <div class="lsdb-item">Số lượng món ăn:
                 <?php echo $total_items; ?>
@@ -80,7 +80,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 
                     <?php
                     for ($i = 0; $i < count($mon_an_ids); $i++) {
-                      ?>
+                    ?>
                       <tr>
                         <td>
                           <?php echo $mon_an_ids[$i]; ?>
@@ -97,20 +97,27 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
                           <?php echo $so_luong_mon_ans[$i]; ?>
                         </td>
                       </tr>
-                      <?php
+                    <?php
                     }
                     ?>
 
                   </tbody>
                 </table>
-                <div class="my-3 float-end">
-                  <button id="printPage" class="btn btn-success" onclick="printAndHide()"> <i class="fa-solid fa-print"></i>
-                    In</button>
-                </div>
+                <table class="history-table">
+                  <tr>
+                    <td>
+                      <div class="my-3 float-end">
+                        <button id="printPage" class="btn btn-success" onclick="printAndHide()"> <i class="fa-solid fa-print"></i>
+                          In</button>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
 
               </div>
             </div>
-            <?php
+        <?php
           }
         } else {
           echo "<div class='lsdb-item'>Không tìm thấy thông tin đặt bàn và món ăn.</div>";
@@ -120,7 +127,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
       </div>
     </div>
 
-    <?php
+<?php
   }
 } else {
   echo "<div class='lsdb-container'>Không có đơn hàng nào.</div>";
@@ -129,9 +136,9 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 
 <script>
   // In hóa đơn
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function() {
     // Lắng nghe sự kiện nhấp chuột vào nút in
-    document.getElementById("printPage").addEventListener("click", function () {
+    document.getElementById("printPage").addEventListener("click", function() {
       // Gọi hàm in của trình duyệt
       window.print();
     });

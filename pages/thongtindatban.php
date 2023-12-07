@@ -53,21 +53,21 @@
                 </div>
                 <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
                 <div class="boxcontent_thong_tin_gio_hang table-responsive">
-                    <table class="bang_thongtin_mon_an table">
+                    <table class="bang_thongtin_mon_an table table table-hover">
                         <thead>
                             <tr>
                                 <th>Hình ảnh</th>
                                 <th>Tên món ăn</th>
                                 <th>Giá bán</th>
                                 <th>Số lượng</th>
-                                <th>Sửa/Xóa</th>
+                                <th>Xóa</th>
                                 <th>Thành tiền</th>
                             </tr>
                         </thead>
                         <?php xemgiohang(); ?>
                     </table>
                     <br>
-                    <a href="index.php?act=datban" class="btn btn-primary">
+                    <a href="index.php?act=datbanngay" class="btn btn-primary">
                         Chọn thêm món
                     </a>
 

@@ -1456,3 +1456,34 @@ h2 {
     display: none;
   }
 } /* Xóa đi button in trang khi được bấm vào */
+/* Styles for the table */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Adjust the top margin as needed */
+}
+
+/* Styles for the link */
+.float-right {
+    float: right;
+}
+
+.my-3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Additional styles for the link (customize as needed) */
+.float-right a {
+    color: #3498db; /* Link color */
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.float-right a:hover {
+    background-color: #3498db; /* Hover background color */
+    color: #fff; /* Hover text color */
+}
