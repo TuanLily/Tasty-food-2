@@ -356,14 +356,13 @@ if (isset($_GET['act'])) {
                 $check = 1;
                 $phonePattern = '/^(84|0[35789])+([0-9]{8})\b$/';
 
-                    update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi);
-                    echo '<script>
+                update_dskh($id, $ten, $ho_ten, $email, $sdt, $dia_chi);
+                echo '<script>
                     alert("Cập nhật thành công!");
                     setTimeout(function() {
                         window.location.href = "index.php?act=dskh&page=1";
                     }, 0); // Đợi 0 giây (1 giây = 1000 milliseconds)
                  </script>';
-                
             }
             break;
 
@@ -426,27 +425,36 @@ if (isset($_GET['act'])) {
 
             // *Bắt đầu chức năng thống kê
         case "thongkema":
-            
+
             $listthongke = loadall_thongke();
             include('modules/thongke/thongke_mon_an.php');
             break;
         case "thongketk":
-            
+
             $listthongketk = loadall_thongke_taikhoan();
             include('modules/thongke/thongke_taikhoan.php');
-            break;  
+            break;
         case "thongkedb":
-            
+
             $listthongkedb = loadall_thongke_datban();
-            
-            break;     
+
+            break;
         case "bieudo":
             $listthongke = loadall_thongke();
             include('modules/thongke/bieudo.php');
             break;
+        case "thongkedbtc":
+
+            $listthongkedb = loadall_thongke_datban();
+            break;
+        case "thongkedbdh":
+
+            $listthongkedb = loadall_thongke_datban();
+
+            break;
             // *Kết thúc chức năng thống kê
 
-        // Bắt đầu phần phân quyền
+            // Bắt đầu phần phân quyền
         case "phanquyen":
             $list_dskh = loadall_dskh();
             include('modules/phanquyen/danhsach.php');
@@ -487,7 +495,7 @@ if (isset($_GET['act'])) {
             $list_dskh = loadall_dskh();
             include('modules/phanquyen/danhsach.php');
             break;
-        // Kết thúc phần phân quyền
+            // Kết thúc phần phân quyền
 
         default:
             include('error/404.php');
@@ -497,6 +505,5 @@ if (isset($_GET['act'])) {
     $listthongketk = loadall_thongke_taikhoan();
     $listthongke = loadall_thongke();
     include('view/home.php');
-    
 }
 include('view/footer.php');

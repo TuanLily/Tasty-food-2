@@ -139,8 +139,16 @@ function get_trang_thai_datban($n)
   }
   return $tt;
 }
-
-
+function getCountCanceledOrders() {
+  $sql = "SELECT COUNT(*) AS count FROM dat_ban WHERE trang_thai = 1"; // Assuming 1 is the status for canceled orders
+  $result = pdo_query_one($sql);
+  return $result ? $result['count'] : 0;
+}
+function getCountOrders(){
+  $sql = "SELECT COUNT(*) AS count FROM dat_ban WHERE trang_thai = 5"; // Assuming 1 is the status for canceled orders
+  $result = pdo_query_one($sql);
+  return $result ? $result['count'] : 0;
+}
 function update_trang_thai_datban($ten_kh, $thoi_gian_dat_ban, $trang_thai)
 {
   $sql = "UPDATE dat_ban SET trang_thai=:trang_thai WHERE ten_kh=:ten_kh AND thoi_gian_dat_ban=:thoi_gian_dat_ban";
