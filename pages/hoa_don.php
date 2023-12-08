@@ -10,8 +10,8 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 
 		// Định dạng ngày giờ
 		$ngay_thanh_toan = date('d/m/Y H:i:s', strtotime($thanh_toan['ngay_thanh_toan']));
-?>
-<?php
+	?>
+	<?php
 	}
 }
 ?>
@@ -48,6 +48,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 			break; // Thêm break để chỉ lấy giá trị đầu tiên trong mảng
 		} ?>
 		<p class="header_top_right"><i class="fa-solid fa-money-bills"></i> <strong>Hóa đơn :</strong>
+			TF -
 			<?php echo $id; ?>
 		</p>
 		<p class="header_top_left"><i class="fa-regular fa-calendar-days"></i> <strong>Ngày thanh toán:</strong>
@@ -116,7 +117,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 					$thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
 					$tong_tien += $thanh_tien; // Cộng vào tổng tiền
 					$i++;
-				?>
+					?>
 					<tr>
 						<td><img src="<?php echo $item['hinh']; ?>" alt=""></td>
 						<td>
@@ -196,17 +197,22 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 		</tr>
 
 	</table>
-<table class="history-table">
-    <tr>
-        <td>
-            <div class="float-right my-3">
-                <a href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn hàng</a>
-            </div>
-        </td>
-    </tr>
-</table>
+	<table class="history-table">
+		<tr>
+			<td>
+				<div class="mx-1 float-right">
+					<button id="printPage" class="btn btn-success" onclick="printAndHide()"> <i
+							class="fa-solid fa-print"></i>
+						In</button>
+				</div>
+				<div class="mx-1 float-right">
+					<a class="btn btn-outline-primary" id="lsdh" href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn
+						hàng</a>
 
-
+				</div>
+			</td>
+		</tr>
+	</table>
 
 
 	<div class="footer_hoadon">
@@ -214,169 +220,13 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 	</div>
 </div>
 
-<style>
-/* Styles for the table */
-.history-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px; /* Adjust the top margin as needed */
-}
-
-/* Styles for the link */
-.float-right {
-    float: right;
-}
-
-.my-3 {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-/* Additional styles for the link (customize as needed) */
-.float-right a {
-    color: #3498db; /* Link color */
-    text-decoration: none;
-    padding: 5px 10px;
-    border: 1px solid #3498db;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.float-right a:hover {
-    background-color: #3498db; /* Hover background color */
-    color: #fff; /* Hover text color */
-}
-
-	.container_hoadon {
-		max-width: 1040px;
-		margin: 0 auto;
-		padding: 10px;
-		background-color: #fff;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		border-radius: 4px;
-	}
-
-	.header_top {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		background-color: #f8f8f8;
-		padding: 10px 20px;
-	}
-
-	.header_top p {
-		margin: 0;
-	}
-
-	.header_top_left i,
-	.header_top_right i {
-		margin-right: 5px;
-	}
-
-	.header_bottom_taikhoan i,
-	.header_bottom_giohang i {
-		margin-right: 5px;
-	}
-
-	.header_bottom_taikhoan a,
-	.header_bottom_giohang a {
-		color: #000;
-	}
-
-	.header_top_left i:hover,
-	.header_top_right i:hover {
-		color: #ea8025;
-	}
-
-	p.header_top_left:hover,
-	p.header_top_right:hover {
-		color: #ea8025;
-	}
-
-	.header_bottom {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 10px 20px;
-		border-bottom: 1px solid #ccc;
-	}
-
-	.logo_header a {
-		font-family: 'Roboto Mono', monospace;
-		font-size: 40px;
-		font-weight: bold;
-		text-decoration: none;
-		color: black;
-	}
-
-	.header_title a {
-		font-family: 'Roboto Mono', monospace;
-		font-size: 20px;
-		font-weight: bold;
-		text-decoration: none;
-		color: black;
-	}
-
-	.header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 10px;
-		background-color: #f1f1f1;
-	}
-
-	.logo h2 {
-		margin: 0;
-		font-size: 28px;
-		color: #333333;
-	}
-
-	.contact-info p {
-		margin: 0;
-		font-size: 14px;
-		color: #333333;
-	}
-
-	h2 {
-		color: #333333;
-		font-size: 20px;
-		margin-top: 30px;
-		margin-bottom: 15px;
-	}
-
-	.table {
-		width: 100%;
-		border-collapse: collapse;
-		margin-bottom: 20px;
-	}
-
-	.table th,
-	.table td {
-		padding: 12px;
-		border: 1px solid #cccccc;
-	}
-
-	.table th {
-		background-color: #f2f2f2;
-		text-align: left;
-		font-size: 14px;
-		color: #333333;
-	}
-
-	.table td img {
-		max-width: 80px;
-		height: auto;
-	}
-
-	.footer_hoadon {
-		background-color: #f2f2f2;
-		padding: 20px;
-		text-align: center;
-		font-size: 14px;
-		color: #333;
-	}
-
-	.footer_hoadon p {
-		margin: 0;
-	}
-</style>
+<script>
+	// In hóa đơn
+	document.addEventListener("DOMContentLoaded", function () {
+		// Lắng nghe sự kiện nhấp chuột vào nút in
+		document.getElementById("printPage").addEventListener("click", function () {
+			// Gọi hàm in của trình duyệt
+			window.print();
+		});
+	});
+</script>

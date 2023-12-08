@@ -416,14 +416,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $_SESSION['error']['ten_kh']['dinhdang'] = 'Không quá 30 ký tự';
                     $check = 0;
                 }
-                // Kiểm tra trường "Email"
-                if (empty($email)) {
-                    $_SESSION['error']['email']['invalid'] = 'Không được để trống';
-                    $check = 0;
-                } elseif (!preg_match("/^[\w\-]+(\.[\w\-]+)*@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/", $email)) {
-                    $_SESSION['error']['email']['dinhdang'] = 'Không đúng dịnh dạng email';
-                    $check = 0;
-                }
 
                 // Kiểm tra trường "Số điện thoại"
                 if (empty($sdt)) {
