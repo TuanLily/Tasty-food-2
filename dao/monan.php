@@ -193,7 +193,7 @@ function count_monan_danhmuc($danh_muc_id)
 
 function load_monAn_by_danhMuc($danh_muc_id)
 {
-    $sql = "SELECT * FROM mon_an WHERE trang_thai = 1 AND danh_muc_id=" . $danh_muc_id;
+    $sql = "SELECT * FROM mon_an WHERE trang_thai = 1 AND danh_muc_id = " . $danh_muc_id . " ORDER BY id DESC";
     $listmonan = pdo_query($sql);
     return $listmonan;
 }

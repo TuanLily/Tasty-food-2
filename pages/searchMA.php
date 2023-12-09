@@ -1,6 +1,7 @@
 <section class="food_section layout_padding">
     <div class="container">
-        <div class="mt-5"></div>
+        <div class="mt-5 mt-3"></div>
+        <br>
         <div class="heading_container heading_center">
             <h2>Món ăn được tìm với từ khóa
                 <span>

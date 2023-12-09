@@ -134,7 +134,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
                                     <td scope="row">' . $ten . '</td>
                                     <td scope="row">' . number_format($gia, 0, ',', '.') . 'đ</td>
                                     <td scope="row">' . number_format($gia_giam, 0, ',', '.') . 'đ</td>
-                                    <td scope="row">' . $hinhanh . '</td>
+                                    <td scope="row" class="text-center">' . $hinhanh . '</td>
                                     <td scope="row" class="text-center"><span class="btn btn-success btn-sm cs-default">Hoạt động</span></td>
                                     <td>
                                         <a href="' . $suama . '" class="btn btn-primary"><i
