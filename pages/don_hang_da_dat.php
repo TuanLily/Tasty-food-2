@@ -1,9 +1,13 @@
 <div class="container_hoadon"><?php
                               if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) && count($danh_sach_don_hang_da_dat) > 0) {
                                 $pdo = pdo_get_connection();
+                                $stmt = $pdo->prepare("SELECT * FROM thanh_toan WHERE khach_hang_id = :khach_hang_id ORDER BY id DESC LIMIT :start, :limit");
 
-                                $stmt = $pdo->query("SELECT * FROM thanh_toan WHERE phuong_thuc = 1 ORDER BY id DESC");
-                                $danh_sach_don_hang_da_dat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                // Bind giá trị cho tham số
+                                $stmt->bindParam(':khach_hang_id', $khach_hang_id, PDO::PARAM_INT);
+                                $stmt->bindParam(':start', $vi_tri_bat_dau, PDO::PARAM_INT);
+                                $stmt->bindParam(':limit', $so_luong_tren_trang, PDO::PARAM_INT);
+
                                 $so_luong_tren_trang = 3;
 
                                 // Tính toán số trang
@@ -81,7 +85,6 @@
                       <table class="bang_thongtin_mon_an">
                         <thead>
                           <tr>
-                            <th>Mã món ăn</th>
                             <th>Tên món ăn</th>
                             <th>Giá</th>
                             <th>Hình ảnh</th>
@@ -94,9 +97,6 @@
                                         for ($i = 0; $i < count($mon_an_ids); $i++) {
                           ?>
                             <tr>
-                              <td>
-                                <?php echo $mon_an_ids[$i]; ?>
-                              </td>
                               <td>
                                 <?php echo $ten_mon_ans[$i]; ?>
                               </td>
@@ -119,7 +119,7 @@
               <?php
                                       }
                                     } else {
-                                      echo "<div class='lsdb-item'>Không tìm thấy thông tin đặt bàn và món ăn.</div>";
+                                      echo "<div class='lsdb-item'>Không có đơn hàng nào.</div>";
                                     }
               ?>
             </div>
@@ -137,7 +137,7 @@
                                   echo '</div>';
                                 }
                               } else {
-                                echo "<div class='lsdb-container'>vui lòng đăng ký tài khoản mới xem được lịch sử đặt bàn.</div>";
+                                echo "<div class='lsdb-container'>lịch sử đặt bàn trống.</div>";
                               }
   ?>
 </div>
@@ -165,45 +165,3 @@
     });
   });
 </script>
-<style>
-  /* CSS cho container chính */
-  .pagination {
-    margin-top: 20px;
-justify-content: center;
-    text-align: center;
-  }
-
-  /* CSS cho các nút phân trang */
-  .pagination a {
-    color: #007bff;
-    padding: 8px 16px;
-    text-decoration: none;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-    border-radius: 4px;
-  }
-
-  /* CSS cho nút trang hiện tại */
-  .pagination a.active {
-    background-color: #007bff;
-    color: #fff;
-  }
-
-  /* CSS khi di chuột qua các nút phân trang */
-  .pagination a:hover {
-    background-color: #ddd;
-  }
-
-  /* CSS cho nút trang đầu và trang cuối */
-  .pagination a:first-child,
-  .pagination a:last-child {
-    margin: 0;
-  }
-
-  /* CSS cho nút Previous và Next */
-  .pagination .prev,
-  .pagination .next {
-    padding: 8px 12px;
-  }
-</style>

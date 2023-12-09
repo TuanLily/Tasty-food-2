@@ -7,21 +7,21 @@
                     <table class="user-table">
 
                         <?php if (isset($_SESSION['info_datban'])) {
-              $ten_kh = $_SESSION['info_datban']['ten_kh'];
-              $email = $_SESSION['info_datban']['email'];
-              $sdt = $_SESSION['info_datban']['sdt'];
-              $so_nguoi = $_SESSION['info_datban']['so_nguoi'];
-              $thoi_gian_dat_ban = $_SESSION['info_datban']['thoi_gian_dat_ban'];
-              $ghi_chu = $_SESSION['info_datban']['ghi_chu'];
-            } else {
-              $ten_kh = "";
-              $email = "";
-              $sdt = "";
-              $so_nguoi = "";
-              $thoi_gian_dat_ban = "";
-              $ghi_chu = "";
-            }
-            ?>
+                            $ten_kh = $_SESSION['info_datban']['ten_kh'];
+                            $email = $_SESSION['info_datban']['email'];
+                            $sdt = $_SESSION['info_datban']['sdt'];
+                            $so_nguoi = $_SESSION['info_datban']['so_nguoi'];
+                            $thoi_gian_dat_ban = $_SESSION['info_datban']['thoi_gian_dat_ban'];
+                            $ghi_chu = $_SESSION['info_datban']['ghi_chu'];
+                        } else {
+                            $ten_kh = "";
+                            $email = "";
+                            $sdt = "";
+                            $so_nguoi = "";
+                            $thoi_gian_dat_ban = "";
+                            $ghi_chu = "";
+                        }
+                        ?>
                         <tr>
                             <td>Tên khách hàng:</td>
                             <td><input type="text" name="ten_kh" value="<?php echo $ten_kh; ?>" readonly></td>
@@ -41,8 +41,7 @@
                         </tr>
                         <tr>
                             <td>Thời gian đặt bàn:</td>
-                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>"
-                                    readonly>
+                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>" readonly>
                             </td>
                         </tr>
                         <tr>
@@ -78,16 +77,16 @@
             <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
             <div class="boxcontent">
                 <?php
-        $i = 0;
-        $tong_tien = 0; // Khởi tạo biến tổng tiền
-        foreach ($_SESSION['mycart'] as $item) {
-          $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-          $tong_tien += $thanh_tien; // Cộng vào tổng tiền
-          $i++;
-        }
-        $khuyen_mai = $tong_tien * 0.1;
-        $tong_cong = $tong_tien - $khuyen_mai;
-        ?>
+                $i = 0;
+                $tong_tien = 0; // Khởi tạo biến tổng tiền
+                foreach ($_SESSION['mycart'] as $item) {
+                    $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+                    $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+                    $i++;
+                }
+                $khuyen_mai = $tong_tien * 0.1;
+                $tong_cong = $tong_tien - $khuyen_mai;
+                ?>
 
 
                 <table>
@@ -116,24 +115,22 @@
                 <hr class="hr_thong_tin_dat_ban">
                 <table>
                     <tr>
-                        <td><input type="radio" name="phuong_thuc" value="cash" checked />Thanh toán tại nhà hàng</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="phuong_thuc" value="bank-transfer" />Chuyển khoản ngân hàng</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="phuong_thuc" value="online-payment" />Thanh toán Momo</td>
+                        <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
+                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc" id="phuong_thuc_1" value="1" />
+                            <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà hàng</label>
+                        </td>
                     </tr>
                 </table>
+                <div class="thongbao"> <?php
+                                        if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
+                                            if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
+                                                echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
+                                                unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
+                                            }
+                                        }
+                                        ?></div>
                 <hr class="hr_thong_tin_dat_ban">
-                <table>
-                    <tr>
-                        <td><input type="radio" name="phuong_thuc" value="cash" checked />Thanh toán toàn bộ</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="phuong_thuc" value="bank-transfer" />Đặt cọc một phần</td>
-                    </tr>
-                </table>
+
                 <div class="nut_thanh_toan">
                     <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
                 </div>
@@ -145,3 +142,27 @@
     </div>
 
 </form>
+<style>
+    #phuong_thuc_cell {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    #phuong_thuc_1 {
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    #phuong_thuc_1+label {
+        margin: 0;
+    }
+</style>
+
+<script>
+    function toggleSelection(elementId) {
+        var checkbox = document.getElementById(elementId);
+        checkbox.checked = !checkbox.checked;
+    }
+</script>

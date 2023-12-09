@@ -588,6 +588,15 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $ghi_chu = $_POST['ghi_chu'];
                 $phuong_thuc = isset($_POST['phuong_thuc']) ? intval($_POST['phuong_thuc']) : 1;
                 $phuong_thuc = ($phuong_thuc >= 1 && $phuong_thuc <= 2) ? $phuong_thuc : 1;
+                $phuong_thuc = isset($_POST['phuong_thuc']) ? intval($_POST['phuong_thuc']) : null;
+
+                if (empty($phuong_thuc)) {
+                    // Người dùng không chọn phương thức thanh toán
+                    $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'] = 'vui lòng chọn phương thức thanh toán';
+                    $check = 0;
+                    echo '<script>window.location.href = "index.php?act=thongtindatban";</script>';
+                }
+
 
                 // Check if the total amount is greater than 0
                 $tong_tien = tongdonhang();
@@ -627,7 +636,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/nav.php";
             include "view/margintop.php";
             include "./pages/hoa_don.php";
-            $_SESSION['mycart'] = [];
+            // $_SESSION['mycart'] = [];
             include "view/margintop.php";
             break;
         case "don_hang_da_dat":

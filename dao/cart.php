@@ -381,12 +381,54 @@ function get_phuong_thuc_don_hang($n)
     return $phuong_thuc;
 }
 
+// function get_lich_su_limit($start, $limit)
+// {
+//     $sql = "SELECT * FROM thanh_toan WHERE phuong_thuc = 1 ORDER BY id DESC LIMIT $start,$limit";
+//     $danh_sach_don_hang_da_dat = pdo_query($sql);
+//     return $danh_sach_don_hang_da_dat;
+// }
+
 function get_lich_su_limit($start, $limit)
 {
-    $sql = "SELECT * FROM thanh_toan WHERE phuong_thuc = 1 ORDER BY id DESC LIMIT $start,$limit";
-    $danh_sach_don_hang_da_dat = pdo_query($sql);
-    return $danh_sach_don_hang_da_dat;
+    // Lấy id từ session, giả sử key là 'id'
+    $khach_hang_id = isset($_SESSION["email"]["id"]) ? $_SESSION["email"]["id"] : null;
+
+    // Kiểm tra xem có giá trị id hay không
+    if ($khach_hang_id !== null) {
+        // Câu truy vấn SQL
+        $sql = "SELECT * FROM thanh_toan WHERE khach_hang_id = :khach_hang_id ORDER BY id DESC LIMIT :start, :limit";
+
+        // Tham số của câu truy vấn
+        $params = array(
+            ':khach_hang_id' => $khach_hang_id,
+            ':start' => $start,
+            ':limit' => $limit
+        );
+
+        try {
+            // Thực hiện câu truy vấn và lấy kết quả
+            $danh_sach_don_hang_da_dat = pdo_query($sql, $params);
+
+            // Trả về kết quả
+            return $danh_sach_don_hang_da_dat;
+        } catch (PDOException $e) {
+            // Xử lý nếu có lỗi PDO
+            echo "Error: " . $e->getMessage();
+        }
+    } else {
+        // Trả về một giá trị mặc định hoặc xử lý khác tùy thuộc vào yêu cầu của bạn
+        return null;
+    }
 }
+
+
+
+// function get_lich_su_limit($start, $limit)
+// {
+//     $sql = "SELECT * FROM thanh_toan ORDER BY khach_hang_id DESC LIMIT $start,$limit";
+//     $danh_sach_don_hang_da_dat = pdo_query($sql);
+//     return $danh_sach_don_hang_da_dat;
+// }
 
 
 function load_so_luong_mon_an($dat_ban_id)

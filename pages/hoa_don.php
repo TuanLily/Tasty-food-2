@@ -1,8 +1,16 @@
 <?php
+$phuong_thuc_don_hang_default = get_phuong_thuc_don_hang(1);
+$phuong_thuc_don_hang = isset($phuong_thuc) ? get_phuong_thuc_don_hang($phuong_thuc) : $phuong_thuc_don_hang_default;
+
 if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) && count($danh_sach_don_hang_da_dat) > 0) {
 	foreach ($danh_sach_don_hang_da_dat as $thanh_toan) {
 		extract($thanh_toan);
-		$phuong_thuc_don_hang = get_phuong_thuc_don_hang($thanh_toan['phuong_thuc']);
+		if (isset($thanh_toan['phuong_thuc'])) {
+			$phuong_thuc_don_hang = get_phuong_thuc_don_hang($thanh_toan['phuong_thuc']);
+		} else {
+			// Sử dụng giá trị mặc định nếu 'phuong_thuc_don_hang' không tồn tại
+			$phuong_thuc_don_hang = $phuong_thuc_don_hang_default;
+		}
 		$dem_so_luong_mon = load_so_luong_mon_an($thanh_toan['dat_ban_id']);
 
 		// Định dạng số tiền với đuôi "đ"
@@ -10,11 +18,13 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 
 		// Định dạng ngày giờ
 		$ngay_thanh_toan = date('d/m/Y H:i:s', strtotime($thanh_toan['ngay_thanh_toan']));
-	?>
-	<?php
+
+?>
+<?php
 	}
 }
 ?>
+
 
 
 
@@ -178,24 +188,18 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 	<hr class="hr_thong_tin_dat_ban">
 	<table>
 		<tr>
-			<td><input type="radio" name="payment-method" value="cash" checked />Thanh toán tại nhà hàng</td>
-		</tr>
-		<tr>
-			<td><input type="radio" name="payment-method" value="bank-transfer" />Chuyển khoản ngân hàng</td>
-		</tr>
-		<tr>
-			<td><input type="radio" name="payment-method" value="online-payment" />Thanh toán Momo</td>
+			<td> <?php echo $phuong_thuc_don_hang; ?></td>
 		</tr>
 	</table>
 	<hr class="hr_thong_tin_dat_ban">
-	<table>
+	<table class="history-table">
 		<tr>
-			<td><input type="radio" name="payment-method" value="cash" checked />Thanh toán toàn bộ</td>
+			<td>
+				<div class="float-right my-3">
+					<a href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn hàng</a>
+				</div>
+			</td>
 		</tr>
-		<tr>
-			<td><input type="radio" name="payment-method" value="bank-transfer" />Đặt cọc một phần</td>
-		</tr>
-
 	</table>
 	<table class="history-table">
 		<tr>
@@ -230,3 +234,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 		});
 	});
 </script>
+	<div class="footer_hoadon">
+		<p>Cảm ơn bạn đã mua hàng!</p>
+	</div>
+</div>

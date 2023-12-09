@@ -1660,3 +1660,44 @@ h2 {
 .footer_hoadon p {
   margin: 0;
 }
+
+/* PHÂN TRANG  LỊCH SỬ DAT BÀN  */
+.pagination {
+    margin-top: 20px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* CSS cho các nút phân trang */
+  .pagination a {
+    color: #007bff;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+  }
+
+  /* CSS cho nút trang hiện tại */
+  .pagination a.active {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  /* CSS khi di chuột qua các nút phân trang */
+  .pagination a:hover {
+    background-color: #ddd;
+  }
+
+  /* CSS cho nút trang đầu và trang cuối */
+  .pagination a:first-child,
+  .pagination a:last-child {
+    margin: 0;
+  }
+
+  /* CSS cho nút Previous và Next */
+  .pagination .prev,
+  .pagination .next {
+    padding: 8px 12px;
+  }
