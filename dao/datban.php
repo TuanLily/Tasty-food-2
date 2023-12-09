@@ -55,6 +55,13 @@ function getDatBan_limit($start, $limit)
   $datban_limit = pdo_query($sql);
   return $datban_limit;
 }
+function getdatban_thanhtoan_limit($start, $limit)
+{
+  $sql = "SELECT COUNT(DISTINCT id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id";
+  $sql .= " FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC LIMIT $start,$limit";
+  $datban_limit = pdo_query($sql);
+  return $datban_limit;
+}
 
 function loadall_tt_datban_theo_ten()
 {

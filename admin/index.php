@@ -452,6 +452,10 @@ if (isset($_GET['act'])) {
             $listthongkedb = loadall_thongke_datban();
 
             break;
+        case "bieudodb":
+            $listthongkedb = loadall_thongke_datban();
+            include('modules/thongke/bieudodb.php');
+            break;
             // *Kết thúc chức năng thống kê
 
             // Bắt đầu phần phân quyền
