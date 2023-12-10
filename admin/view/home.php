@@ -88,7 +88,7 @@
                 <?php } ?>
             </div>
             <div class="row">
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-chart-area me-1"></i>
@@ -129,8 +129,8 @@
                                             legend: {
                                                 position: 'bottom'
                                             },
-                                            width: 550,
-                                            height: 400
+                                            width: 940,
+                                            height: 380
                                         };
 
                                         var chart = new google.visualization.AreaChart(document.getElementById(
@@ -144,86 +144,77 @@
                 </div>
             </div>
 
-            <div class="col-xl-6">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar me-1"></i>
-                        Bar Chart Example
+            <div class="card mb-4 col-xl-6">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Thống kê món ăn
+                </div>
+                <div class="card-body">
+
+
+
+                    <div id="piechart">
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+                        <script type="text/javascript">
+                            // Load google charts
+                            google.charts.load('current', {
+                                'packages': ['corechart']
+                            });
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            // Draw the chart and set the chart values
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Danh mục', 'Số lượng sản phẩm'],
+                                    <?php
+                                    $tongdm = count($listthongke);
+                                    $i = 1;
+                                    foreach ($listthongke as $thongke) {
+                                        extract($thongke);
+                                        if ($i == $tongdm)
+                                            $dauphay = "";
+                                        else
+                                            $dauphay = ",";
+                                        echo "  ['" . $thongke['ten_dm'] . "'," . $thongke['count_ma'] . "]" . $dauphay;
+                                        $i += 1;
+                                    }
+                                    ?>
+
+                                ]);
+
+                                // Optional; add a title and set the width and height of the chart
+                                var options = {
+                                    'title': 'Biểu đồ món ăn theo danh mục',
+                                    'width': 450,
+                                    'height': 350
+                                };
+
+                                // Display the chart inside the <div> element with id="piechart"
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                chart.draw(data, options);
+                            }
+                        </script>
                     </div>
-                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas>
-                    </div>
+
+
                 </div>
             </div>
         </div>
-        <div class="card mb-4 col-xl-6">
-            <div class="card-header">
-                <i class="fas fa-table me-1"></i>
-                Thống kê món ăn
-            </div>
-            <div class="card-body">
 
 
-
-                <div id="piechart">
-                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-                    <script type="text/javascript">
-                        // Load google charts
-                        google.charts.load('current', {
-                            'packages': ['corechart']
-                        });
-                        google.charts.setOnLoadCallback(drawChart);
-
-                        // Draw the chart and set the chart values
-                        function drawChart() {
-                            var data = google.visualization.arrayToDataTable([
-                                ['Danh mục', 'Số lượng sản phẩm'],
-                                <?php
-                                $tongdm = count($listthongke);
-                                $i = 1;
-                                foreach ($listthongke as $thongke) {
-                                    extract($thongke);
-                                    if ($i == $tongdm)
-                                        $dauphay = "";
-                                    else
-                                        $dauphay = ",";
-                                    echo "  ['" . $thongke['ten_dm'] . "'," . $thongke['count_ma'] . "]" . $dauphay;
-                                    $i += 1;
-                                }
-                                ?>
-
-                            ]);
-
-                            // Optional; add a title and set the width and height of the chart
-                            var options = {
-                                'title': 'Biểu đồ món ăn theo danh mục',
-                                'width': 450,
-                                'height': 350
-                            };
-
-                            // Display the chart inside the <div> element with id="piechart"
-                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-                            chart.draw(data, options);
-                        }
-                    </script>
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid px-4">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted"><span class="text-ft">Fasty Food</span> - Copyright &copy; 2023 All Rights
+                    Reserved.</div>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    &middot;
+                    <a href="#">Terms &amp; Conditions</a>
                 </div>
-
-
             </div>
         </div>
-</div>
-</main>
-<footer class="py-4 bg-light mt-auto">
-    <div class="container-fluid px-4">
-        <div class="d-flex align-items-center justify-content-between small">
-            <div class="text-muted"><span class="text-ft">Fasty Food</span> - Copyright &copy; 2023 All Rights
-                Reserved.</div>
-            <div>
-                <a href="#">Privacy Policy</a>
-                &middot;
-                <a href="#">Terms &amp; Conditions</a>
-            </div>
-        </div>
-    </div>
-</footer>
+    </footer>
 </div>

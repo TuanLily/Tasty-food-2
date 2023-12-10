@@ -14,6 +14,7 @@ include "../dao/delete_list.php";
 include "../dao/taikhoan.php";
 
 include "../dao/cart.php";
+include "../dao/thongke.php";
 
 // Giao diện
 include('view/header.php');
@@ -26,7 +27,7 @@ $previousPage = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'in
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
     switch ($act) {
-            // *Bắt đầu chức năng danh mục
+        // *Bắt đầu chức năng danh mục
 
 
         case 'themdm': //Kiểm tra người dùng có ấn vào nút add hay không?
@@ -131,9 +132,9 @@ if (isset($_GET['act'])) {
             include('modules/danhmuc/danhsach.php');
             break;
 
-            // *Kết thúc chức năng danh mục
+        // *Kết thúc chức năng danh mục
 
-            // !Bắt đầu chức năng sản phẩm
+        // !Bắt đầu chức năng sản phẩm
         case 'them':
             if (isset($_POST['them']) && ($_POST['them'])) {
                 $tensp = $_POST['tensp'];
@@ -329,9 +330,9 @@ if (isset($_GET['act'])) {
             include('modules/monan/danhsach.php');
             break;
 
-            // !Kết thúc chức năng sản phẩm
+        // !Kết thúc chức năng sản phẩm
 
-            // *Bắt đầu chức năng khách hàng
+        // *Bắt đầu chức năng khách hàng
         case 'dskh':
             $list_dskh = loadall_dskh();
             include('modules/khachhang/danhsach.php');
@@ -366,10 +367,10 @@ if (isset($_GET['act'])) {
             }
             break;
 
-            // *Kết thúc chức năng khách hàng
+        // *Kết thúc chức năng khách hàng
 
 
-            // !Bắt đầu chức năng đặt bàn
+        // !Bắt đầu chức năng đặt bàn
         case 'ds_dat_ban':
             $listdatban = loadall_tt_datban_theo_ten();
             include('modules/datban/danhsach.php');
@@ -420,10 +421,10 @@ if (isset($_GET['act'])) {
             break;
 
 
-            // !Kết thúc chức năng đặt bàn
+        // !Kết thúc chức năng đặt bàn
 
 
-            // *Bắt đầu chức năng thống kê
+        // *Bắt đầu chức năng thống kê
         case "thongkema":
 
             $listthongke = loadall_thongke();
@@ -456,9 +457,9 @@ if (isset($_GET['act'])) {
             $listthongkedb = loadall_thongke_datban();
             include('modules/thongke/bieudodb.php');
             break;
-            // *Kết thúc chức năng thống kê
+        // *Kết thúc chức năng thống kê
 
-            // Bắt đầu phần phân quyền
+        // Bắt đầu phần phân quyền
         case "phanquyen":
             $list_dskh = loadall_dskh();
             include('modules/phanquyen/danhsach.php');
@@ -499,7 +500,7 @@ if (isset($_GET['act'])) {
             $list_dskh = loadall_dskh();
             include('modules/phanquyen/danhsach.php');
             break;
-            // Kết thúc phần phân quyền
+        // Kết thúc phần phân quyền
 
         default:
             include('error/404.php');
