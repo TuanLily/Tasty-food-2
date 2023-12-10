@@ -1,120 +1,8 @@
 <?php
 
 
-function viewcart()
-{
-    global $img_path;
-    $tong = 0;
-    $i = 0;
-
-    foreach ($_SESSION['mycart'] as $cart) {
-        $hinh = $img_path . $cart['img'];
-        $thanhtien = $cart['so_luong'] * $cart['gia'];
-        $gia = $cart['gia'];
-        $tong += $thanhtien;
-        $xoasp = '<a href="index.php?act=delcart&idcart=' . $i . '"><input type="button" value="Xóa"></a>';
-        echo '
-                <tr> 
-                <td><img src="' . $hinh . '" alt="" height="80px"></td>
-                <td>' . $cart['name'] . '</td>
-                <td>$' . number_format($gia, 0, ",", ".") . '</td>
-                <td>
-                     <form action="index.php?act=viewcart" method="post">
-                        <input type="number" style="text-align:center; width:50px;" name="edit_qty" value="' . $cart['soluong'] . '" onchange="this.form.submit();" min="1">
-                        <input type="hidden" name="id" value="' . $cart['id'] . '">
-                     </form>
-                </td>
-                             
-                <td>$' . number_format($thanhtien, 0, ",", ".") . '</td>
-                <td>' . $xoasp . '</td>
-                
-                            
-                </tr> 
-                ';
-        $i += 1;
-    }
-    echo '
-              <td colspan="5">Tổng đơn hàng</td>
-                    
-              <td>' . number_format($tong, 0, ",", ".") . '</td>
-
-            ';
-
-    if (isset($_POST['dathang']) && ($_POST['dathang'])) {
-        $_SESSION['mycart'] = [];
-    }
-}
-// Hàm tăng số lượng sản phẩm giỏ hàng
-if (isset($_POST['edit_qty']) && ($_POST['edit_qty']) && isset($_POST['id'])) {
-    if (isset($_SESSION['mycart'])) {
-        $id = $_POST['id'];
-        // Trong $_SESSION['cart'] láy mảng là id mấy và láy số lượng của nó
-        $_SESSION['mycart']["$id"]['soluong'] = $_POST['edit_qty'];
-    }
-}
 
 
-function bill()
-{
-    global $img_path;
-    $tong = 0;
-    $i = 0;
-    foreach ($_SESSION['mycart'] as $cart) {
-        $hinh = $img_path . $cart['img'];
-        $thanhtien = $cart['soluong'] * $cart['price'];
-        $gia = $cart['price'];
-        $tong += $thanhtien;
-        $i += 1;
-        echo '
-                <tr> 
-                <td>' . $i . '</td>
-                <td><img src="' . $hinh . '" alt="" height="80px"></td>
-                <td>' . $cart['name'] . '</td>
-                <td>$' . number_format($gia, 0, ",", ".") . '</td>
-                <td>' . $cart['soluong'] . '</td>
-                <td>$' . number_format($thanhtien, 0, ",", ".") . '</td>
-                            
-                </tr> 
-                ';
-    }
-    echo '
-              <td colspan="5">Tổng đơn hàng</td>
-                    
-              <td>$' . number_format($tong, 0, ",", ".") . '</td>
-
-            ';
-}
-
-// function bill_chi_tiet($listbill)
-// {
-
-//     global $img_path;
-//     $tong = 0;
-//     $i = 0;
-//     foreach ($listbill as $item) {
-//         $hinh = $img_path . $item['img'];
-//         $thanhtien = $item['soluong'] * $item['price'];
-//         $tong += $thanhtien;
-//         $i += 1;
-//         echo '
-//                 <tr> 
-//                 <td>' . $i . '</td>
-//                 <td><img src="' . $hinh . '" alt="" height="80px"></td>
-//                 <td>' . $item['name'] . '</td>
-//                 <td>$' . number_format($item['price'], 0, ",", ".") . '</td>
-//                 <td>' . $item['soluong'] . '</td>
-//                 <td>$' . number_format($thanhtien, 0, ",", ".") . '</td>
-
-//                 </tr> 
-//                 ';
-//     }
-//     echo '
-//             <tr style="background-color:rgba(194, 255, 233);">
-//               <td colspan="5">Tổng đơn hàng</td>      
-//               <td><strong>$' . number_format($tong, 0, ",", ".") . '</strong></td>
-//             </tr>
-//             ';
-// }
 
 
 
@@ -252,34 +140,55 @@ function xemgiohang()
 {
     echo '<tbody>';
     global $img_path;
-    $i = 0;
+    $mon_an_info = []; // Mảng để lưu thông tin mỗi món ăn
     $tong_tien = 0; // Khởi tạo biến tổng tiền
+
     foreach ($_SESSION['mycart'] as $item) {
-        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-        $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+        $mon_an_id = $item['mon_an_id'];
+
+        // Kiểm tra xem món ăn đã tồn tại trong mảng chưa
+        if (isset($mon_an_info[$mon_an_id])) {
+            // Nếu đã tồn tại, tăng số lượng và cập nhật thành tiền
+            $mon_an_info[$mon_an_id]['so_luong'] += $item['so_luong'];
+            $mon_an_info[$mon_an_id]['thanh_tien'] += $item['gia'] * $item['so_luong'];
+        } else {
+            // Nếu chưa tồn tại, thêm mới thông tin của món ăn
+            $mon_an_info[$mon_an_id] = [
+                'hinh' => $item['hinh'],
+                'ten' => $item['ten'],
+                'gia' => $item['gia'],
+                'so_luong' => $item['so_luong'],
+                'thanh_tien' => $item['gia'] * $item['so_luong'],
+            ];
+        }
+    }
+
+    $i = 0;
+
+    // Hiển thị thông tin từ mảng đã gộp
+    foreach ($mon_an_info as $mon_an_id => $info) {
         $i++;
 ?>
-
         <tr>
-            <td><img src="<?php echo $item['hinh']; ?>" alt="" ></td>
+            <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
             <td>
-                <?php echo $item['ten']; ?>
+                <?php echo $info['ten']; ?>
             </td>
             <td>
-                <?php echo number_format($item['gia'], 0, ',', '.') . 'đ'; ?>
+                <?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?>
             </td>
             <td>
-                <?php echo $item['so_luong']; ?>
+                <?php echo $info['so_luong']; ?>
             </td>
             <td>
                 <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
             </td>
             <td>
-                <?php echo isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ'; ?>
+                <?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?>
             </td>
         </tr>
-
     <?php
+        $tong_tien += $info['thanh_tien'];
     }
     ?>
     <tr>
@@ -289,10 +198,99 @@ function xemgiohang()
         </td>
     </tr>
     </tbody>
-
 <?php
-
 }
+
+function hienthi_thongtin_donhang($hoa_don_chi_tiet)
+{
+    $mon_an_info = []; // Mảng để lưu thông tin mỗi món ăn
+    $tong_tien = 0; // Khởi tạo biến tổng tiền
+
+    foreach ($hoa_don_chi_tiet as $item) {
+        $mon_an_id = $item['mon_an_id'];
+
+        // Kiểm tra xem món ăn đã tồn tại trong mảng chưa
+        if (isset($mon_an_info[$mon_an_id])) {
+            // Nếu đã tồn tại, tăng số lượng và cập nhật thành tiền
+            $mon_an_info[$mon_an_id]['so_luong'] += $item['so_luong'];
+            $mon_an_info[$mon_an_id]['thanh_tien'] += $item['gia'] * $item['so_luong'];
+        } else {
+            // Nếu chưa tồn tại, thêm mới thông tin của món ăn
+            $mon_an_info[$mon_an_id] = [
+                'hinh' => $item['hinh'],
+                'ten' => $item['ten'],
+                'gia' => $item['gia'],
+                'so_luong' => $item['so_luong'],
+                'thanh_tien' => $item['gia'] * $item['so_luong'],
+            ];
+        }
+    }
+
+    foreach ($mon_an_info as $info) {
+    ?>
+        <tr>
+            <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
+            <td><?php echo $info['ten']; ?></td>
+            <td><?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?></td>
+            <td><?php echo $info['so_luong']; ?></td>
+            <td><?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?></td>
+        </tr>
+    <?php
+        $tong_tien += $info['thanh_tien'];
+    }
+    ?>
+    <tr>
+        <td colspan="4"><strong>Tổng thành tiền:</strong></td>
+        <td><?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?></td>
+    </tr>
+<?php
+}
+
+
+
+function hoa_don_chi_tiet($cartItems)
+{
+    $tableHTML = '<table class="table">
+                    <thead>
+                        <tr>
+                            <th>Hình ảnh</th>
+                            <th>Tên món ăn</th>
+                            <th>Giá bán</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+
+    $i = 0;
+    $tong_tien = 0; // Khởi tạo biến tổng tiền
+
+    foreach ($cartItems as $item) {
+        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+        $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+        $i++;
+
+        $tableHTML .= '<tr>
+                        <td><img src="' . $item['hinh'] . '" alt=""></td>
+                        <td>' . $item['ten'] . '</td>
+                        <td>' . number_format($item['gia'], 0, ',', '.') . 'đ</td>
+                        <td>' . $item['so_luong'] . '</td>
+                        <td>' . (isset($thanh_tien) ? number_format($thanh_tien, 0, ',', '.') . 'đ' : '0đ') . '</td>
+                    </tr>';
+    }
+
+    $tableHTML .= '</tbody>
+                </table>';
+
+    return $tableHTML;
+}
+
+
+
+
+
+
+
 
 function tongdonhang()
 {
@@ -313,9 +311,7 @@ function tongdonhang()
     return $tong_cong;
 }
 
-function thanhtoan()
-{
-}
+
 
 // function insert_thanhtoan($thanh_toan_ten, $thanh_toan_email, $thanh_toan_sdt, $thanh_toan_so_nguoi, $thanh_toan_thoigiandatban, $thanh_toan_ghi_chu, $ngay_thanh_toan, $tongtien)
 // {
@@ -331,6 +327,9 @@ function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $
     return pdo_execute($sql, $ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
 }
 
+
+
+
 function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
 {
     global $conn;
@@ -344,6 +343,12 @@ function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gh
 //     $sql = "insert into cart(khach_hang_id,mon_an_id,hinh,ten,gia,so_luong,thanh_tien,id_thanh_toan) values('$khach_hang_id','$mon_an_id','$hinh','$ten','$gia','$so_luong','$thanh_tien','$id_thanh_toan')";
 //     return pdo_execute($sql);
 // }
+
+function delete_dat_ban($id) {
+    $sql = "DELETE FROM dat_ban WHERE id = ?";
+    return pdo_execute($sql, $id);
+}
+
 
 function loadall_don_hang_da_dat($khach_hang_id)
 {
@@ -396,13 +401,15 @@ function get_lich_su_limit($start, $limit)
     // Kiểm tra xem có giá trị id hay không
     if ($khach_hang_id !== null) {
         // Câu truy vấn SQL
-        $sql = "SELECT * FROM thanh_toan WHERE khach_hang_id = :khach_hang_id ORDER BY id DESC LIMIT :start, :limit";
+       $sql = "SELECT * FROM thanh_toan WHERE khach_hang_id = :khach_hang_id ORDER BY id DESC LIMIT :start, :limit";
+
 
         // Tham số của câu truy vấn
         $params = array(
             ':khach_hang_id' => $khach_hang_id,
             ':start' => $start,
             ':limit' => $limit
+
         );
 
         try {
@@ -422,6 +429,44 @@ function get_lich_su_limit($start, $limit)
 }
 
 
+function findItemIndex($mon_an_id, $mycart)
+{
+    foreach ($mycart as $index => $item) {
+        if ($item['mon_an_id'] == $mon_an_id) {
+            return $index;
+        }
+    }
+    return -1;
+}
+
+
+function themMonVaoGioHang($mon_an)
+{
+    $mon_an_id = $mon_an['mon_an_id'];
+    $so_luong = $mon_an['so_luong'];
+
+    // Kiểm tra xem món ăn đã tồn tại trong giỏ hàng hay chưa
+    $index = findItemIndex($mon_an_id, $_SESSION['mycart']);
+
+    if ($index !== -1) {
+        // Món ăn đã tồn tại trong giỏ hàng, tăng số lượng
+        $_SESSION['mycart'][$index]['so_luong'] += $so_luong;
+    } else {
+        // Món ăn chưa tồn tại trong giỏ hàng, thêm món mới
+        $_SESSION['mycart'][] = $mon_an;
+    }
+}
+function itemExistsInCart($mon_an_id, $mycart)
+{
+    foreach ($mycart as $index => $item) {
+        if ($item['mon_an_id'] == $mon_an_id) {
+            return $index;
+        }
+    }
+    return -1;
+}
+
+
 
 // function get_lich_su_limit($start, $limit)
 // {
@@ -431,12 +476,25 @@ function get_lich_su_limit($start, $limit)
 // }
 
 
+// function load_so_luong_mon_an($dat_ban_id)
+// {
+//     $sql = "SELECT * FROM thanh_toan INNER JOIN dat_ban ON thanh_toan.dat_ban_id = dat_ban.id WHERE dat_ban_id=" . $dat_ban_id;
+//     $thanh_toan = pdo_query($sql);
+//     return count($thanh_toan);
+// }
 function load_so_luong_mon_an($dat_ban_id)
 {
     $sql = "SELECT * FROM thanh_toan INNER JOIN dat_ban ON thanh_toan.dat_ban_id = dat_ban.id WHERE dat_ban_id=" . $dat_ban_id;
     $thanh_toan = pdo_query($sql);
-    return count($thanh_toan);
+
+    // Kiểm tra xem $thanh_toan có phải là mảng hoặc đối tượng trước khi sử dụng count()
+    if (is_array($thanh_toan) || is_object($thanh_toan)) {
+        return count($thanh_toan);
+    } else {
+        return 0; // Trả về 0 nếu $thanh_toan không phải là mảng hoặc đối tượng
+    }
 }
+
 
 
 function get_booking_history_by_customer_and_time($ten_kh, $thoi_gian_dat_ban)
@@ -519,6 +577,12 @@ function loadone_in_hoa_don($id)
 
     $in_hoa_don = pdo_query_one($sql, $params);
     return $in_hoa_don;
+}
+function loadall_hoadon($dat_ban_id)
+{
+    $sql = "select * from thanh_toan where dat_ban_id=" . $dat_ban_id;
+    $thanh_toan = pdo_query($sql);
+    return $thanh_toan;
 }
 
 

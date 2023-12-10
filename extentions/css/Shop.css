@@ -472,11 +472,11 @@ form a {
 
 .khungdatban {
   background-color: #222831;
-  max-width: 120%;
+  max-width: 100%;
   width: 100%;
   max-height: 400rem;
   border-radius: 8px;
-  padding: 8px;
+  padding: 50px;
   margin: auto;
 }
 
@@ -1659,45 +1659,84 @@ h2 {
 
 .footer_hoadon p {
   margin: 0;
+  color: #3498db; /* Link color */
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.float-right a:hover {
+  background-color: #3498db; /* Hover background color */
+  color: #fff; /* Hover text color */
 }
 
 /* PHÂN TRANG  LỊCH SỬ DAT BÀN  */
 .pagination {
-    margin-top: 20px;
-    justify-content: center;
-    text-align: center;
-  }
+  margin-top: 20px;
+  justify-content: center;
+  text-align: center;
+}
 
-  /* CSS cho các nút phân trang */
-  .pagination a {
-    color: #007bff;
-    padding: 8px 16px;
-    text-decoration: none;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    margin: 0 4px;
-    border-radius: 4px;
-  }
+/* CSS cho các nút phân trang */
+.pagination a {
+  color: #007bff;
+  padding: 8px 16px;
+  text-decoration: none;
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+  border-radius: 4px;
+}
 
-  /* CSS cho nút trang hiện tại */
-  .pagination a.active {
-    background-color: #007bff;
-    color: #fff;
-  }
+/* CSS cho nút trang hiện tại */
+.pagination a.active {
+  background-color: #007bff;
+  color: #fff;
+}
 
-  /* CSS khi di chuột qua các nút phân trang */
-  .pagination a:hover {
-    background-color: #ddd;
-  }
+/* CSS khi di chuột qua các nút phân trang */
+.pagination a:hover {
+  background-color: #ddd;
+}
 
-  /* CSS cho nút trang đầu và trang cuối */
-  .pagination a:first-child,
-  .pagination a:last-child {
-    margin: 0;
-  }
+/* CSS cho nút trang đầu và trang cuối */
+.pagination a:first-child,
+.pagination a:last-child {
+  margin: 0;
+}
 
-  /* CSS cho nút Previous và Next */
-  .pagination .prev,
-  .pagination .next {
-    padding: 8px 12px;
-  }
+/* CSS cho nút Previous và Next */
+.pagination .prev,
+.pagination .next {
+  padding: 8px 12px;
+}
+/* giỏ hàng  rổng */
+
+.empty-cart-message {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  margin: 20px 0;
+  border-radius: 5px;
+}
+/* nút check box */
+#phuong_thuc_cell {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#phuong_thuc_1 {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+#phuong_thuc_1 + label {
+  margin: 0;
+}

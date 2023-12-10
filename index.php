@@ -383,6 +383,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 include "view/margintop.php";
                 include "./pages/xemgiohang.php";
                 include "view/footer.php";
+
             } else {
                 include "view/header.php";
                 include "pages/pocup.php";
@@ -483,10 +484,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
                             $_SESSION['mycart'][] = $themvaogiohang;
 
-                            if (isset($_POST['thanhtoan']) && ($_POST['thanhtoan'])) {
-                                // Xóa hết dữ liệu trong Session 'mycart'
-                                unset($_SESSION['mycart']);
-                            }
+                       
                             // Lưu thông tin vào session
                             $selectedItems = [
                                 'id' => $id,
@@ -529,6 +527,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             header('Location: index.php?act=thongtindatban');
             exit();
             break;
+
 
 
 
@@ -636,7 +635,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/nav.php";
             include "view/margintop.php";
             include "./pages/hoa_don.php";
-            // $_SESSION['mycart'] = [];
+            $_SESSION['mycart'] = [];
             include "view/margintop.php";
             break;
         case "don_hang_da_dat":

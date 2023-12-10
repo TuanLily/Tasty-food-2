@@ -3,6 +3,9 @@
                                 $pdo = pdo_get_connection();
                                 $stmt = $pdo->prepare("SELECT * FROM thanh_toan WHERE khach_hang_id = :khach_hang_id ORDER BY id DESC LIMIT :start, :limit");
 
+                                // ...
+
+
                                 // Bind giá trị cho tham số
                                 $stmt->bindParam(':khach_hang_id', $khach_hang_id, PDO::PARAM_INT);
                                 $stmt->bindParam(':start', $vi_tri_bat_dau, PDO::PARAM_INT);
@@ -21,6 +24,12 @@
                                   // Xử lý khi trang hiện tại không hợp lệ
                                   echo "<div class='lsdb-container'>Trang không tồn tại.</div>";
                                 } else {
+                                  // Tính toán vị trí bắt đầu của dữ liệu trên trang hiện tại
+                                  // Sắp xếp mảng $danh_sach_don_hang_da_dat theo id giảm dần
+                                  usort($danh_sach_don_hang_da_dat, function ($a, $b) {
+                                    return $b['id'] - $a['id'];
+                                  });
+
                                   // Tính toán vị trí bắt đầu của dữ liệu trên trang hiện tại
                                   $vi_tri_bat_dau = ($trang_hien_tai - 1) * $so_luong_tren_trang;
 
@@ -67,7 +76,7 @@
               ?>
                   <div class="lsdb-items">
                     <div class="lsdb-item">Tổng cộng có
-                      <?php echo $total_items; ?> món ăn
+                      <?php echo $total_items; ?> món được chọn
                     </div>
                     <div class="lsdb-item">Lịch đặt bàn:
                       <?php echo $info['thoi_gian_dat_ban']; ?>
@@ -79,8 +88,30 @@
                                         $gia_mon_ans = explode(',', $info['gia']);
                                         $hinh_mon_ans = explode(',', $info['hinh']);
                                         $so_luong_mon_ans = explode(',', $info['so_luong']);
-                    ?>
 
+                                        // Mảng kết hợp để lưu thông tin về món ăn
+                                        $mon_an_info = array();
+
+                                        // Lặp qua từng món ăn
+                                        for ($i = 0; $i < count($mon_an_ids); $i++) {
+                                          $mon_an_id = $mon_an_ids[$i];
+
+                                          // Nếu món ăn đã tồn tại trong mảng kết hợp, tăng số lượng lên
+                                          if (isset($mon_an_info[$mon_an_id])) {
+                                            $mon_an_info[$mon_an_id]['so_luong'] += $so_luong_mon_ans[$i];
+                                          } else {
+                                            // Nếu chưa tồn tại, thêm mới vào mảng kết hợp
+                                            $mon_an_info[$mon_an_id] = array(
+                                              'ten' => $ten_mon_ans[$i],
+                                              'gia' => $gia_mon_ans[$i],
+                                              'hinh' => $hinh_mon_ans[$i],
+                                              'so_luong' => $so_luong_mon_ans[$i]
+                                            );
+                                          }
+                                        }
+
+                                        // Hiển thị thông tin món ăn gộp lại
+                    ?>
                     <div class="lsdb-items">
                       <table class="bang_thongtin_mon_an">
                         <thead>
@@ -92,26 +123,18 @@
                           </tr>
                         </thead>
                         <tbody>
-
                           <?php
-                                        for ($i = 0; $i < count($mon_an_ids); $i++) {
+                                        foreach ($mon_an_info as $mon_an_id => $mon_an) {
                           ?>
                             <tr>
-                              <td>
-                                <?php echo $ten_mon_ans[$i]; ?>
-                              </td>
-                              <td>
-                                <?php echo $gia_mon_ans[$i]; ?>
-                              </td>
-                              <td><img src="uploads/<?php echo $hinh_mon_ans[$i]; ?>" alt="<?php echo $ten_mon_ans[$i]; ?>" width="50"></td>
-                              <td>
-                                <?php echo $so_luong_mon_ans[$i]; ?>
-                              </td>
+                              <td><?php echo $mon_an['ten']; ?></td>
+                              <td><?php echo $mon_an['gia']; ?></td>
+                              <td><img src="uploads/<?php echo $mon_an['hinh']; ?>" alt="<?php echo $mon_an['ten']; ?>" width="50"></td>
+                              <td><?php echo $mon_an['so_luong']; ?></td>
                             </tr>
                           <?php
                                         }
                           ?>
-
                         </tbody>
                       </table>
                     </div>

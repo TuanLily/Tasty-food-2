@@ -66,9 +66,17 @@
             <?php xemgiohang(); ?>
           </table>
           <br>
-          <a href="index.php?act=datban" class="btn btn-primary">
+          <?php
+          // Kiểm tra nếu giỏ hàng rỗng
+          if (empty($_SESSION['mycart'])) {
+            echo '<div class="empty-cart-message">Giỏ hàng rỗng!</div>';
+          }
+          ?>
+          <a href="index.php?act=datbanngay" class="btn btn-primary">
             Chọn thêm món
           </a>
+
+
 
         </div>
       </div>
@@ -115,24 +123,21 @@
         <hr class="hr_thong_tin_dat_ban">
         <table>
           <tr>
-            <td><input type="radio" name="phuong_thuc" value="cash" checked />Thanh toán tại nhà hàng</td>
-          </tr>
-          <tr>
-            <td><input type="radio" name="phuong_thuc" value="bank-transfer" />Chuyển khoản ngân hàng</td>
-          </tr>
-          <tr>
-            <td><input type="radio" name="phuong_thuc" value="online-payment" />Thanh toán Momo</td>
+            <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
+              <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc" id="phuong_thuc_1" value="1" />
+              <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà hàng</label>
+            </td>
           </tr>
         </table>
+        <div class="thongbao"> <?php
+                                if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
+                                  if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
+                                    echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
+                                    unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
+                                  }
+                                }
+                                ?></div>
         <hr class="hr_thong_tin_dat_ban">
-        <table>
-          <tr>
-            <td><input type="radio" name="phuong_thuc" value="cash" checked />Thanh toán toàn bộ</td>
-          </tr>
-          <tr>
-            <td><input type="radio" name="phuong_thuc" value="bank-transfer" />Đặt cọc một phần</td>
-          </tr>
-        </table>
         <div class="nut_thanh_toan">
           <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
         </div>

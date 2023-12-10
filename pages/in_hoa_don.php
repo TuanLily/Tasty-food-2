@@ -69,7 +69,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
                 <table class="bang_thongtin_mon_an">
                   <thead>
                     <tr>
-                      <th>Mã món ăn</th>
+
                       <th>Tên món ăn</th>
                       <th>Giá</th>
                       <th>Hình ảnh</th>
@@ -82,9 +82,7 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
                     for ($i = 0; $i < count($mon_an_ids); $i++) {
                     ?>
                       <tr>
-                        <td>
-                          <?php echo $mon_an_ids[$i]; ?>
-                        </td>
+
                         <td>
                           <?php echo $ten_mon_ans[$i]; ?>
                         </td>
