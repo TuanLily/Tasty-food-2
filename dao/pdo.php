@@ -160,38 +160,6 @@ function pdo_prepare($pdo, $sql, $params = [])
     // Trả về kết quả
     return $stmt;
 }
-// function pdo_prepare($pdo, $sql, $params = [])
-// {
-//     // Kiểm tra kết nối PDO
-//     if (!$pdo) {
-//         return false;
-//     }
-
-//     try {
-//         // Tạo đối tượng PDOStatement
-//         $stmt = $pdo->prepare($sql);
-
-//         // Kiểm tra lỗi khi chuẩn bị truy vấn
-//         if (!$stmt) {
-//             return false;
-//         }
-
-//         // Gắn các tham số vào câu truy vấn
-//         foreach ($params as $key => $value) {
-//             $stmt->bindValue($key, $value);
-//         }
-
-//         // Trả về kết quả
-//         return $stmt;
-//     } catch (PDOException $e) {
-//         // Handle PDOException if needed
-//         return false;
-//     }
-// }
-
-
-// Hàm bindValues này nhìn chung có vẻ giống với việc thay thế các giá trị tham số 
-// trong câu truy vấn SQL bằng các giá trị tương ứng
 
 function bindValues($sql, $params)
 {

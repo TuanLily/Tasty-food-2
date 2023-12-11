@@ -14,10 +14,9 @@
 
     <div class="wrapper">
         <form action="index.php?act=quenmatkhau" method="post">
-    <div class="style_text">
-        <a href="index.php?act=trangchu"><span > Tasty Food </span></a>
-    </div>
-            
+            <div class="style_text">
+                <a href="index.php?act=trangchu"><span> Tasty Food </span></a>
+            </div>
 
             <h2>Quên mật khẩu</h2>
 

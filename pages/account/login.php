@@ -66,22 +66,22 @@
     </div>
 
     <script>
-    const password = document.querySelector('#mat_khau');
-    const eyeOpen = document.querySelector('.eye-open');
-    const eyeClose = document.querySelector('.eye-close');
+        const password = document.querySelector('#mat_khau');
+        const eyeOpen = document.querySelector('.eye-open');
+        const eyeClose = document.querySelector('.eye-close');
 
-    eyeOpen.addEventListener('click', function() {
-        eyeOpen.classList.add('hidden');
-        eyeClose.classList.remove('hidden');
-        password.setAttribute("type", "password");
+        eyeOpen.addEventListener('click', function () {
+            eyeOpen.classList.add('hidden');
+            eyeClose.classList.remove('hidden');
+            password.setAttribute("type", "password");
 
-    });
-    eyeClose.addEventListener('click', function() {
-        eyeOpen.classList.remove('hidden');
-        eyeClose.classList.add('hidden');
-        password.setAttribute("type", "text");
+        });
+        eyeClose.addEventListener('click', function () {
+            eyeOpen.classList.remove('hidden');
+            eyeClose.classList.add('hidden');
+            password.setAttribute("type", "text");
 
-    });
+        });
     </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

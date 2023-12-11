@@ -33,12 +33,12 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
 <div class="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">LƯU TRŨ SẢN PHẨM ĐÃ XÓA</h1>
+            <h1 class="mt-4">LƯU TRŨ MÓN ĂN ĐÃ XÓA</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">LƯU TRŨ SẢN PHẨM ĐÃ XÓA</li>
+                <li class="breadcrumb-item active">LƯU TRŨ MÓN ĂN ĐÃ XÓA</li>
             </ol>
             <form action="<?php
             if (isset($_POST['restore']) && $_POST['restore'])
@@ -110,31 +110,31 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
                             <nav aria-label="Page navigation example" class="pag">
                                 <ul class="pagination">
                                     <?php if ($cr_page > 1): ?>
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="index.php?act=mon_an_luu_tru&page=<?= $cr_page - 1 ?>"
-                                                aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="index.php?act=mon_an_luu_tru&page=<?= $cr_page - 1 ?>"
+                                            aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
                                     <?php endif; ?>
 
                                     <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                                        <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
-                                            <a class="page-link" href="index.php?act=mon_an_luu_tru&page=<?= $i ?>">
-                                                <?= $i ?>
-                                            </a>
-                                        </li>
+                                    <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
+                                        <a class="page-link" href="index.php?act=mon_an_luu_tru&page=<?= $i ?>">
+                                            <?= $i ?>
+                                        </a>
+                                    </li>
                                     <?php endfor; ?>
 
                                     <?php if ($cr_page < $total_page): ?>
-                                        <li class="page-item">
-                                            <a class="page-link"
-                                                href="index.php?act=mon_an_luu_tru&page=<?= $cr_page + 1 ?>"
-                                                aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="index.php?act=mon_an_luu_tru&page=<?= $cr_page + 1 ?>"
+                                            aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
                                     <?php endif; ?>
                                 </ul>
                             </nav>

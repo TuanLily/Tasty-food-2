@@ -471,13 +471,12 @@ form a {
 /* form dat ban */
 
 .khungdatban {
-  background-color: #222831;
-  max-width: 100%;
-  width: 100%;
-  max-height: 400rem;
-  border-radius: 8px;
-  padding: 50px;
-  margin: auto;
+  position: relative;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 4px;
+  min-height: 2000px;
+  max-height: 100%;
 }
 
 .tieuDe {
@@ -744,7 +743,7 @@ form .form-group .form-group-input-long2 select {
 .form-group-capnhattaikhoan label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .form-group-capnhattaikhoan input[type="text"],
@@ -1725,6 +1724,22 @@ h2 {
   border-radius: 5px;
 }
 /* nút check box */
+#phuong_thuc_cell {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#phuong_thuc_1 {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+#phuong_thuc_1 + label {
+  margin: 0;
+}
+
 #phuong_thuc_cell {
   display: flex;
   align-items: center;

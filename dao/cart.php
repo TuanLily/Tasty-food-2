@@ -24,11 +24,6 @@ function delete_bill($id)
     pdo_execute($sql);
 }
 
-
-
-
-
-
 function xemgiohang()
 {
     echo '<tbody>';

@@ -34,7 +34,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
             <h1 class="mt-4">QUẢN LÝ KHÁCH HÀNG</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Dashboard</a>
+                    <a href="index.php">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">QUẢN LÝ KHÁCH HÀNG</li>
             </ol>
@@ -85,38 +85,39 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
                     </table>
                 </div>
                 <div class="card-footer">
-            <!-- Phân trang  -->
-            <div class="pag float-end">
-                <nav aria-label="Page navigation example" class="pag">
-                    <ul class="pagination">
-                        <?php if ($cr_page > 1): ?>
-                            <li class="page-item">
-                                <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page - 1 ?>"
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
+                    <!-- Phân trang  -->
+                    <div class="pag float-end">
+                        <nav aria-label="Page navigation example" class="pag">
+                            <ul class="pagination">
+                                <?php if ($cr_page > 1): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page - 1 ?>"
+                                        aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
 
-                        <?php for ($i = 1; $i <= $total_page; $i++): ?>
-                            <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
-                                <a class="page-link" href="index.php?act=dskh&page=<?= $i ?>">
-                                    <?= $i ?>
-                                </a>
-                            </li>
-                        <?php endfor; ?>
+                                <?php for ($i = 1; $i <= $total_page; $i++): ?>
+                                <li class="page-item <?php echo (($cr_page == $i) ? 'active' : '') ?>">
+                                    <a class="page-link" href="index.php?act=dskh&page=<?= $i ?>">
+                                        <?= $i ?>
+                                    </a>
+                                </li>
+                                <?php endfor; ?>
 
-                        <?php if ($cr_page < $total_page): ?>
-                            <li class="page-item">
-                                <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page + 1 ?>" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </nav>
-            </div>
-        </div>    
+                                <?php if ($cr_page < $total_page): ?>
+                                <li class="page-item">
+                                    <a class="page-link" href="index.php?act=dskh&page=<?= $cr_page + 1 ?>"
+                                        aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
         </div>
     </main>

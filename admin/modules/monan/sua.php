@@ -12,19 +12,19 @@ if (is_file($hinhpath)) {
 <div class="layoutSidenav_content">
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">SỬA SẢN PHẨM</h1>
+            <h1 class="mt-4">SỬA MÓN ĂN</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item">
                     <a href="index.html">Dashboard</a>
                 </li>
                 <a href="index.php?act=dsma" class="breadcrumb-item">QUẢN LÝ MÓN ĂN</a>
-                <li class="breadcrumb-item active">SỬA SẢN PHẨM</li>
+                <li class="breadcrumb-item active">SỬA MÓN ĂN</li>
             </ol>
 
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    Chỉnh sửa sản phẩm
+                    Chỉnh sửa món ăn
                 </div>
                 <form class="row g-3" method="post" action="index.php?act=updatema" enctype="multipart/form-data">
 

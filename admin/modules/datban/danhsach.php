@@ -3,7 +3,7 @@
 $pdo = pdo_get_connection();
 
 // !Làm phân trang
-$stmt = $pdo->query("SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY thoi_gian_dat_ban DESC");
+$stmt = $pdo->query("SELECT MAX(id) as id, ten_kh, thoi_gian_dat_ban, MAX(email) AS email, MAX(sdt) AS sdt, MAX(so_nguoi) AS so_nguoi, MAX(ghi_chu) AS ghi_chu, MAX(trang_thai) AS trang_thai, MAX(khach_hang_id) AS khach_hang_id FROM dat_ban GROUP BY ten_kh, thoi_gian_dat_ban ORDER BY id DESC");
 $list_datban = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 //Tổng các bảng ghi
@@ -36,7 +36,7 @@ if (isset($_GET['page']) && !empty($_GET['page'])) {
             <h1 class="mt-4">QUẢN LÝ ĐẶT BÀN ĂN</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item">
-                    <a href="index.html">Dashboard</a>
+                    <a href="index.php">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">QUẢN LÝ ĐẶT BÀN ĂN</li>
             </ol>

@@ -1,12 +1,12 @@
 <form action="index.php?act=thanhtoan" method="post">
-  <div class="khung_thông_tin_dat_ban">
-    <div class="order-info">
-      <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
-      <div class="boxcontent">
-        <div class="padding_margin">
-          <table class="user-table">
+    <div class="khung_thông_tin_dat_ban">
+        <div class="order-info">
+            <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
+            <div class="boxcontent">
+                <div class="padding_margin">
+                    <table class="user-table">
 
-            <?php if (isset($_SESSION['info_datban'])) {
+                        <?php if (isset($_SESSION['info_datban'])) {
               $ten_kh = $_SESSION['info_datban']['ten_kh'];
               $email = $_SESSION['info_datban']['email'];
               $sdt = $_SESSION['info_datban']['sdt'];
@@ -22,69 +22,69 @@
               $ghi_chu = "";
             }
             ?>
-            <tr>
-              <td>Tên khách hàng:</td>
-              <td><input type="text" name="ten_kh" value="<?php echo $ten_kh; ?>"></td>
+                        <tr>
+                            <td>Tên khách hàng:</td>
+                            <td><input type="text" name="ten_kh" value="<?php echo $ten_kh; ?>"></td>
 
-            </tr>
-            <tr>
-              <td>Email:</td>
-              <td><input type="text" name="email" value="<?php echo $email; ?>"></td>
-            </tr>
-            <tr>
-              <td>Điện thoại:</td>
-              <td><input type="text" name="sdt" value="<?php echo $sdt; ?>"></td>
-            </tr>
-            <tr>
-              <td>Số người:</td>
-              <td><input type="text" name="so_nguoi" value="<?php echo $so_nguoi; ?>"></td>
-            </tr>
-            <tr>
-              <td>Thời gian đặt bàn:</td>
-              <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>">
-              </td>
-            </tr>
-            <tr>
-              <td>Ghi chú:</td>
-              <td><input type="text" name="ghi_chu" value="<?php echo $ghi_chu; ?>"></td>
-            </tr>
-          </table>
-        </div>
-        <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
-        <div class="boxcontent_thong_tin_gio_hang">
-          <table class="bang_thongtin_mon_an">
-            <thead>
-              <tr>
-                <th>Hình ảnh</th>
-                <th>Tên món ăn</th>
-                <th>Giá bán</th>
-                <th>Số lượng</th>
-                <th>Sửa/Xóa</th>
-                <th>Thành tiền</th>
-              </tr>
-            </thead>
-            <?php xemgiohang(); ?>
-          </table>
-          <br>
-          <?php
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td><input type="text" name="email" value="<?php echo $email; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td>Điện thoại:</td>
+                            <td><input type="text" name="sdt" value="<?php echo $sdt; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td>Số người:</td>
+                            <td><input type="text" name="so_nguoi" value="<?php echo $so_nguoi; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td>Thời gian đặt bàn:</td>
+                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ghi chú:</td>
+                            <td><input type="text" name="ghi_chu" value="<?php echo $ghi_chu; ?>"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
+                <div class="boxcontent_thong_tin_gio_hang">
+                    <table class="bang_thongtin_mon_an">
+                        <thead>
+                            <tr>
+                                <th>Hình ảnh</th>
+                                <th>Tên món ăn</th>
+                                <th>Giá bán</th>
+                                <th>Số lượng</th>
+                                <th>Sửa/Xóa</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <?php xemgiohang(); ?>
+                    </table>
+                    <br>
+                    <?php
           // Kiểm tra nếu giỏ hàng rỗng
           if (empty($_SESSION['mycart'])) {
             echo '<div class="empty-cart-message">Giỏ hàng rỗng!</div>';
           }
           ?>
-          <a href="index.php?act=datbanngay" class="btn btn-primary">
-            Chọn thêm món
-          </a>
+                    <a href="index.php?act=datbanngay" class="btn btn-primary">
+                        Chọn thêm món
+                    </a>
 
 
 
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="payment-info">
-      <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
-      <div class="boxcontent">
-        <?php
+        <div class="payment-info">
+            <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
+            <div class="boxcontent">
+                <?php
         $i = 0;
         $tong_tien = 0; // Khởi tạo biến tổng tiền
         foreach ($_SESSION['mycart'] as $item) {
@@ -97,39 +97,41 @@
         ?>
 
 
-        <table>
-          <tr>
-            <td>Tạm tính</td>
-            <td>
-              <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-            </td>
-          </tr>
-          <tr>
-            <td>Khuyến mãi</td>
-            <td>
-              <?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?>
-            </td>
-          </tr>
-        </table>
-        <hr class="hr_thong_tin_dat_ban">
-        <table>
-          <tr>
-            <td>Tổng cộng (sau khuyến mãi)</td>
-            <td>
-              <?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?>
-            </td>
-          </tr>
-        </table>
-        <hr class="hr_thong_tin_dat_ban">
-        <table>
-          <tr>
-            <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
-              <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc" id="phuong_thuc_1" value="1" />
-              <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà hàng</label>
-            </td>
-          </tr>
-        </table>
-        <div class="thongbao"> <?php
+                <table>
+                    <tr>
+                        <td>Tạm tính</td>
+                        <td>
+                            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Khuyến mãi</td>
+                        <td>
+                            <?php echo number_format($khuyen_mai, 0, ',', '.') . 'đ'; ?>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="hr_thong_tin_dat_ban">
+                <table>
+                    <tr>
+                        <td>Tổng cộng (sau khuyến mãi)</td>
+                        <td>
+                            <?php echo number_format($tong_cong, 0, ',', '.') . 'đ'; ?>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="hr_thong_tin_dat_ban">
+                <table>
+                    <tr>
+                        <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
+                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc"
+                                id="phuong_thuc_1" value="1" />
+                            <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà
+                                hàng</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="thongbao"> <?php
                                 if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
                                   if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
                                     echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
@@ -137,15 +139,13 @@
                                   }
                                 }
                                 ?></div>
-        <hr class="hr_thong_tin_dat_ban">
-        <div class="nut_thanh_toan">
-          <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
+                <hr class="hr_thong_tin_dat_ban">
+                <div class="nut_thanh_toan">
+                    <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">
+                </div>
+
+            </div>
         </div>
-
-
-
-      </div>
     </div>
-  </div>
 
 </form>

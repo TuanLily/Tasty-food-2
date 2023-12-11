@@ -10,7 +10,7 @@
 			<div class="col-md-6">
 				<div class="detail-box">
 					<div class="heading_container">
-						<h2>Tasty Food</h2>
+						<h2 style="color:#e69c02;">Tasty Food</h2>
 					</div>
 					<p style="font-family: 'Dancing Script', cursive; line-height: 2; letter-spacing: 1px;">
 						Chào mừng bạn đến với Tasty Food - nơi mang đến cho bạn những

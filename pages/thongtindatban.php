@@ -41,7 +41,8 @@
                         </tr>
                         <tr>
                             <td>Thời gian đặt bàn:</td>
-                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>" readonly>
+                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>"
+                                    readonly>
                             </td>
                         </tr>
                         <tr>
@@ -69,7 +70,6 @@
                     <a href="index.php?act=datbanngay" class="btn btn-primary">
                         Chọn thêm món
                     </a>
-
 
                 </div>
             </div>
@@ -117,19 +117,23 @@
                 <table>
                     <tr>
                         <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
-                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc" id="phuong_thuc_1" value="1" />
-                            <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà hàng</label>
+                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc"
+                                id="phuong_thuc_1" value="1" />
+                            <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà
+                                hàng</label>
                         </td>
                     </tr>
                 </table>
-                <div class="thongbao"> <?php
-                                        if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
-                                            if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
-                                                echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
-                                                unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
-                                            }
-                                        }
-                                        ?></div>
+                <div class="thongbao mx-2">
+                    <?php
+                    if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
+                        if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
+                            echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
+                            unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
+                        }
+                    }
+                    ?>
+                </div>
                 <hr class="hr_thong_tin_dat_ban">
 
                 <div class="nut_thanh_toan">
@@ -143,23 +147,6 @@
     </div>
 
 </form>
-<style>
-    #phuong_thuc_cell {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
-
-    #phuong_thuc_1 {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-    }
-
-    #phuong_thuc_1+label {
-        margin: 0;
-    }
-</style>
 
 <script>
     function toggleSelection(elementId) {

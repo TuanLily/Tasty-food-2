@@ -2,13 +2,13 @@
     <form action="index.php?act=updatepw" method="post" class="fc-reset">
         <h2>Đổi mật khẩu</h2>
         <?php
-                        
-                        if(isset($_SESSION['id']) && ($_SESSION['id'])){
-                          extract($_SESSION['id']);
-                          
-                        }
-                        ?>
-        <input type="hidden" name="email" value="<?= $email?>">
+
+        if (isset($_SESSION['id']) && ($_SESSION['id'])) {
+            extract($_SESSION['id']);
+
+        }
+        ?>
+        <input type="hidden" name="email" value="<?= $email ?>">
         <div class="form-group">
 
             <input type="password" id="mat_khau_1" class="form-control" aria-describedby="emailHelp" name="mat_khau_1"
@@ -76,50 +76,50 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script>
-const password = document.querySelector('#mat_khau');
-const rpassword = document.querySelector('#rpass');
-const password_old = document.querySelector('#mat_khau_1');
-const eyeOpen = document.querySelector('.eye-open');
-const eyeClose = document.querySelector('.eye-close');
-const eyeOpen1 = document.querySelector('.eye-open1');
-const eyeClose1 = document.querySelector('.eye-close1');
-const eyeOpen2 = document.querySelector('.eye-open2');
-const eyeClose2 = document.querySelector('.eye-close2');
+    const password = document.querySelector('#mat_khau');
+    const rpassword = document.querySelector('#rpass');
+    const password_old = document.querySelector('#mat_khau_1');
+    const eyeOpen = document.querySelector('.eye-open');
+    const eyeClose = document.querySelector('.eye-close');
+    const eyeOpen1 = document.querySelector('.eye-open1');
+    const eyeClose1 = document.querySelector('.eye-close1');
+    const eyeOpen2 = document.querySelector('.eye-open2');
+    const eyeClose2 = document.querySelector('.eye-close2');
 
-eyeOpen.addEventListener('click', function() {
-    eyeOpen.classList.add('hidden');
-    eyeClose.classList.remove('hidden');
-    password.setAttribute("type", "password");
+    eyeOpen.addEventListener('click', function () {
+        eyeOpen.classList.add('hidden');
+        eyeClose.classList.remove('hidden');
+        password.setAttribute("type", "password");
 
-});
-eyeClose.addEventListener('click', function() {
-    eyeOpen.classList.remove('hidden');
-    eyeClose.classList.add('hidden');
-    password.setAttribute("type", "text");
+    });
+    eyeClose.addEventListener('click', function () {
+        eyeOpen.classList.remove('hidden');
+        eyeClose.classList.add('hidden');
+        password.setAttribute("type", "text");
 
-});
-eyeOpen1.addEventListener('click', function() {
-    eyeOpen1.classList.add('hidden');
-    eyeClose1.classList.remove('hidden');
-    rpassword.setAttribute("type", "password");
+    });
+    eyeOpen1.addEventListener('click', function () {
+        eyeOpen1.classList.add('hidden');
+        eyeClose1.classList.remove('hidden');
+        rpassword.setAttribute("type", "password");
 
-});
-eyeClose1.addEventListener('click', function() {
-    eyeOpen1.classList.remove('hidden');
-    eyeClose1.classList.add('hidden');
-    rpassword.setAttribute("type", "text");
+    });
+    eyeClose1.addEventListener('click', function () {
+        eyeOpen1.classList.remove('hidden');
+        eyeClose1.classList.add('hidden');
+        rpassword.setAttribute("type", "text");
 
-});
-eyeOpen2.addEventListener('click', function() {
-    eyeOpen2.classList.add('hidden');
-    eyeClose2.classList.remove('hidden');
-    mat_khau_1.setAttribute("type", "password");
+    });
+    eyeOpen2.addEventListener('click', function () {
+        eyeOpen2.classList.add('hidden');
+        eyeClose2.classList.remove('hidden');
+        mat_khau_1.setAttribute("type", "password");
 
-});
-eyeClose2.addEventListener('click', function() {
-    eyeOpen2.classList.remove('hidden');
-    eyeClose2.classList.add('hidden');
-    mat_khau_1.setAttribute("type", "text");
+    });
+    eyeClose2.addEventListener('click', function () {
+        eyeOpen2.classList.remove('hidden');
+        eyeClose2.classList.add('hidden');
+        mat_khau_1.setAttribute("type", "text");
 
-});
+    });
 </script>

@@ -341,6 +341,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 if (empty($ho_ten)) {
                     $_SESSION['error']['ho_ten'] = 'Không được để trống';
                     $check = 0;
+                } else {
+                    unset($_SESSION['error']['ho_ten']);
                 }
 
                 if (empty($email)) {
@@ -349,18 +351,23 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                     $_SESSION['error']['email'] = 'Email không đúng định dạng';
                     $check = 0;
+                } else {
+                    unset($_SESSION['error']['email']);
                 }
+
                 if (empty($sdt)) {
                     $_SESSION['error']['sdt'] = 'Không được để trống';
                     $check = 0;
                 } else if (!preg_match($phonePattern, $sdt)) { // Sử dụng preg_match để so khớp với biểu thức chính quy
                     $_SESSION['error']['sdt'] = 'Không đúng định dạng số điện thoại';
                     $check = 0;
+                } else {
+                    unset($_SESSION['error']['sdt']);
                 }
 
                 if ($check == 1) {
                     capnhat_taikhoan_kh($id, $ho_ten, $email, $sdt);
-                    echo '<script>alert("Cập nhật thành công thành công")</script>';
+                    echo '<script>alert("Cập nhật thành công thành công, đăng nhập lại để cập nhật lại thông tin")</script>';
                     echo '<script>
                               setTimeout(function() {
                                   window.location.href = "index.php?act=trangchu";
@@ -484,7 +491,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
                             $_SESSION['mycart'][] = $themvaogiohang;
 
-                       
+
                             // Lưu thông tin vào session
                             $selectedItems = [
                                 'id' => $id,
@@ -591,7 +598,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
                 if (empty($phuong_thuc)) {
                     // Người dùng không chọn phương thức thanh toán
-                    $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'] = 'vui lòng chọn phương thức thanh toán';
+                    $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'] = 'Vui lòng chọn phương thức thanh toán!';
                     $check = 0;
                     echo '<script>window.location.href = "index.php?act=thongtindatban";</script>';
                 }
