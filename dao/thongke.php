@@ -2,12 +2,14 @@
 
 function loadall_thongke()
 {
-    $sql = "select danh_muc.ten_dm as ten_dm, danh_muc.id as ma_dm, count(mon_an.id) as count_ma, min(mon_an.gia) as min_gia, max(mon_an.gia) as max_gia, avg(mon_an.gia) as avg_gia";
-    $sql .= " from mon_an left join danh_muc on danh_muc.id=mon_an.danh_muc_id where 1";
-    $sql .= " group by danh_muc.id order by danh_muc.id asc";
+    $sql = "SELECT danh_muc.ten_dm as ten_dm, danh_muc.id as ma_dm, count(mon_an.id) as count_ma, min(mon_an.gia) as min_gia, max(mon_an.gia) as max_gia, avg(mon_an.gia) as avg_gia, danh_muc.trang_thai";
+    $sql .= " FROM mon_an LEFT JOIN danh_muc on danh_muc.id=mon_an.danh_muc_id WHERE danh_muc.trang_thai = 1";
+    $sql .= " GROUP BY danh_muc.id ORDER BY danh_muc.id ASC";
     $listthongke = pdo_query($sql);
     return $listthongke;
 }
+
+// Select danh_muc.ten_dm as ten_dm, danh_muc.id as ma_dm, count(mon_an.id) as count_ma, min(mon_an.gia) as min_gia, max(mon_an.gia) as max_gia, avg(mon_an.gia) as avg_gia from mon_an left join danh_muc on danh_muc.id=mon_an.danh_muc_id where trang_thai = 1 group by danh_muc.id order by danh_muc.id asc
 
 function loadall_thongke_taikhoan()
 {
