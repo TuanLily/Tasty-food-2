@@ -6,6 +6,7 @@ include 'dao/pdo.php';
 include 'dao/cookie.php';
 require_once './mail/index.php';
 include 'global/global.php';
+include 'global/auth.php';
 
 // DAO
 include "dao/datban.php";
@@ -14,6 +15,7 @@ include 'dao/cart.php';
 include 'dao/monan.php';
 include "dao/taikhoan.php";
 $mail = new Mailer();
+
 
 $show_monan = loadall_monan_home();
 if (!isset($_SESSION['mycart']))
@@ -41,6 +43,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "view/giamgiatrongtuan.php";
             include "view/home.php";
             include "view/footer.php";
+
             break;
 
         case 'monan':
@@ -222,7 +225,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                               window.location.href = "index.php?act=trangchu";
                           }, 0);
                         </script>';
-                            exit();
+
                         } else {
                             echo '<script>alert("Sai email hoặc sai mật khẩu")</script>';
                             include 'pages/account/login.php';
@@ -678,19 +681,11 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
 
-
-
-
-
-
-
         case "thoat":
             session_unset();
             header("Location:index.php?act=trangchu");
 
             break;
-
-
 
         case 'updatepw':
             include "view/header.php";
@@ -762,7 +757,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 }
             }
 
-            // update_password($email, $mat_khau);
 
             include 'pages/account/update_pw.php';
             include "view/footer.php";
@@ -785,3 +779,4 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
     include "view/home.php";
     include "view/footer.php";
 }
+?>

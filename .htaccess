@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Kiểm tra nếu có chữ "admin" trong đường dẫn
+RewriteCond %{REQUEST_URI} /admin/ [NC]
+
+# Kiểm tra nếu chưa đăng nhập
+RewriteCond %{HTTP_COOKIE} !PHPSESSID=
+
+# Chuyển hướng đến trang đăng nhập
+RewriteRule ^(.*)$ index.php?act=dangnhap [L,R=302]

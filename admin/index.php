@@ -5,6 +5,7 @@ ob_start();
 
 require_once "../dao/pdo.php";
 require_once "../global/global.php";
+include '../global/auth.php';
 
 
 include "../dao/danhmuc.php";
