@@ -393,7 +393,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 include "view/margintop.php";
                 include "./pages/xemgiohang.php";
                 include "view/footer.php";
-
             } else {
                 include "view/header.php";
                 include "pages/pocup.php";
@@ -524,18 +523,28 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
 
         case 'xoagiohang':
-            if (isset($_GET['idgiohang'])) {
-                $idgiohang = $_GET['idgiohang'];
-                if (isset($_SESSION['mycart'][$idgiohang])) {
-                    unset($_SESSION['mycart'][$idgiohang]); // Xóa sản phẩm khỏi giỏ hàng
-                    $_SESSION['mycart'] = array_values($_SESSION['mycart']); // Cập nhật lại chỉ số của mảng
-                }
-            } else {
-                $_SESSION['mycart'] = [];
-            }
+            if (isset($_GET['act']) && $_GET['act'] == 'xoagiohang' && isset($_GET['id'])) {
+                $id_to_remove = $_GET['id'];
 
-            header('Location: index.php?act=thongtindatban');
-            exit();
+                // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
+                // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
+                foreach ($_SESSION['mycart'] as $key => $item) {
+                    if ($item['id'] == $id_to_remove) {
+                        unset($_SESSION['mycart'][$key]);
+
+                        // Gọi hàm xoadatban để xóa bản ghi từ bảng dat_ban
+                        xoadatban($item['mon_an_id'], $item['thoi_gian_dat_ban']);
+
+
+                        // Dừng khi tìm thấy và xóa món hàng
+                        break;
+                    }
+                }
+
+                // Chuyển hướng về trang thông tin đặt bàn
+                header('Location: index.php?act=thongtindatban');
+                exit();
+            }
             break;
 
 
@@ -562,7 +571,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $_SESSION['dat_ban_id'] = $lay_id_dat_ban;
                 } else {
                     // Xử lý nếu dat_ban_id không tồn tại (có thể hiển thị thông báo hoặc điều hướng người dùng)
-                    echo "Không thể xác định đặt bàn. Vui lòng thử lại.";
+                    echo "";
                 }
             } else {
                 // Xử lý nếu giá trị không tồn tại (có thể hiển thị thông báo hoặc điều hướng người dùng)
@@ -612,11 +621,19 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 if ($tong_tien > 0) {
                     $ngay_thanh_toan = date('Y-m-d H:i:s');
 
-                    // Proceed with payment processing
-                    insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
+                    // Kiểm tra nếu đã có hóa đơn tồn tại
+                    $existing_order = get_existing_order($ten_kh, $thoi_gian_dat_ban, $khach_hang_id, date('Y-m-d', strtotime($ngay_thanh_toan)));
 
-                    // Clear the dat_ban_id from session after successful payment
+                    if ($existing_order) {
+                        // Nếu đã có hóa đơn, cập nhật thông tin và tăng tổng tiền
+                        update_existing_order($existing_order['id'], $tong_tien);
+                    } else {
+                        // Nếu chưa có hóa đơn, thêm hóa đơn mới
+                        insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
+                    }
+
                     unset($_SESSION['dat_ban_id']);
+
 
                     echo '<script>alert("Đặt bàn thành công! Sau đây là trang xem lại đơn đặt hàng, cám ơn vì đã sử dụng dịch vụ")</script>';
                     echo '<script>

@@ -66,6 +66,10 @@
                         </thead>
                         <?php xemgiohang(); ?>
                     </table>
+                    <?php           // Kiểm tra nếu giỏ hàng rỗng
+                    if (empty($_SESSION['mycart'])) {
+                        echo '<div class="empty-cart-message">Giỏ hàng rỗng!</div>';
+                    } ?>
                     <br>
                     <a href="index.php?act=datbanngay" class="btn btn-primary">
                         Chọn thêm món
@@ -88,8 +92,6 @@
                 $khuyen_mai = $tong_tien * 0.1;
                 $tong_cong = $tong_tien - $khuyen_mai;
                 ?>
-
-
                 <table>
                     <tr>
                         <td>Tạm tính</td>

@@ -7,7 +7,7 @@ $tong_tien = 0;
 $ten_kh = $datban['ten_kh']; // Thay bằng tên khách hàng cần tìm kiếm
 $thoi_gian_dat_ban = $datban['thoi_gian_dat_ban']; // Thay bằng thời gian đặt bàn cần tìm kiếm
 
-$info_datban_monan = load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban);
+$info_datban_monan = load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban,$gio_dat_ban);
 
 
 foreach ($info_datban_monan as $n => $item) {
