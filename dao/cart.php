@@ -56,38 +56,45 @@ function xemgiohang()
     // Hiển thị thông tin từ mảng đã gộp
     foreach ($mon_an_info as $mon_an_id => $info) {
         $i++;
-        ?>
-<tr>
-    <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
-    <td>
-        <?php echo $info['ten']; ?>
-    </td>
-    <td>
-        <?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?>
-    </td>
-    <td>
-        <?php echo $info['so_luong']; ?>
-    </td>
-    <td>
-        <a href="index.php?act=xoagiohang&idgiohang=<?php echo $i - 1; ?>">Xóa</a>
-    </td>
-    <td>
-        <?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
-<?php
+?>
+        <tr>
+            <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
+            <td>
+                <?php echo $info['ten']; ?>
+            </td>
+            <td>
+                <?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?>
+            </td>
+            <td>
+                <?php echo $info['so_luong']; ?>
+            </td>
+            <td>
+                <a href="index.php?act=xoagiohang&id=<?php echo isset($mon_an_id) ? $mon_an_id : ''; ?>">Xóa</a>
+            </td>
+
+            <td>
+                <?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?>
+            </td>
+        </tr>
+    <?php
         $tong_tien += $info['thanh_tien'];
     }
     ?>
-<tr>
-    <td colspan="5"><strong>Tổng thành tiền:</strong></td>
-    <td colspan="5">
-        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
-</tbody>
-<?php
+    <tr>
+        <td colspan="5"><strong>Tổng thành tiền:</strong></td>
+        <td colspan="5">
+            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+        </td>
+    </tr>
+    </tbody>
+    <?php
 }
+function xoadatban($mon_an_id, $thoi_gian_dat_ban)
+{
+    $sql = "DELETE FROM dat_ban WHERE mon_an_id = " . $mon_an_id . " AND thoi_gian_dat_ban = '" . $thoi_gian_dat_ban . "'";
+    pdo_execute($sql);
+}
+
 
 function hienthi_thongtin_donhang($hoa_don_chi_tiet)
 {
@@ -115,32 +122,32 @@ function hienthi_thongtin_donhang($hoa_don_chi_tiet)
     }
 
     foreach ($mon_an_info as $info) {
-        ?>
-<tr>
-    <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
-    <td>
-        <?php echo $info['ten']; ?>
-    </td>
-    <td>
-        <?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?>
-    </td>
-    <td>
-        <?php echo $info['so_luong']; ?>
-    </td>
-    <td>
-        <?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
-<?php
+    ?>
+        <tr>
+            <td><img src="<?php echo $info['hinh']; ?>" alt=""></td>
+            <td>
+                <?php echo $info['ten']; ?>
+            </td>
+            <td>
+                <?php echo number_format($info['gia'], 0, ',', '.') . 'đ'; ?>
+            </td>
+            <td>
+                <?php echo $info['so_luong']; ?>
+            </td>
+            <td>
+                <?php echo number_format($info['thanh_tien'], 0, ',', '.') . 'đ'; ?>
+            </td>
+        </tr>
+    <?php
         $tong_tien += $info['thanh_tien'];
     }
     ?>
-<tr>
-    <td colspan="4"><strong>Tổng thành tiền:</strong></td>
-    <td>
-        <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
-    </td>
-</tr>
+    <tr>
+        <td colspan="4"><strong>Tổng thành tiền:</strong></td>
+        <td>
+            <?php echo number_format($tong_tien, 0, ',', '.') . 'đ'; ?>
+        </td>
+    </tr>
 <?php
 }
 
@@ -203,6 +210,25 @@ function tongdonhang()
 
     return $tong_cong;
 }
+// function tongdonhang()
+// {
+//     if (empty($_SESSION['mycart'])) {
+//         return ['tong_tien' => 0, 'khuyen_mai' => 0, 'tong_cong' => 0];
+//     }
+
+//     $tong_tien = 0; // Khởi tạo biến tổng tiền
+
+//     foreach ($_SESSION['mycart'] as $item) {
+//         $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+//         $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+//     }
+
+//     $km = $tong_tien * 0.1;
+//     $tong_cong = $tong_tien - $km;
+
+//     return ['tong_tien' => $tong_tien, 'khuyen_mai' => $km, 'tong_cong' => $tong_cong];
+// }
+
 
 
 function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id)
@@ -210,6 +236,7 @@ function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $
     $sql = "INSERT INTO thanh_toan (thanh_toan_ten,thanh_toan_email,thanh_toan_sdt,thanh_toan_thoigiandatban,thanh_toan_ghi_chu,thanh_toan_so_nguoi,phuong_thuc, tong_tien, ngay_thanh_toan, dat_ban_id,khach_hang_id) VALUES (?, ?, ?, ?,?,?,?, ?, ?,?,?)";
     return pdo_execute($sql, $ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $so_nguoi, $phuong_thuc, $tong_tien, $ngay_thanh_toan, $dat_ban_id, $khach_hang_id);
 }
+
 
 
 
@@ -222,6 +249,37 @@ function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gh
 
     pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
 }
+
+// Hàm để kiểm tra xem đã có hóa đơn nào có cùng ten_kh và thoi_gian_dat_ban chưa
+function get_existing_order($ten_kh, $thoi_gian_dat_ban, $khach_hang_id, $ngay_thanh_toan)
+{
+    $sql = "SELECT * FROM thanh_toan WHERE thanh_toan_ten = ? AND thanh_toan_thoigiandatban = ? AND khach_hang_id = ? AND DATE(ngay_thanh_toan) = DATE(?)";
+
+    // Thực hiện truy vấn cơ sở dữ liệu và trả về kết quả
+    return pdo_query_one($sql, $ten_kh, $thoi_gian_dat_ban, $khach_hang_id, $ngay_thanh_toan);
+}
+
+function update_existing_order($id, $tong_tien)
+{
+    // Lấy thông tin hóa đơn cũ
+    $existing_order = get_order_by_id($id);
+
+    // Tổng tiền cũ
+    $old_tong_tien = $existing_order['tong_tien'];
+
+    // Cộng tổng tiền mới vào tổng tiền cũ
+    $new_tong_tien = $old_tong_tien + $tong_tien;
+
+    $sql = "UPDATE thanh_toan SET tong_tien = ? WHERE id = ?";
+    pdo_execute($sql, $new_tong_tien, $id);
+}
+// Hàm để lấy thông tin hóa đơn theo ID
+function get_order_by_id($id)
+{
+    $sql = "SELECT * FROM thanh_toan WHERE id = ?";
+    return pdo_query_one($sql, $id);
+}
+
 
 
 function delete_dat_ban($id)
@@ -359,28 +417,29 @@ function load_so_luong_mon_an($dat_ban_id)
 function get_booking_history_by_customer_and_time($ten_kh, $thoi_gian_dat_ban)
 {
     $sql = "SELECT
-    dat_ban.id as dat_ban_id,
-    thanh_toan.id as thanh_toan_id,
-    thanh_toan.thanh_toan_ten,
-    SUM(thanh_toan.tong_tien) as total_price,
-    COUNT(mon_an.id) as total_items,
-    thanh_toan.ngay_thanh_toan,
-    GROUP_CONCAT(mon_an.id) AS mon_an_id,
-    GROUP_CONCAT(mon_an.ten) AS ten,
-    GROUP_CONCAT(mon_an.gia) AS gia,
-    GROUP_CONCAT(mon_an.hinh) AS hinh,
-    GROUP_CONCAT(dat_ban.so_luong) AS so_luong
-FROM
-    dat_ban
-INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
-INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
-WHERE
-    thanh_toan.thanh_toan_ten = :ten_kh
-    AND thanh_toan.ngay_thanh_toan = :thoi_gian_dat_ban
-GROUP BY
-    dat_ban.id, thanh_toan.id, thanh_toan.thanh_toan_ten, thanh_toan.ngay_thanh_toan
-ORDER BY
-    thanh_toan.ngay_thanh_toan DESC";
+        GROUP_CONCAT(DISTINCT thanh_toan.id) AS grouped_thanh_toan_id,
+        dat_ban.id AS dat_ban_id,
+        GROUP_CONCAT(DISTINCT mon_an.id) AS mon_an_id,
+        GROUP_CONCAT(DISTINCT mon_an.ten) AS ten,
+        GROUP_CONCAT(DISTINCT mon_an.gia) AS gia,
+        GROUP_CONCAT(DISTINCT mon_an.hinh) AS hinh,
+        GROUP_CONCAT(DISTINCT dat_ban.so_luong) AS so_luong,
+        COUNT(DISTINCT mon_an.id) AS total_items,
+        COUNT(DISTINCT thanh_toan.id) AS total_invoices,
+        SUM(thanh_toan.tong_tien) AS total_price,
+        MAX(thanh_toan.ngay_thanh_toan) AS latest_payment_date,
+        MAX(thanh_toan.id) AS latest_thanh_toan_id
+    FROM
+        dat_ban
+    INNER JOIN thanh_toan ON dat_ban.id = thanh_toan.dat_ban_id
+    INNER JOIN mon_an ON dat_ban.mon_an_id = mon_an.id
+    WHERE
+        thanh_toan.thanh_toan_ten = :ten_kh
+        AND thanh_toan.ngay_thanh_toan = :thoi_gian_dat_ban
+    GROUP BY
+        dat_ban.id
+    ORDER BY
+        latest_payment_date DESC";
 
     $params = array(
         ':ten_kh' => $ten_kh,
@@ -391,6 +450,7 @@ ORDER BY
 
     return $result;
 }
+
 
 
 function lay_thong_tin_hoa_don_theo_id($hoa_don_id)

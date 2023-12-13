@@ -7,21 +7,21 @@
                     <table class="user-table">
 
                         <?php if (isset($_SESSION['info_datban'])) {
-              $ten_kh = $_SESSION['info_datban']['ten_kh'];
-              $email = $_SESSION['info_datban']['email'];
-              $sdt = $_SESSION['info_datban']['sdt'];
-              $so_nguoi = $_SESSION['info_datban']['so_nguoi'];
-              $thoi_gian_dat_ban = $_SESSION['info_datban']['thoi_gian_dat_ban'];
-              $ghi_chu = $_SESSION['info_datban']['ghi_chu'];
-            } else {
-              $ten_kh = "";
-              $email = "";
-              $sdt = "";
-              $so_nguoi = "";
-              $thoi_gian_dat_ban = "";
-              $ghi_chu = "";
-            }
-            ?>
+                            $ten_kh = $_SESSION['info_datban']['ten_kh'];
+                            $email = $_SESSION['info_datban']['email'];
+                            $sdt = $_SESSION['info_datban']['sdt'];
+                            $so_nguoi = $_SESSION['info_datban']['so_nguoi'];
+                            $thoi_gian_dat_ban = $_SESSION['info_datban']['thoi_gian_dat_ban'];
+                            $ghi_chu = $_SESSION['info_datban']['ghi_chu'];
+                        } else {
+                            $ten_kh = "";
+                            $email = "";
+                            $sdt = "";
+                            $so_nguoi = "";
+                            $thoi_gian_dat_ban = "";
+                            $ghi_chu = "";
+                        }
+                        ?>
                         <tr>
                             <td>Tên khách hàng:</td>
                             <td><input type="text" name="ten_kh" value="<?php echo $ten_kh; ?>"></td>
@@ -51,32 +51,28 @@
                     </table>
                 </div>
                 <div class="boxtitle_thong_tin_gio_hang">THÔNG TIN MÓN ĂN</div>
-                <div class="boxcontent_thong_tin_gio_hang">
-                    <table class="bang_thongtin_mon_an">
+                <div class="boxcontent_thong_tin_gio_hang table-responsive">
+                    <table class="bang_thongtin_mon_an table table table-hover">
                         <thead>
                             <tr>
                                 <th>Hình ảnh</th>
                                 <th>Tên món ăn</th>
                                 <th>Giá bán</th>
                                 <th>Số lượng</th>
-                                <th>Sửa/Xóa</th>
+                                <th>Xóa</th>
                                 <th>Thành tiền</th>
                             </tr>
                         </thead>
                         <?php xemgiohang(); ?>
                     </table>
+                    <?php           // Kiểm tra nếu giỏ hàng rỗng
+                    if (empty($_SESSION['mycart'])) {
+                        echo '<div class="empty-cart-message">Giỏ hàng rỗng!</div>';
+                    } ?>
                     <br>
-                    <?php
-          // Kiểm tra nếu giỏ hàng rỗng
-          if (empty($_SESSION['mycart'])) {
-            echo '<div class="empty-cart-message">Giỏ hàng rỗng!</div>';
-          }
-          ?>
                     <a href="index.php?act=datbanngay" class="btn btn-primary">
                         Chọn thêm món
                     </a>
-
-
 
                 </div>
             </div>
@@ -85,16 +81,16 @@
             <div class="boxtitle">PHƯƠNG THỨC THANH TOÁN</div>
             <div class="boxcontent">
                 <?php
-        $i = 0;
-        $tong_tien = 0; // Khởi tạo biến tổng tiền
-        foreach ($_SESSION['mycart'] as $item) {
-          $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-          $tong_tien += $thanh_tien; // Cộng vào tổng tiền
-          $i++;
-        }
-        $khuyen_mai = $tong_tien * 0.1;
-        $tong_cong = $tong_tien - $khuyen_mai;
-        ?>
+                $i = 0;
+                $tong_tien = 0; // Khởi tạo biến tổng tiền
+                foreach ($_SESSION['mycart'] as $item) {
+                    $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+                    $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+                    $i++;
+                }
+                $khuyen_mai = $tong_tien * 0.1;
+                $tong_cong = $tong_tien - $khuyen_mai;
+                ?>
 
 
                 <table>
@@ -131,14 +127,16 @@
                         </td>
                     </tr>
                 </table>
-                <div class="thongbao"> <?php
-                                if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
-                                  if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
-                                    echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
-                                    unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
-                                  }
-                                }
-                                ?></div>
+                <div class="thongbao">
+                    <?php
+                    if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']) && $_SESSION['error_phuong_thuc']['phuong_thuc'] != "") {
+                        if (isset($_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'])) {
+                            echo $_SESSION['error_phuong_thuc']['phuong_thuc']['invalid'];
+                            unset($_SESSION['error_phuong_thuc']['phuong_thuc']);
+                        }
+                    }
+                    ?>
+                </div>
                 <hr class="hr_thong_tin_dat_ban">
                 <div class="nut_thanh_toan">
                     <input type="submit" name="thanhtoan" value="Thanh toán" class="btnthanhtoan">

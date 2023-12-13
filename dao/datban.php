@@ -157,7 +157,6 @@ function datBan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $trang_thai
   try {
     // Kết nối đến cơ sở dữ liệu (thay đổi thông tin kết nối phù hợp với hệ thống của bạn)
 
-
     $conn = pdo_get_connection();
 
     // Thiết lập chế độ báo lỗi

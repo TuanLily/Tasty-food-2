@@ -3,25 +3,25 @@ $phuong_thuc_don_hang_default = get_phuong_thuc_don_hang(1);
 $phuong_thuc_don_hang = isset($phuong_thuc) ? get_phuong_thuc_don_hang($phuong_thuc) : $phuong_thuc_don_hang_default;
 
 if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) && count($danh_sach_don_hang_da_dat) > 0) {
-	foreach ($danh_sach_don_hang_da_dat as $thanh_toan) {
-		extract($thanh_toan);
-		if (isset($thanh_toan['phuong_thuc'])) {
-			$phuong_thuc_don_hang = get_phuong_thuc_don_hang($thanh_toan['phuong_thuc']);
-		} else {
-			// Sử dụng giá trị mặc định nếu 'phuong_thuc_don_hang' không tồn tại
-			$phuong_thuc_don_hang = $phuong_thuc_don_hang_default;
-		}
-		$dem_so_luong_mon = load_so_luong_mon_an($thanh_toan['dat_ban_id']);
+    foreach ($danh_sach_don_hang_da_dat as $thanh_toan) {
+        extract($thanh_toan);
+        if (isset($thanh_toan['phuong_thuc'])) {
+            $phuong_thuc_don_hang = get_phuong_thuc_don_hang($thanh_toan['phuong_thuc']);
+        } else {
+            // Sử dụng giá trị mặc định nếu 'phuong_thuc_don_hang' không tồn tại
+            $phuong_thuc_don_hang = $phuong_thuc_don_hang_default;
+        }
+        $dem_so_luong_mon = load_so_luong_mon_an($thanh_toan['dat_ban_id']);
 
-		// Định dạng số tiền với đuôi "đ"
-		$tong_tien = number_format($thanh_toan['tong_tien'], 0, ',', '.') . 'đ';
+        // Định dạng số tiền với đuôi "đ"
+        $tong_tien = number_format($thanh_toan['tong_tien'], 0, ',', '.') . 'đ';
 
-		// Định dạng ngày giờ
-		$ngay_thanh_toan = date('d/m/Y H:i:s', strtotime($thanh_toan['ngay_thanh_toan']));
+        // Định dạng ngày giờ
+        $ngay_thanh_toan = date('d/m/Y H:i:s', strtotime($thanh_toan['ngay_thanh_toan']));
 
 ?>
 <?php
-	}
+    }
 }
 ?>
 
@@ -54,9 +54,9 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
     </div>
     <div class="header_top">
         <?php foreach ($load_ma_hoa_don as $hoa_don) {
-			extract($hoa_don);
-			break; // Thêm break để chỉ lấy giá trị đầu tiên trong mảng
-		} ?>
+            extract($hoa_don);
+            break; // Thêm break để chỉ lấy giá trị đầu tiên trong mảng
+        } ?>
         <p class="header_top_right"><i class="fa-solid fa-money-bills"></i> <strong>Hóa đơn :</strong>
             TF -
             <?php echo $id; ?>
@@ -125,16 +125,16 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
         </table>
     </div>
     <?php
-	$i = 0;
-	$tong_tien = 0; // Khởi tạo biến tổng tiền
-	foreach ($_SESSION['mycart'] as $item) {
-		$thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
-		$tong_tien += $thanh_tien; // Cộng vào tổng tiền
-		$i++;
-	}
-	$khuyen_mai = $tong_tien * 0.1;
-	$tong_cong = $tong_tien - $khuyen_mai;
-	?>
+    $i = 0;
+    $tong_tien = 0; // Khởi tạo biến tổng tiền
+    foreach ($_SESSION['mycart'] as $item) {
+        $thanh_tien = $item['gia'] * $item['so_luong']; // Tính thành tiền cho mỗi món
+        $tong_tien += $thanh_tien; // Cộng vào tổng tiền
+        $i++;
+    }
+    $khuyen_mai = $tong_tien * 0.1;
+    $tong_cong = $tong_tien - $khuyen_mai;
+    ?>
 
 
     <table>
@@ -167,28 +167,23 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
         </tr>
     </table>
     <hr class="hr_thong_tin_dat_ban">
-    <table class="history-table">
-        <tr>
-            <td>
-                <div class="float-right my-3">
-                    <a href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn hàng</a>
-                </div>
-            </td>
-        </tr>
-    </table>
+
     <table class="history-table">
         <tr>
             <td>
                 <div class="mx-1 float-right">
-                    <button id="printPage" class="btn btn-success" onclick="printAndHide()"> <i
-                            class="fa-solid fa-print"></i>
+                    <button id="printPage" class="btn btn-success" onclick="printAndHide()"> <i class="fa-solid fa-print"></i>
                         In</button>
                 </div>
-                <div class="mx-1 float-right">
-                    <a class="btn btn-outline-primary" id="lsdh" href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn
-                        hàng</a>
-
-                </div>
+                <table class="history-table">
+                    <tr>
+                        <td>
+                            <div class="float-right my-3">
+                                <a href="index.php?act=don_hang_da_dat">Xem Lịch sử đơn hàng</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
@@ -200,16 +195,14 @@ if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) &&
 </div>
 
 <script>
-// In hóa đơn
-document.addEventListener("DOMContentLoaded", function() {
-    // Lắng nghe sự kiện nhấp chuột vào nút in
-    document.getElementById("printPage").addEventListener("click", function() {
-        // Gọi hàm in của trình duyệt
-        window.print();
+    // In hóa đơn
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lắng nghe sự kiện nhấp chuột vào nút in
+        document.getElementById("printPage").addEventListener("click", function() {
+            // Gọi hàm in của trình duyệt
+            window.print();
+        });
     });
-});
 </script>
-<div class="footer_hoadon">
-    <p>Cảm ơn bạn đã mua hàng!</p>
-</div>
+
 </div>

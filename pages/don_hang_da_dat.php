@@ -44,6 +44,7 @@
         $dem_so_luong_mon = load_so_luong_mon_an($thanh_toan['dat_ban_id']);
         $tong_tien = number_format($thanh_toan['tong_tien'], 0, ',', '.') . 'đ';
         $ngay_thanh_toan = date('d/m/Y H:i:s', strtotime($thanh_toan['ngay_thanh_toan']));
+
         ?>
         <form action="index.php?act=in_hoa_don" method="GET">
           <div class="lsdb-container">
@@ -119,33 +120,30 @@
                           <tr>
                             <th>Tên món ăn</th>
                             <th>Giá</th>
-                            <th>Hình ảnh</th>
                             <th>Số lượng</th>
+                            <th>Hình ảnh</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <?php
-                          foreach ($mon_an_info as $mon_an_id => $mon_an) {
-                            ?>
+                          <?php foreach ($mon_an_info as $mon_an_id => $mon_an) { ?>
                             <tr>
                               <td>
                                 <?php echo $mon_an['ten']; ?>
                               </td>
                               <td>
-                                <?php echo $mon_an['gia']; ?>
-                              </td>
-                              <td><img src="uploads/<?php echo $mon_an['hinh']; ?>" alt="<?php echo $mon_an['ten']; ?>" width="50">
+                                <?php echo number_format($mon_an['gia'], 0, ',', '.') ?>đ
                               </td>
                               <td>
                                 <?php echo $mon_an['so_luong']; ?>
                               </td>
+                              <td><img src="uploads/<?php echo $mon_an['hinh']; ?>" alt="<?php echo $mon_an['ten']; ?>" width="50">
+                              </td>
                             </tr>
-                            <?php
-                          }
-                          ?>
+                          <?php } ?>
                         </tbody>
                       </table>
                     </div>
+
                   </div>
                   <?php
                 }

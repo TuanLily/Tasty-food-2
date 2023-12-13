@@ -28,12 +28,16 @@ function pdo_execute($sql)
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($sql_args);
+        return $stmt->rowCount(); // Return the number of affected rows
     } catch (PDOException $e) {
+        // Log or print the error message
+        error_log("SQL Error: " . $e->getMessage());
         throw $e;
     } finally {
         unset($conn);
     }
 }
+
 
 /**
  * Thực thi câu lệnh sql thao tác dữ liệu (INSERT, UPDATE, DELETE)
@@ -48,13 +52,15 @@ function pdo_execute_lastInsertId($sql)
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);
         $stmt->execute($sql_args);
-        return $conn->lastInsertId();
+        return $conn->lastInsertId(); // Return the last inserted ID
     } catch (PDOException $e) {
         throw $e;
     } finally {
         unset($conn);
     }
 }
+
+
 /**
  * Thực thi câu lệnh sql truy vấn dữ liệu (SELECT)
  * @param string $sql câu lệnh sql
