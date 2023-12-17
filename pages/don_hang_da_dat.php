@@ -73,9 +73,11 @@
               $info_datban_monan = load_tt_monan_theo_ten($ten_kh, $thoi_gian_dat_ban);
               if ($info_datban_monan) {
                 foreach ($info_datban_monan as $info) {
+                  //chuyển  chuổi thành 1 mnag
                   $mon_an_ids = explode(',', $info['mon_an_id']);
                   $total_items = count(array_unique($mon_an_ids));
-                  ?>
+                  //loại bỏ các giá trị trùng lặp giữ lại 1 giá trị duy nhất
+              ?>
                   <div class="lsdb-items">
                     <div class="lsdb-item">Tổng cộng có
                       <?php echo $total_items; ?> món được chọn
@@ -127,17 +129,10 @@
                         <tbody>
                           <?php foreach ($mon_an_info as $mon_an_id => $mon_an) { ?>
                             <tr>
-                              <td>
-                                <?php echo $mon_an['ten']; ?>
-                              </td>
-                              <td>
-                                <?php echo number_format($mon_an['gia'], 0, ',', '.') ?>đ
-                              </td>
-                              <td>
-                                <?php echo $mon_an['so_luong']; ?>
-                              </td>
-                              <td><img src="uploads/<?php echo $mon_an['hinh']; ?>" alt="<?php echo $mon_an['ten']; ?>" width="50">
-                              </td>
+                              <td><?php echo $mon_an['ten']; ?></td>
+                              <td><?php echo number_format($mon_an['gia'], 0, ',', '.') . 'đ'; ?></td>
+                              <td><?php echo $mon_an['so_luong']; ?></td>
+                              <td><img src="uploads/<?php echo $mon_an['hinh']; ?>" alt="<?php echo $mon_an['ten']; ?>" width="50"></td>
                             </tr>
                           <?php } ?>
                         </tbody>

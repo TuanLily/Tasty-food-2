@@ -160,7 +160,7 @@
                         <?php foreach ($danhsachdanhmuc as $danhMuc): ?>
                             <div class="tab-pane fade show table-responsive" id="pills-<?= $danhMuc['id'] ?>" role="tabpanel"
                                 aria-labelledby="pills-home-tab" tabindex="0">
-                                <table class="bang_thongtin_mon_an ">
+                                <table class="bang_thongtin_mon_an">
                                     <tbody>
                                         <?php $listmonan = loadMonAn_tu_danhMuc($danhMuc['id']); ?>
                                         <?php foreach ($listmonan as $monan): ?>

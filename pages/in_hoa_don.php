@@ -6,8 +6,6 @@ $daHienThiHoaDon = false;
 if (isset($danh_sach_don_hang_da_dat) && is_array($danh_sach_don_hang_da_dat) && count($danh_sach_don_hang_da_dat) > 0) {
   foreach ($danh_sach_don_hang_da_dat as $thanh_toan) {
 
-    // Nếu đã hiển thị hóa đơn hoặc hóa đơn không phải là hóa đơn có ID là 1, bỏ qua vòng lặp
-    // var_dump($thanh_toan['id']);
 
     $hienThiDonHangId = $thanh_toan['id'];
     if ($daHienThiHoaDon || $id_hoa_don != $hienThiDonHangId) {
