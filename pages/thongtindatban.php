@@ -4,7 +4,7 @@
             <div class="boxtitle">THÔNG TIN NGƯỜI ĐẶT BÀN</div>
             <div class="boxcontent">
                 <div class="padding_margin">
-                    <table class="user-table">
+                    <table class="user-table table-hover">
 
                         <?php if (isset($_SESSION['info_datban'])) {
                             $ten_kh = $_SESSION['info_datban']['ten_kh'];
@@ -24,30 +24,28 @@
                         ?>
                         <tr>
                             <td>Tên khách hàng:</td>
-                            <td><input type="text" name="ten_kh" value="<?php echo $ten_kh; ?>" readonly></td>
-
+                            <td><input type="text" name="ten_kh" id="border_none" value="<?php echo $ten_kh; ?>" readonly></td>
                         </tr>
                         <tr>
                             <td>Email:</td>
-                            <td><input type="text" name="email" value="<?php echo $email; ?>" readonly></td>
+                            <td><input type="text" name="email" id="border_none" value="<?php echo $email; ?>" readonly></td>
                         </tr>
                         <tr>
                             <td>Điện thoại:</td>
-                            <td><input type="text" name="sdt" value="<?php echo $sdt; ?>" readonly></td>
+                            <td><input type="text" name="sdt" id="border_none" value="<?php echo $sdt; ?>" readonly></td>
                         </tr>
                         <tr>
                             <td>Số người:</td>
-                            <td><input type="text" name="so_nguoi" value="<?php echo $so_nguoi; ?>" readonly></td>
+                            <td><input type="text" name="so_nguoi" id="border_none" value="<?php echo $so_nguoi; ?>" readonly></td>
                         </tr>
                         <tr>
                             <td>Thời gian đặt bàn:</td>
-                            <td><input type="text" name="thoi_gian_dat_ban" value="<?php echo $thoi_gian_dat_ban; ?>"
-                                    readonly>
+                            <td><input type="text" name="thoi_gian_dat_ban" id="border_none" value="<?php echo $thoi_gian_dat_ban; ?>" readonly>
                             </td>
                         </tr>
                         <tr>
                             <td>Ghi chú:</td>
-                            <td><input type="text" name="ghi_chu" value="<?php echo $ghi_chu; ?>" readonly></td>
+                            <td><input type="text" name="ghi_chu" id="border_none" value="<?php echo $ghi_chu; ?>" readonly></td>
                         </tr>
                     </table>
                 </div>
@@ -119,8 +117,7 @@
                 <table>
                     <tr>
                         <td id="phuong_thuc_cell" onclick="toggleSelection('phuong_thuc_1')">
-                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc"
-                                id="phuong_thuc_1" value="1" />
+                            <input type="checkbox" onclick="toggleSelection('phuong_thuc_1')" name="phuong_thuc" id="phuong_thuc_1" value="1" />
                             <label for="phuong_thuc_1" onclick="toggleSelection('phuong_thuc_1')">Thanh toán tại nhà
                                 hàng</label>
                         </td>

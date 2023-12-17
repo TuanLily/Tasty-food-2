@@ -225,7 +225,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                               window.location.href = "index.php?act=trangchu";
                           }, 0);
                         </script>';
-
                         } else {
                             echo '<script>alert("Sai email hoặc sai mật khẩu")</script>';
                             include 'pages/account/login.php';
@@ -418,7 +417,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $ghi_chu = $_POST['ghi_chu'];
                 $check = 1;
                 $tong_tien = 0;
-
                 if (empty($ten_kh)) {
                     $_SESSION['error']['ten_kh']['invalid'] = 'Không được để trống';
                     $check = 0;
@@ -457,9 +455,11 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $check = 0;
                 }
 
+
                 // Bắt đầu xử lý nếu không có lỗi
                 if ($check == 1) {
                     $listmonan = loadall_monan();
+                    $co_mon_duoc_chon = false;
 
                     foreach ($listmonan as $monan) {
                         $id = $monan['id'];
@@ -470,11 +470,13 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $mon_an_id = $id;
 
                         if ($so_luong > 0) {
-                            insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+                            $gio_chon_mon = date('Y-m-d H:i:s');
+                            // Thực hiện các thao tác khi người dùng chọn ít nhất một món
+                            insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gio_chon_mon, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
                             $thanh_tien = $gia * $so_luong;
                             $tong_tien += $thanh_tien;
-
                             $hinh_ma = "uploads/" . $hinh;
+                            $co_mon_duoc_chon = true;
 
                             $themvaogiohang = [
                                 'hinh' => $hinh_ma,
@@ -482,6 +484,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                                 'gia' => $gia,
                                 'so_luong' => $so_luong,
                                 'thoi_gian_dat_ban' => $thoi_gian_dat_ban,
+                                'gio_chon_mon' => $gio_chon_mon,
                                 'so_nguoi' => $so_nguoi,
                                 'ghi_chu' => $ghi_chu,
                                 'ten_kh' => $ten_kh,
@@ -492,7 +495,6 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                             ];
 
                             $_SESSION['mycart'][] = $themvaogiohang;
-
 
                             // Lưu thông tin vào session
                             $selectedItems = [
@@ -509,12 +511,19 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         }
                     }
 
-                    echo '<script>alert("Điền thông tin và chọn món thành công, sẽ chuyển đến trang thanh toán")</script>';
-                    echo '<script>
-                            setTimeout(function() {
-                                window.location.href = "index.php?act=thongtindatban";
-                            }, 0);
-                        </script>';
+                    if (!$co_mon_duoc_chon) {
+                        // Xử lý khi người dùng không chọn món
+                        echo '<script>alert("Bạn chưa chọn món để thanh toán. Vui lòng quay lại chọn món!")</script>';
+                        echo '<script>window.location.href = "index.php?act=datbanngay";</script>'; // Redirect to the appropriate page
+                    } else {
+                        // Chuyển hướng đến trang thanh toán
+                        echo '<script>alert("Điền thông tin và chọn món thành công, sẽ chuyển đến trang thanh toán")</script>';
+                        echo '<script>
+                setTimeout(function() {
+                    window.location.href = "index.php?act=thongtindatban";
+                }, 0);
+            </script>';
+                    }
                 }
             }
 
@@ -522,19 +531,55 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include 'view/footer.php';
             break;
 
+            // case 'xoagiohang':
+            //     if (isset($_GET['act']) && $_GET['act'] == 'xoagiohang' && isset($_GET['id'])) {
+            //         $id_to_remove = $_GET['id'];
+
+            //         // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
+            //         // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
+            //         foreach ($_SESSION['mycart'] as $key => $item) {
+            //             if ($item['id'] == $id_to_remove) {
+            //                 unset($_SESSION['mycart'][$key]);
+
+            //                 // Gọi hàm xoadatban để xóa bản ghi từ bảng dat_ban
+            //                 xoadatban($item['mon_an_id'], $item['thoi_gian_dat_ban']);
+
+
+            //                 // Dừng khi tìm thấy và xóa món hàng
+            //                 break;
+            //             }
+            //         }
+
+            //         // Chuyển hướng về trang thông tin đặt bàn
+            //         header('Location: index.php?act=thongtindatban');
+            //         exit();
+            //     }
+            //     break;
+
+
+            // ...
+
         case 'xoagiohang':
-            if (isset($_GET['act']) && $_GET['act'] == 'xoagiohang' && isset($_GET['id'])) {
+            $soLuongXoa = 0;
+            if (isset($_GET['id'])) {
                 $id_to_remove = $_GET['id'];
 
                 // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
-                // Lặp qua giỏ hàng để tìm và xóa món hàng có id tương ứng
                 foreach ($_SESSION['mycart'] as $key => $item) {
                     if ($item['id'] == $id_to_remove) {
-                        unset($_SESSION['mycart'][$key]);
+                        // Gọi hàm kiemTraVaGiamSoLuong để kiểm tra và giảm số lượng
+                        kiemTraVaGiamSoLuong($item['mon_an_id'], $item['thoi_gian_dat_ban'], $item['gio_chon_mon']);
 
-                        // Gọi hàm xoadatban để xóa bản ghi từ bảng dat_ban
-                        xoadatban($item['mon_an_id'], $item['thoi_gian_dat_ban']);
+                        // Giảm số lượng trong giỏ hàng
+                        $_SESSION['mycart'][$key]['so_luong']--;
 
+                        // Nếu số lượng là 0 thì xóa luôn
+                        if ($_SESSION['mycart'][$key]['so_luong'] <= 0) {
+                            unset($_SESSION['mycart'][$key]);
+                        }
+
+                        // Tăng biến đếm số lượng món hàng đã xóa
+                        $soLuongXoa++;
 
                         // Dừng khi tìm thấy và xóa món hàng
                         break;
@@ -542,10 +587,15 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 }
 
                 // Chuyển hướng về trang thông tin đặt bàn
-                header('Location: index.php?act=thongtindatban');
+                header('Location: index.php?act=thongtindatban&xoathanhcong=' . $soLuongXoa);
                 exit();
             }
             break;
+
+
+
+
+
 
 
 
@@ -642,7 +692,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 }, 0);
             </script>';
                 } else {
-                    // Display a message if the total amount is empty
+
                     echo '<script>alert("Bạn chưa chọn món để thanh toán. Vui lòng quay lại chọn món!")</script>';
                     echo '<script>
 
@@ -796,4 +846,3 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
     include "view/home.php";
     include "view/footer.php";
 }
-?>

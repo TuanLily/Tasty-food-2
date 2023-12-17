@@ -89,11 +89,30 @@ function xemgiohang()
     </tbody>
     <?php
 }
-function xoadatban($mon_an_id, $thoi_gian_dat_ban)
+// function xoadatban($mon_an_id, $thoi_gian_dat_ban)
+// {
+//     $sql = "DELETE FROM dat_ban WHERE mon_an_id = " . $mon_an_id . " AND thoi_gian_dat_ban = '" . $thoi_gian_dat_ban . "'";
+//     pdo_execute($sql);
+// }
+
+function kiemTraVaGiamSoLuong($mon_an_id, $thoi_gian_dat_ban, $gio_chon_mon)
 {
-    $sql = "DELETE FROM dat_ban WHERE mon_an_id = " . $mon_an_id . " AND thoi_gian_dat_ban = '" . $thoi_gian_dat_ban . "'";
-    pdo_execute($sql);
+    // Kiểm tra số lượng trước khi xóa
+    $sql_check_quantity = "SELECT so_luong FROM dat_ban WHERE mon_an_id = ? AND thoi_gian_dat_ban = ? AND gio_chon_mon = ?";
+    $current_quantity = pdo_query_value($sql_check_quantity, $mon_an_id, $thoi_gian_dat_ban, $gio_chon_mon);
+
+    if ($current_quantity > 1) {
+        // Giảm số lượng đi 1 nếu số lượng lớn hơn 1
+        $sql_update_quantity = "UPDATE dat_ban SET so_luong = so_luong - 1 WHERE mon_an_id = ? AND thoi_gian_dat_ban = ? AND gio_chon_mon = ?";
+        pdo_execute($sql_update_quantity, $mon_an_id, $thoi_gian_dat_ban, $gio_chon_mon);
+    } else {
+        // Nếu số lượng là 1 hoặc ít hơn, thì xóa bản ghi
+        $sql_delete = "DELETE FROM dat_ban WHERE mon_an_id = ? AND thoi_gian_dat_ban = ? AND gio_chon_mon = ?";
+        pdo_execute($sql_delete, $mon_an_id, $thoi_gian_dat_ban, $gio_chon_mon);
+    }
 }
+
+
 
 
 function hienthi_thongtin_donhang($hoa_don_chi_tiet)
@@ -241,13 +260,13 @@ function insert_thanhtoan($ten_kh, $email, $sdt, $thoi_gian_dat_ban, $ghi_chu, $
 
 
 
-function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
+function insert_datban($ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gio_chon_mon, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id)
 {
     global $conn;
 
-    $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban, ghi_chu, so_luong, gia, hinh, ten, mon_an_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO dat_ban (ten_kh, email, sdt, so_nguoi, thoi_gian_dat_ban,gio_chon_mon, ghi_chu, so_luong, gia, hinh, ten, mon_an_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-    pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
+    pdo_execute($sql, $ten_kh, $email, $sdt, $so_nguoi, $thoi_gian_dat_ban, $gio_chon_mon, $ghi_chu, $so_luong, $gia, $hinh, $ten, $mon_an_id);
 }
 
 // Hàm để kiểm tra xem đã có hóa đơn nào có cùng ten_kh và thoi_gian_dat_ban chưa
